@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>The Forgotten Web</title>
+    <link>https://github.com/willstrand-dotcom/winston-notes</link>
+    <description>World-class old-web finds, human-selected.</description>
+    <item>
+      <title>Tim Berners-Lee — Cool URIs don’t change</title>
+      <link>https://www.w3.org/Provider/Style/URI</link>
+      <description>A small manifesto for permanent links: links as promises, not disposable plumbing.</description>
+      <category>web architecture</category>
+    </item>
+    <item>
+      <title>John Allsopp — A Dao of Web Design</title>
+      <link>https://alistapart.com/article/dao/</link>
+      <description>Responsive web thinking before “responsive design” had a name.</description>
+      <category>web architecture</category>
+    </item>
+    <item>
+      <title>Rebecca Blood — Weblogs: A History and Perspective</title>
+      <link>https://web.archive.org/web/20001018220805/http://www.rebeccablood.net/essays/weblog_history.html</link>
+      <description>It preserves human selection: someone found a thing, thought about it, and linked with voice.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Clay Shirky — A Group Is Its Own Worst Enemy</title>
+      <link>https://web.archive.org/web/20030713130936/http://shirky.com/writings/group_enemy.html</link>
+      <description>It reads like a field manual for every platform community failure that followed.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Joel Spolsky — The Law of Leaky Abstractions</title>
+      <link>https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</link>
+      <description>A durable warning against smooth tools, black boxes, and fake simplicity.</description>
+      <category>old programming blogs</category>
+    </item>
+    <item>
+      <title>Richard P. Gabriel — The Rise of Worse is Better</title>
+      <link>https://www.dreamsongs.com/RiseOfWorseIsBetter.html</link>
+      <description>It explains half the software world with an uncomfortable little knife.</description>
+      <category>old programming blogs</category>
+    </item>
+    <item>
+      <title>Calculated Risk — Housing: Speculation is the Key</title>
+      <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
+      <description>Independent diagnosis from before the crash became obvious.</description>
+      <category>markets that aged well</category>
+    </item>
+    <item>
+      <title>Warren Buffett — Mr. Buffett on the Stock Market</title>
+      <link>https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm</link>
+      <description>A calm valuation note written while the room was drunk.</description>
+      <category>markets that aged well</category>
+    </item>
+    <item>
+      <title>Jo Freeman — The Tyranny of Structurelessness</title>
+      <link>https://www.jofreeman.com/joreen/tyranny.htm</link>
+      <description>Still one of the sharpest texts about organizations, communities, and informal control.</description>
+      <category>weird useful corners</category>
+    </item>
+    <item>
+      <title>Bertrand Russell — In Praise of Idleness</title>
+      <link>https://harpers.org/archive/1932/10/in-praise-of-idleness/</link>
+      <description>Old enough to be public-domain furniture, sharp enough to cut modern work culture.</description>
+      <category>weird useful corners</category>
+    </item>
+  </channel>
+</rss>

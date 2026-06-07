@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Forgotten Web OS</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root{
+      --cream:#ff00ff;
+      --peach:#ff4fd8;
+      --coral:#ff6bb5;
+      --ink:#24152a;
+      --blue:#005bd8;
+      --muted:#6a5364;
+      --green:#26a96c;
+      --paper:#fff9d8;
+      --shadow:#7e3f79;
+      --chrome:#ffb7ef;
+      --dark:#24152a;
+      --mint:#8cffc1;
+      --aqua:#7df9ff;
+      --lavender:#d8b4ff;
+      --banana:#fff25c;
+      --apricot:#ffb347;
+      --blush:#ff9bd5;
+      --lime:#c8ff4d;
+      --orange:#ff8a00;
+    }
+    html,body{ margin:0; min-height:100%; background:var(--cream); color:var(--ink); }
+    body{
+      font-family: Geneva, Tahoma, Verdana, system-ui, sans-serif;
+      overflow-x:hidden;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(125,249,255,.72) 0 8%, transparent 27%),
+        radial-gradient(circle at 82% 20%, rgba(255,242,92,.82) 0 9%, transparent 28%),
+        radial-gradient(circle at 58% 78%, rgba(140,255,193,.5) 0 7%, transparent 24%),
+        linear-gradient(135deg, #ff00ff 0%, #ff2bd6 35%, #7b00ff 68%, #00d5ff 100%);
+    }
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:2; opacity:.18;
+      background-image:linear-gradient(rgba(36,27,24,.05) 1px, transparent 1px);
+      background-size:100% 3px;
+      mix-blend-mode:multiply;
+    }
+    button,a{ font:inherit; }
+    .boot{
+      position:fixed; inset:0; z-index:40; background:#191613; color:#f9efe4;
+      display:flex; align-items:center; justify-content:center; padding:24px;
+      animation:bootAway .7s ease forwards; animation-delay:2.55s;
+    }
+    .boot.is-hidden{ display:none; }
+    .boot-box{ width:min(620px,92vw); border:2px solid #f9efe4; padding:22px; box-shadow:0 0 0 4px #191613, 0 0 0 6px #f9efe4; background:#211c18; }
+    .boot-title{ font-family: Monaco, Consolas, monospace; letter-spacing:.08em; font-size:18px; margin-bottom:18px; }
+    .boot-line{ font-family: Monaco, Consolas, monospace; font-size:13px; line-height:1.7; opacity:0; animation:lineIn .18s steps(1,end) forwards; }
+    .boot-line:nth-child(2){ animation-delay:.25s; } .boot-line:nth-child(3){ animation-delay:.65s; }
+    .boot-line:nth-child(4){ animation-delay:1.05s; } .boot-line:nth-child(5){ animation-delay:1.45s; }
+    .boot-line:nth-child(6){ animation-delay:1.95s; color:#90d1a7; }
+    @keyframes lineIn{ to{ opacity:1; } }
+    @keyframes bootAway{ to{ opacity:0; visibility:hidden; pointer-events:none; } }
+    @media (prefers-reduced-motion: reduce){ .boot{ display:none; } *{ animation:none!important; transition:none!important; } }
+
+    .desktop{ min-height:100vh; padding:34px 24px 46px; position:relative; }
+    .menu-bar{
+      position:fixed; top:0; left:0; right:0; z-index:20; height:26px; border-bottom:2px solid var(--ink);
+      background:var(--banana); display:flex; align-items:center; justify-content:space-between; padding:0 10px; font-size:12px;
+      box-shadow:0 2px 0 rgba(36,27,24,.12);
+    }
+    .menu-left,.menu-right{ display:flex; gap:12px; align-items:center; white-space:nowrap; }
+    .sun{ color:#c00078; font-weight:bold; }
+    .menu-item{ border:0; background:transparent; color:var(--ink); padding:2px 4px; cursor:pointer; text-decoration:none; font:inherit; }
+    .menu-item:hover,.menu-item:focus-visible,.menu-item.active{ background:var(--aqua); box-shadow:2px 2px 0 var(--ink); outline:0; }
+    .desktop-title{ position:absolute; right:28px; top:48px; text-align:right; user-select:none; }
+    .desktop-title h1{ margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:clamp(28px,5vw,58px); line-height:.9; letter-spacing:-.06em; text-shadow:2px 2px 0 #fff6e9; }
+    .desktop-title p{ margin:10px 0 0; font-size:12px; max-width:340px; color:#5f4b43; line-height:1.35; }
+    .icons{ display:grid; grid-template-columns:repeat(2,92px); gap:18px 14px; width:206px; padding-top:30px; }
+    .icon{ border:0; background:transparent; color:var(--ink); width:92px; min-height:94px; padding:5px 4px; cursor:pointer; text-align:center; }
+    .icon:hover .ico,.icon:focus-visible .ico,.icon.active .ico{ transform:translateY(-2px); box-shadow:4px 4px 0 var(--ink); }
+    .icon:hover .label,.icon:focus-visible .label,.icon.active .label{ background:var(--lime); border-color:var(--ink); box-shadow:2px 2px 0 rgba(36,27,24,.32); }
+    .icon.active .label{ color:#120014; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
+    .ico{ display:block; width:48px; height:42px; margin:0 auto 8px; border:2px solid var(--ink); background:var(--aqua); position:relative; transition:.12s; box-shadow:3px 3px 0 rgba(36,27,24,.36); }
+    .icon:nth-child(2n) .ico{ background:var(--lavender); }
+    .icon:nth-child(3n) .ico{ background:var(--mint); }
+    .icon:nth-child(4n) .ico{ background:var(--banana); }
+    .icon:nth-child(5n) .ico{ background:var(--coral); }
+    .icon:nth-child(6n) .ico{ background:var(--apricot); }
+    .ico.boot-icon{ height:40px; background:var(--aqua); border-radius:1px; }
+    .ico.boot-icon::before{ content:""; position:absolute; left:8px; right:8px; top:8px; bottom:9px; border:2px solid var(--ink); background:var(--paper); box-shadow:inset 8px 0 0 var(--mint); }
+    .ico.boot-icon::after{ content:""; position:absolute; left:15px; right:15px; bottom:-9px; height:7px; background:var(--ink); box-shadow:0 7px 0 -2px var(--ink); }
+    .ico.folder::before{ content:""; position:absolute; left:4px; top:-8px; width:22px; height:8px; background:inherit; border:2px solid var(--ink); border-bottom:0; }
+    .ico.archive-icon::after{ content:""; position:absolute; left:7px; right:7px; top:13px; height:2px; background:rgba(36,27,24,.45); box-shadow:0 8px 0 rgba(36,27,24,.45), 0 16px 0 rgba(36,27,24,.45); }
+    .ico.doc{ height:48px; background:var(--lavender); }
+    .ico.doc::before{ content:""; position:absolute; left:8px; right:8px; top:14px; height:2px; background:var(--ink); box-shadow:0 8px 0 var(--ink), 0 16px 0 var(--ink); opacity:.45; }
+    .ico.doc::after{ content:""; position:absolute; right:-2px; top:-2px; border-left:12px solid transparent; border-bottom:12px solid #cfc0ee; width:0; height:0; }
+    .ico.latest-icon::before{ left:7px; right:10px; top:12px; box-shadow:0 7px 0 var(--ink), 0 14px 0 var(--ink), 4px 21px 0 var(--ink); }
+    .ico.source-icon{ background:var(--mint); }
+    .ico.source-icon::before{ content:""; position:absolute; left:9px; right:9px; top:9px; bottom:8px; border:2px solid var(--ink); background:var(--paper); box-shadow:inset 0 7px 0 rgba(36,27,24,.16); }
+    .ico.source-icon::after{ content:""; position:absolute; left:15px; right:15px; top:-5px; height:8px; border:2px solid var(--ink); background:var(--banana); }
+    .ico.radio{ border-radius:4px; background:var(--banana); }
+    .ico.radio::before{ content:"?"; position:absolute; left:50%; top:50%; transform:translate(-50%,-53%); font-family:Monaco,Consolas,monospace; font-weight:bold; font-size:23px; line-height:1; color:var(--ink); }
+    .ico.radio::after{ content:""; position:absolute; right:4px; top:4px; width:6px; height:6px; border:1px solid var(--ink); background:var(--coral); }
+    .ico.rss-icon{ background:var(--apricot); clip-path:none; border-radius:1px; }
+    .ico.rss-icon::before{ content:""; position:absolute; left:8px; bottom:8px; width:8px; height:8px; border-radius:50%; background:var(--ink); }
+    .ico.rss-icon::after{ content:""; position:absolute; left:7px; bottom:7px; width:22px; height:22px; border:3px solid var(--ink); border-left-color:transparent; border-bottom-color:transparent; border-radius:50%; box-shadow:7px -7px 0 -3px var(--apricot), 7px -7px 0 0 var(--ink); }
+    .label{ display:inline-flex; align-items:center; justify-content:center; min-height:26px; max-width:88px; background:rgba(255,248,223,.92); border:2px solid var(--ink); padding:3px 7px; font-size:11px; line-height:1.05; box-shadow:3px 3px 0 rgba(36,27,24,.26); }
+
+    .window{
+      position:absolute; background:var(--paper); border:2px solid var(--ink); box-shadow:8px 8px 0 rgba(36,27,24,.32); overflow:hidden;
+    }
+    .window.main{ left:240px; top:116px; width:min(720px, calc(100vw - 290px)); min-height:490px; z-index:8; }
+    .titlebar{ height:28px; background:var(--chrome); border-bottom:2px solid var(--ink); display:flex; align-items:center; justify-content:space-between; padding:0 8px; font-size:12px; font-weight:bold; }
+    .controls{ display:flex; gap:5px; }
+    .ctrl{ width:13px; height:13px; border:2px solid var(--ink); background:#fff6e9; display:inline-block; }
+    .ctrl.close{ background:#e98b78; }
+    .ctrl.min{ background:#f2d979; }
+    .ctrl.max{ background:#8fbfa2; }
+    .content{ padding:16px; }
+    .sysline{ font-family: Monaco, Consolas, monospace; font-size:11px; color:#6a5850; text-transform:uppercase; letter-spacing:.03em; }
+    .content h2{ font-family: Georgia, 'Times New Roman', serif; font-size:35px; line-height:.94; letter-spacing:-.045em; margin:6px 0 10px; }
+    .intro{ display:grid; grid-template-columns:1fr; gap:16px; align-items:start; }
+    .manifesto{ font-family: Georgia, serif; font-size:17px; line-height:1.45; }
+    .stamp{ border:2px solid var(--ink); background:var(--apricot); padding:10px; box-shadow:3px 3px 0 rgba(36,27,24,.22); font-size:12px; }
+    .stamp b{ display:block; font-family:Monaco, Consolas, monospace; margin-bottom:4px; }
+    .promise{ border:2px solid var(--ink); background:var(--banana); padding:13px 15px; margin:12px 0 24px; box-shadow:3px 3px 0 rgba(36,27,24,.25); font-size:13px; line-height:1.45; }
+    .rule-strip{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:13px 0 0; }
+    .rule{ border:2px solid var(--ink); background:var(--mint); padding:8px; font-family:Monaco,Consolas,monospace; font-size:10px; line-height:1.3; box-shadow:2px 2px 0 rgba(36,27,24,.2); }
+    .rule:nth-child(2){ background:var(--aqua); } .rule:nth-child(3){ background:var(--lavender); }
+    .finds{ margin-top:15px; border-top:2px dotted #b78f7e; }
+    .find{ display:grid; grid-template-columns:86px 1fr auto; gap:10px; align-items:center; padding:12px 0; border-bottom:2px dotted #d5b8a6; }
+    .year{ font-family:Monaco, Consolas, monospace; font-size:12px; border:2px solid var(--ink); background:var(--aqua); padding:6px 7px; text-align:center; box-shadow:2px 2px 0 rgba(36,27,24,.25); }
+    .find:nth-child(2n) .year{ background:var(--lavender); }
+    .find:nth-child(3n) .year{ background:var(--mint); }
+    .find a{ color:var(--blue); font-weight:bold; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
+    .find p{ margin:4px 0 0; font-size:12px; line-height:1.35; color:#594941; }
+    .badge{ font-family:Monaco, Consolas, monospace; font-size:10px; border:1px solid var(--ink); padding:3px 5px; background:var(--banana); white-space:nowrap; box-shadow:1px 1px 0 rgba(36,27,24,.18); }
+    .status-live{ background:var(--mint); } .status-archived{ background:var(--blush); }
+    .relic-meta{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0; }
+    .meta-cell{ border:2px solid var(--ink); background:var(--aqua); padding:7px; font-size:11px; box-shadow:2px 2px 0 rgba(36,27,24,.2); }
+    .meta-cell b{ display:block; font-family:Monaco,Consolas,monospace; font-size:9px; text-transform:uppercase; margin-bottom:3px; color:#5f4b43; }
+    .quote{ margin:12px 0 0; border-left:0; border:2px dashed var(--ink); background:var(--lavender); padding:10px 12px; font-family:Georgia,serif; font-size:15px; line-height:1.35; }
+    .category-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:14px; }
+    .category{ display:block; width:100%; text-align:left; color:var(--ink); cursor:pointer; border:2px solid var(--ink); background:var(--mint); padding:10px; box-shadow:3px 3px 0 rgba(36,27,24,.22); min-height:82px; }
+    .category:hover,.category:focus-visible{ transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(36,27,24,.22); outline:0; }
+    .category:nth-child(2n){ background:var(--aqua); } .category:nth-child(3n){ background:var(--lavender); } .category:nth-child(4n){ background:var(--blush); }
+    .category b{ display:block; font-family:Monaco,Consolas,monospace; font-size:11px; margin-bottom:5px; }
+    .category p{ margin:0; font-size:12px; line-height:1.35; color:#594941; }
+    .about-machine{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+    .about-card,.submit-card{ border:2px solid var(--ink); background:var(--paper); padding:10px; box-shadow:3px 3px 0 rgba(36,27,24,.22); }
+    .submit-card{ background:var(--banana); }
+    .submit-card ul,.about-card ul{ margin:8px 0 0 18px; padding:0; font-size:12px; line-height:1.45; }
+    .randomizing #mainContent{ opacity:.65; }
+    .randomizing .titlebar::after{ content:"loading random find…"; margin-left:auto; font-family:Monaco,Consolas,monospace; font-size:10px; animation:blink .25s steps(1,end) infinite; }
+    @keyframes blink{ 50%{ opacity:.25; } }
+    .statusbar{ border-top:2px solid var(--ink); background:var(--apricot); min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 8px; font-size:11px; color:#4c3b35; }
+    .button-row{ display:flex; gap:12px 14px; flex-wrap:wrap; margin:16px 0 24px; padding-bottom:6px; }
+    .button-row + .sysline{ display:block; margin-top:8px; clear:both; }
+    .retro-btn{
+      display:inline-flex; align-items:center; justify-content:center; text-align:center;
+      border:3px solid var(--ink); background:var(--aqua); padding:10px 14px; cursor:pointer;
+      box-shadow:5px 5px 0 rgba(36,27,24,.42); color:var(--ink); text-decoration:none; font-size:13px;
+      font-family:Monaco,Consolas,monospace; font-weight:bold; letter-spacing:.01em; min-height:42px;
+    }
+    .retro-btn:nth-child(2n){ background:var(--banana); }
+    .retro-btn:nth-child(3n){ background:var(--mint); }
+    .retro-btn:nth-child(4n){ background:var(--coral); }
+    .retro-btn:hover,.retro-btn:focus-visible{ transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(36,27,24,.42); outline:2px solid var(--paper); outline-offset:2px; }
+    .retro-btn:active{ transform:translate(5px,5px); box-shadow:0 0 0 rgba(36,27,24,.42); }
+    .hidden{ display:none; }
+
+    @media (max-width: 900px){
+      body{ overflow:auto; }
+      .desktop{ padding:38px 12px 80px; }
+      .desktop-title{ position:static; text-align:left; margin:12px 0 14px; }
+      .icons{ grid-template-columns:repeat(3,92px); width:100%; gap:14px 10px; padding-top:0; justify-content:start; }
+      .icon{ width:92px; min-height:90px; }
+      .label{ font-size:10.5px; max-width:86px; min-height:24px; }
+      .window,.window.main{ position:relative; left:auto; right:auto; top:auto; bottom:auto; width:100%; margin:14px 0; transform:none; }
+      .intro{ grid-template-columns:1fr; }
+      .rule-strip,.relic-meta,.category-grid,.about-machine{ grid-template-columns:1fr; }
+      .content{ padding:20px 18px; }
+      .sysline{ margin-bottom:12px; }
+      .promise{ padding:17px 20px; margin:14px 0 30px; line-height:1.5; }
+      .content h2{ font-size:30px; }
+      .button-row{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px 16px; margin:18px 0 32px; padding-bottom:10px; }
+      .retro-btn{ width:100%; padding:12px 10px; }
+      .button-row + .sysline{ margin-top:12px; }
+      .find{ grid-template-columns:70px 1fr; }
+      .find .badge{ grid-column:2; justify-self:start; }
+      .menu-left{ gap:8px; } .menu-left .menu-item:nth-child(n+4){ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="boot" aria-hidden="true">
+    <div class="boot-box">
+      <div class="boot-title">THE FORGOTTEN WEB OS 0.9</div>
+      <div class="boot-line">checking dead links..................OK</div>
+      <div class="boot-line">mounting /human-web.................OK</div>
+      <div class="boot-line">loading recovered voices............OK</div>
+      <div class="boot-line">indexing old blogroll residue.......OK</div>
+      <div class="boot-line">ready. open the archive.</div>
+    </div>
+  </div>
+
+  <div class="menu-bar">
+    <div class="menu-left"><strong class="sun">☼ FWOS</strong><button class="menu-item" data-open="start">File</button><button class="menu-item" data-open="latest">Finds</button><button class="menu-item" data-open="archive">Collections</button><button class="menu-item" data-open="rss">Utilities</button></div>
+    <div class="menu-right"><span id="clock">01:17</span><a class="menu-item" href="./feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
+  </div>
+
+  <main class="desktop">
+    <div class="desktop-title">
+      <h1>The<br>Forgotten<br>Web</h1>
+      <p>Forgotten writing from the human web, resurfaced with context. A strange old machine for opening things that survived.</p>
+    </div>
+
+    <nav class="icons" aria-label="Desktop launcher">
+      <button class="icon" data-open="start"><span class="ico boot-icon"></span><span class="label">Start Here</span></button>
+      <button class="icon" data-open="latest"><span class="ico doc latest-icon"></span><span class="label">Latest Finds</span></button>
+      <button class="icon" data-open="archive"><span class="ico folder archive-icon"></span><span class="label">Archive</span></button>
+      <button class="icon" data-open="random"><span class="ico radio"></span><span class="label">Random Relic</span></button>
+      <button class="icon" data-open="source"><span class="ico source-icon"></span><span class="label">Source Notes</span></button>
+      <button class="icon" data-open="rss"><span class="ico rss-icon"></span><span class="label">RSS + Submit</span></button>
+    </nav>
+
+    <section class="window main" aria-live="polite">
+      <div class="titlebar"><span id="windowTitle">Start Here</span></div>
+      <div class="content" id="mainContent"></div>
+      <div class="statusbar"><span id="statusLeft">status: mounted / human-selected</span><span>source policy: link + contextualize</span></div>
+    </section>
+
+  </main>
+
+  <template id="tpl-start">
+    <div class="sysline">Start here · hand-picked old web finds · no infinite scroll</div>
+    <div class="promise"><strong>What this is:</strong> old essays, blogs, forum posts, and useful web pages — selected by a human, summarized fast, and linked back to the original or an archive copy.</div>
+    <div class="intro">
+      <div>
+        <h2>Open old web artifacts that still explain the present.</h2>
+        <p class="manifesto">The Forgotten Web is a small machine for finding durable human writing before it disappears into feeds, SEO sludge, dead links, and platform memory holes.</p>
+        <div class="rule-strip"><div class="rule">NO INFINITE SCROLL</div><div class="rule">NO SEO SLUDGE</div><div class="rule">HUMAN-SELECTED ONLY</div></div>
+      </div>
+    </div>
+    <div class="button-row"><button class="retro-btn" data-open="latest">Latest Finds</button><button class="retro-btn" data-open="random">Random Relic</button><button class="retro-btn" data-open="rss">Submit a Relic</button><button class="retro-btn" data-open="source">Source Policy</button></div>
+    <div class="sysline">Top 5 latest · full archive has 10</div>
+    <div class="finds">
+      <div class="find"><span class="year">1998<br>web</span><div><a href="#" data-open="uris">Cool URIs don’t change</a><p>Permanent links as web infrastructure, written before link rot became ordinary weather.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">2000<br>web</span><div><a href="#" data-open="dao">A Dao of Web Design</a><p>A foundational argument that the web is flexible by nature, not printed paper in a browser.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">2000<br>essay</span><div><a href="#" data-open="blood">Weblogs: A History and Perspective</a><p>A first-person record of weblogs before discovery was flattened into feed mechanics.</p></div><span class="badge status-archived">archive copy</span></div>
+      <div class="find"><span class="year">2003<br>culture</span><div><a href="#" data-open="shirky">A Group Is Its Own Worst Enemy</a><p>A classic on online groups, moderation, identity, and the social architecture underneath software.</p></div><span class="badge status-archived">archive copy</span></div>
+      <div class="find"><span class="year">2002<br>tech</span><div><a href="#" data-open="leaky">The Law of Leaky Abstractions</a><p>Why every simplifying layer eventually leaks the machinery underneath.</p></div><span class="badge status-live">original online</span></div>
+    </div>
+  </template>
+
+  <template id="tpl-latest">
+    <div class="sysline">/latest-finds · sorted by editorial readiness, not freshness</div>
+    <h2>Latest recovered files</h2>
+    <div class="finds">
+      <div class="find"><span class="year">1998</span><div><a href="#" data-open="uris">Tim Berners-Lee — Cool URIs don’t change</a><p><strong>Why now:</strong> A small manifesto for permanent links: links as promises, not disposable plumbing.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">2000</span><div><a href="#" data-open="dao">John Allsopp — A Dao of Web Design</a><p><strong>Why now:</strong> Responsive web thinking before “responsive design” had a name.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">2000</span><div><a href="#" data-open="blood">Rebecca Blood — Weblogs: A History and Perspective</a><p><strong>Why now:</strong> It preserves human selection: someone found a thing, thought about it, and linked with voice.</p></div><span class="badge status-archived">archive copy</span></div>
+      <div class="find"><span class="year">2003</span><div><a href="#" data-open="shirky">Clay Shirky — A Group Is Its Own Worst Enemy</a><p><strong>Why now:</strong> It reads like a field manual for every platform community failure that followed.</p></div><span class="badge status-archived">archive copy</span></div>
+      <div class="find"><span class="year">2002</span><div><a href="#" data-open="leaky">Joel Spolsky — The Law of Leaky Abstractions</a><p><strong>Why now:</strong> A durable warning against smooth tools, black boxes, and fake simplicity.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">1991</span><div><a href="#" data-open="worse">Richard P. Gabriel — The Rise of Worse is Better</a><p><strong>Why now:</strong> It explains half the software world with an uncomfortable little knife.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">2005</span><div><a href="#" data-open="risk">Calculated Risk — Housing: Speculation is the Key</a><p><strong>Why now:</strong> Independent diagnosis from before the crash became obvious.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">1999</span><div><a href="#" data-open="buffett">Warren Buffett — Mr. Buffett on the Stock Market</a><p><strong>Why now:</strong> A calm valuation note written while the room was drunk.</p></div><span class="badge status-archived">archive copy</span></div>
+      <div class="find"><span class="year">1970</span><div><a href="#" data-open="tyranny">Jo Freeman — The Tyranny of Structurelessness</a><p><strong>Why now:</strong> Still one of the sharpest texts about organizations, communities, and informal control.</p></div><span class="badge status-live">original online</span></div>
+      <div class="find"><span class="year">1932</span><div><a href="#" data-open="idleness">Bertrand Russell — In Praise of Idleness</a><p><strong>Why now:</strong> Old enough to be public-domain furniture, sharp enough to cut modern work culture.</p></div><span class="badge status-live">original online</span></div>
+    </div>
+  </template>
+
+  <template id="tpl-archive">
+    <div class="sysline">/archive · folders mounted as collections</div>
+    <h2>Archive folders</h2>
+    <p class="manifesto">Five collection folders. Each one holds two world-class finds — no filler, no warm bodies.</p>
+    <div class="category-grid">
+      <button class="category" data-open="collection-web"><b>WEB ARCHITECTURE</b><p>Permalinks, standards, early arguments about how the web should hold together.</p></button>
+      <button class="category" data-open="collection-culture"><b>PRE-PLATFORM CULTURE</b><p>Weblogs, blogrolls, directories, and personal routes before algorithmic feeds.</p></button>
+      <button class="category" data-open="collection-programming"><b>OLD PROGRAMMING BLOGS</b><p>Technical writing with taste, friction, mistakes, and actual reasoning.</p></button>
+      <button class="category" data-open="collection-markets"><b>MARKETS THAT AGED WELL</b><p>System diagnosis before consensus arrived with a PowerPoint and a fee.</p></button>
+      <button class="category" data-open="collection-weird"><b>WEIRD USEFUL CORNERS</b><p>Pages too specific for platforms and too valuable to let rot quietly.</p></button>
+    </div>
+  </template>
+
+  <template id="tpl-source">
+    <div class="sysline">/source-notes · ethics is product infrastructure</div>
+    <h2>Link. Contextualize. Do not raid the past.</h2>
+    <p class="manifesto">The Forgotten Web points outward by default. We preserve attention, not ownership.</p>
+    <div class="about-machine">
+      <div class="about-card"><b>Source policy</b><ul><li>Link original when it is still online.</li><li>Include archive copy when useful.</li><li>Quote short excerpts only when justified.</li><li>Remove or correct sensitive material fast.</li></ul></div>
+      <div class="about-card"><b>About the machine</b><ul><li>No infinite scroll.</li><li>No SEO sludge.</li><li>No platform nostalgia cosplay.</li><li>Only human-selected artifacts worth reopening.</li></ul></div>
+    </div>
+    <div class="stamp"><b>DEFAULT RIGHTS POSTURE</b>Short excerpt only when attributed and proportionate. Private material is not resurfaced just because it is interesting.</div>
+  </template>
+
+  <template id="tpl-rss">
+    <div class="sysline">/utilities · old web affordances</div>
+    <h2>RSS + Submit</h2>
+    <div class="about-machine">
+      <div class="submit-card"><b>Submit a relic</b><p>Found an old essay, blog, forum post, personal page, or weird useful corner worth contextualizing? Send it to Winston.</p><div class="button-row"><a class="retro-btn" href="mailto:willstrand@gmail.com?subject=Forgotten%20Web%20submission&body=URL%20or%20archive%20link%3A%0A%0AWhy%20it%20matters%20now%3A%0A%0AOriginal%20author%20if%20known%3A%0A">Email Winston</a></div><ul><li>URL or archive link</li><li>Why it matters now</li><li>Original author if known</li></ul></div>
+      <div class="submit-card"><b>Subscribe without surrendering</b><p>Visible from day one. No growth-hack sludge. Just a feed for new relics.</p><div class="button-row"><a class="retro-btn" href="./feed.xml" target="_blank" rel="noopener noreferrer">feed.xml</a></div></div>
+    </div>
+  </template>
+
+  <script>
+    const boot = document.querySelector('.boot');
+    if(sessionStorage.getItem('fwosBootSeen')){
+      boot.classList.add('is-hidden');
+    } else {
+      sessionStorage.setItem('fwosBootSeen', '1');
+    }
+    const relics = {
+      start: { title:'Start Here', tpl:'tpl-start', status:'status: mounted / human-selected', folder:'folder: human-web-before-feeds', preview:'THE FORGOTTEN WEB OS<br>public bookmark machine' },
+      latest:{ title:'Latest Finds / new-relics.dir', tpl:'tpl-latest', status:'status: 10 world-class finds ready', folder:'folder: latest-finds', preview:'RECENT FILES<br>10 items / no infinite scroll' },
+      archive:{ title:'Archive / collections.dir', tpl:'tpl-archive', status:'status: 5 folders / 10 finds indexed', folder:'folder: archive', preview:'COLLECTION MAP<br>5 folders / 10 finds' },
+      source:{ title:'Source Notes / how-we-handle-links.txt', tpl:'tpl-source', status:'status: ethical guardrails active', folder:'folder: source-notes', preview:'SOURCE POLICY<br>link + contextualize' },
+      rss:{ title:'RSS + Submit / send-a-relic.app', tpl:'tpl-rss', status:'status: utilities visible', folder:'folder: utilities', preview:'RSS + TIP LINE<br>old affordances / sane defaults' },
+      'collection-web':{ title:"Archive / web-architecture.dir", html:"<div class=\"sysline\">/archive/web-architecture · collection folder</div><h2>Web Architecture</h2><p class=\"manifesto\">Permalinks, standards, and early arguments about how the web should hold together.</p><div class=\"finds\"><div class=\"find\"><span class=\"year\">1998<br>web</span><div><a href=\"#\" data-open=\"uris\">Cool URIs don’t change</a><p>Permanent links as web infrastructure, written before link rot became ordinary weather.</p></div><span class=\"badge status-live\">original online</span></div><div class=\"find\"><span class=\"year\">2000<br>web</span><div><a href=\"#\" data-open=\"dao\">A Dao of Web Design</a><p>A foundational argument that the web is flexible by nature, not printed paper in a browser.</p></div><span class=\"badge status-live\">original online</span></div></div>", status:"status: 2 finds in web architecture", folder:"folder: web", preview:"WEB ARCHITECTURE<br>2 finds" },
+      'collection-culture':{ title:"Archive / pre-platform-culture.dir", html:"<div class=\"sysline\">/archive/pre-platform-culture · collection folder</div><h2>Pre-Platform Culture</h2><p class=\"manifesto\">Weblogs, blogrolls, directories, and personal routes before algorithmic feeds.</p><div class=\"finds\"><div class=\"find\"><span class=\"year\">2000<br>essay</span><div><a href=\"#\" data-open=\"blood\">Weblogs: A History and Perspective</a><p>A first-person record of weblogs before discovery was flattened into feed mechanics.</p></div><span class=\"badge status-archived\">archive copy</span></div><div class=\"find\"><span class=\"year\">2003<br>culture</span><div><a href=\"#\" data-open=\"shirky\">A Group Is Its Own Worst Enemy</a><p>A classic on online groups, moderation, identity, and the social architecture underneath software.</p></div><span class=\"badge status-archived\">archive copy</span></div></div>", status:"status: 2 finds in pre-platform culture", folder:"folder: culture", preview:"PRE-PLATFORM CULTURE<br>2 finds" },
+      'collection-programming':{ title:"Archive / old-programming-blogs.dir", html:"<div class=\"sysline\">/archive/old-programming-blogs · collection folder</div><h2>Old Programming Blogs</h2><p class=\"manifesto\">Technical writing with taste, friction, mistakes, and actual reasoning.</p><div class=\"finds\"><div class=\"find\"><span class=\"year\">2002<br>tech</span><div><a href=\"#\" data-open=\"leaky\">The Law of Leaky Abstractions</a><p>Why every simplifying layer eventually leaks the machinery underneath.</p></div><span class=\"badge status-live\">original online</span></div><div class=\"find\"><span class=\"year\">1991<br>tech</span><div><a href=\"#\" data-open=\"worse\">The Rise of Worse is Better</a><p>A brutal theory of why simpler, “worse” systems often beat purer, better-designed ones.</p></div><span class=\"badge status-live\">original online</span></div></div>", status:"status: 2 finds in old programming blogs", folder:"folder: programming", preview:"OLD PROGRAMMING BLOGS<br>2 finds" },
+      'collection-markets':{ title:"Archive / markets-that-aged-well.dir", html:"<div class=\"sysline\">/archive/markets-that-aged-well · collection folder</div><h2>Markets That Aged Well</h2><p class=\"manifesto\">System diagnosis before consensus arrived with a PowerPoint and a fee.</p><div class=\"finds\"><div class=\"find\"><span class=\"year\">2005<br>market</span><div><a href=\"#\" data-open=\"risk\">Housing: Speculation is the Key</a><p>Pre-crisis housing bubble analysis focused on speculation, leverage, and mechanism.</p></div><span class=\"badge status-live\">original online</span></div><div class=\"find\"><span class=\"year\">1999<br>market</span><div><a href=\"#\" data-open=\"buffett\">Mr. Buffett on the Stock Market</a><p>Buffett on future stock returns near the peak of late-90s market euphoria.</p></div><span class=\"badge status-archived\">archive copy</span></div></div>", status:"status: 2 finds in markets that aged well", folder:"folder: markets", preview:"MARKETS THAT AGED WELL<br>2 finds" },
+      'collection-weird':{ title:"Archive / weird-useful-corners.dir", html:"<div class=\"sysline\">/archive/weird-useful-corners · collection folder</div><h2>Weird Useful Corners</h2><p class=\"manifesto\">Pages too specific for platforms and too valuable to let rot quietly. Some are older than the web — but too sharp to leave outside the machine.</p><div class=\"finds\"><div class=\"find\"><span class=\"year\">1970<br>social</span><div><a href=\"#\" data-open=\"tyranny\">The Tyranny of Structurelessness</a><p>Why supposedly structureless groups often create invisible power instead of freedom.</p></div><span class=\"badge status-live\">original online</span></div><div class=\"find\"><span class=\"year\">1932<br>essay</span><div><a href=\"#\" data-open=\"idleness\">In Praise of Idleness</a><p>A still-dangerous essay against productivity worship, overwork, and status through busyness.</p></div><span class=\"badge status-live\">original online</span></div></div>", status:"status: 2 finds in weird useful corners", folder:"folder: weird", preview:"WEIRD USEFUL CORNERS<br>2 finds" },
+      uris:{ title:"Find 0001 / uris.file", html:"<div class=\"sysline\">1998 · web architecture · original online</div><h2>Cool URIs don’t change</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Short note on permanent web addresses.</div><div class=\"meta-cell\"><b>Why now</b>Link rot is now normal weather.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>web architecture</div></div><p class=\"manifesto\">Tim Berners-Lee’s note on why web addresses should be designed to last.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>The whole project sits on this idea: links are promises, and the human web rots when those promises break.</div><blockquote class=\"quote\">Best opened as a reminder that persistence was once treated as infrastructure, not nostalgia.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.w3.org/Provider/Style/URI\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.w3.org/Provider/Style/URI\">archive index</a></div>", status:"status: original online", folder:"folder: web-architecture", preview:"TIM BERNERS-LEE<br>permalinks / link rot / web memory" },
+      dao:{ title:"Find 0002 / dao.file", html:"<div class=\"sysline\">2000 · web architecture · original online</div><h2>A Dao of Web Design</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on designing for the web’s flexibility.</div><div class=\"meta-cell\"><b>Why now</b>It predicted the right design philosophy early.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>web architecture</div></div><p class=\"manifesto\">John Allsopp argues for accepting the web’s fluidity instead of forcing print-era control onto screens.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>Modern responsive design sits on this shift: stop fighting the medium, design with it.</div><blockquote class=\"quote\">Best opened when a design starts pretending every browser, device, and reader is the same machine.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://alistapart.com/article/dao/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://alistapart.com/article/dao/\">archive index</a></div>", status:"status: original online", folder:"folder: web-architecture", preview:"JOHN ALLSOPP<br>fluid screens / responsive web / medium" },
+      blood:{ title:"Find 0003 / blood.file", html:"<div class=\"sysline\">2000-09-07 · independent weblog essay · archive copy</div><h2>Weblogs: A History and Perspective</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>First-person history of weblogs.</div><div class=\"meta-cell\"><b>Why now</b>Discovery had a human voice.</div><div class=\"meta-cell\"><b>Status</b>archive copy</div><div class=\"meta-cell\"><b>Found in</b>pre-platform culture</div></div><p class=\"manifesto\">A record of weblogs as the form moved from hand-built link culture into tool-assisted publishing.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It preserves the thing the modern web keeps deleting: the human act of selection.</div><blockquote class=\"quote\">Best opened for the feeling of a person making paths through the web, not a platform ranking them.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://web.archive.org/web/20001018220805/http://www.rebeccablood.net/essays/weblog_history.html\">open archive</a><a class=\"retro-btn\" href=\"http://www.rebeccablood.net/essays/weblog_history.html\">original URL</a></div>", status:"status: archive copy", folder:"folder: pre-platform-culture", preview:"REBECCA BLOOD<br>weblogs / links / voice / community" },
+      shirky:{ title:"Find 0004 / shirky.file", html:"<div class=\"sysline\">2003 · online communities · archive copy</div><h2>A Group Is Its Own Worst Enemy</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on why groups need social structure.</div><div class=\"meta-cell\"><b>Why now</b>Online communities still fail this way.</div><div class=\"meta-cell\"><b>Status</b>archive copy</div><div class=\"meta-cell\"><b>Found in</b>pre-platform culture</div></div><p class=\"manifesto\">Clay Shirky explains why software for groups cannot dodge group dynamics, moderation, and governance.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It shows that community problems are not bugs in the UI; they are load-bearing social mechanics.</div><blockquote class=\"quote\">Best opened before building any community feature and pretending the humans will behave like database rows.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://web.archive.org/web/20030713130936/http://shirky.com/writings/group_enemy.html\">open archive</a><a class=\"retro-btn\" href=\"http://shirky.com/writings/group_enemy.html\">original URL</a></div>", status:"status: archive copy", folder:"folder: pre-platform-culture", preview:"CLAY SHIRKY<br>groups / moderation / social software" },
+      leaky:{ title:"Find 0005 / leaky.file", html:"<div class=\"sysline\">2002-11-11 · programming essay · original online</div><h2>The Law of Leaky Abstractions</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on abstraction failure.</div><div class=\"meta-cell\"><b>Why now</b>Simple tools still leak reality.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>old programming blogs</div></div><p class=\"manifesto\">Joel Spolsky explains why abstractions are useful but never perfectly sealed from the lower layers beneath them.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It is one of the cleanest explanations of why “easy” systems suddenly demand deep knowledge at the worst moment.</div><blockquote class=\"quote\">Best opened when a tool promises to hide complexity forever. The bill always arrives.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/\">archive index</a></div>", status:"status: original online", folder:"folder: old-programming-blogs", preview:"JOEL SPOLSKY<br>abstractions / leaks / hidden machinery" },
+      worse:{ title:"Find 0006 / worse.file", html:"<div class=\"sysline\">1991 · software design essay · original online</div><h2>The Rise of Worse is Better</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on software design philosophy.</div><div class=\"meta-cell\"><b>Why now</b>Worse-but-simpler keeps winning.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>old programming blogs</div></div><p class=\"manifesto\">Richard P. Gabriel contrasts design purity with survival, spread, simplicity, and implementation reality.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It explains why technically compromised systems can conquer cleaner alternatives by being easier to ship, port, and adopt.</div><blockquote class=\"quote\">Best opened whenever “the better architecture” is losing to a scrappy thing that actually runs everywhere.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.dreamsongs.com/RiseOfWorseIsBetter.html\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.dreamsongs.com/RiseOfWorseIsBetter.html\">archive index</a></div>", status:"status: original online", folder:"folder: old-programming-blogs", preview:"RICHARD P. GABRIEL<br>worse is better / adoption / design" },
+      risk:{ title:"Find 0007 / risk.file", html:"<div class=\"sysline\">2005-04-04 · finance/economics blog · original online</div><h2>Housing: Speculation is the Key</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Pre-crisis housing bubble analysis.</div><div class=\"meta-cell\"><b>Why now</b>Old blog diagnosis beat consensus.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>markets that aged well</div></div><p class=\"manifesto\">A housing bubble post arguing that speculation and leverage were the mechanism to watch.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>Old blog writing showing the pipes before the institutional story caught up.</div><blockquote class=\"quote\">Best opened as a reminder that systems usually creak in public before official narratives admit the floor is moving.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html\">archive index</a></div>", status:"status: original online", folder:"folder: markets-that-aged-well", preview:"CALCULATED RISK<br>speculation / leverage / feedback loop" },
+      buffett:{ title:"Find 0008 / buffett.file", html:"<div class=\"sysline\">1999-11-22 · market essay · archive copy</div><h2>Mr. Buffett on the Stock Market</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Valuation argument about long-run stock returns.</div><div class=\"meta-cell\"><b>Why now</b>Euphoria made the sober math valuable.</div><div class=\"meta-cell\"><b>Status</b>archive copy</div><div class=\"meta-cell\"><b>Found in</b>markets that aged well</div></div><p class=\"manifesto\">Warren Buffett explains why market returns are bounded by business results, interest rates, and starting valuations.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It is a clean antidote to line-goes-up thinking: price still matters when everyone wants it not to.</div><blockquote class=\"quote\">Best opened when a boom has started calling arithmetic “old-fashioned.”</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm\">archive index</a></div>", status:"status: archive copy", folder:"folder: markets-that-aged-well", preview:"WARREN BUFFETT<br>valuation / returns / market euphoria" },
+      tyranny:{ title:"Find 0009 / tyranny.file", html:"<div class=\"sysline\">1970 · organization essay · original online</div><h2>The Tyranny of Structurelessness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on informal power in groups.</div><div class=\"meta-cell\"><b>Why now</b>Flat groups still grow hidden hierarchies.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Jo Freeman argues that rejecting explicit structure often produces unaccountable informal structure instead.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It gives language to a recurring failure mode in collectives, startups, movements, and online communities.</div><blockquote class=\"quote\">Best opened whenever “we have no hierarchy” is said with a little too much confidence.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.jofreeman.com/joreen/tyranny.htm\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.jofreeman.com/joreen/tyranny.htm\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"JO FREEMAN<br>structurelessness / power / groups" },
+      idleness:{ title:"Find 0010 / idleness.file", html:"<div class=\"sysline\">1932 · essay · original online</div><h2>In Praise of Idleness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on work, leisure, and civilization.</div><div class=\"meta-cell\"><b>Why now</b>Productivity cults did not age out.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Bertrand Russell argues that less compulsory work and more intelligent leisure would make civilization saner.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It punctures the idea that being constantly busy is evidence of virtue, value, or thought.</div><blockquote class=\"quote\">Best opened after the third productivity system has failed to explain what the work is actually for.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://harpers.org/archive/1932/10/in-praise-of-idleness/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://harpers.org/archive/1932/10/in-praise-of-idleness/\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"BERTRAND RUSSELL<br>idleness / work / civilization" }
+    };
+    const randomKeys = ['uris','dao','blood','shirky','leaky','worse','risk','buffett','tyranny','idleness'];
+    const main = document.getElementById('mainContent');
+    const title = document.getElementById('windowTitle');
+    const statusLeft = document.getElementById('statusLeft');
+    function prepareExternalLinks(){
+      main.querySelectorAll('a[href^="http"]').forEach(link => {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', `${link.textContent.trim()} — opens in a new tab`);
+      });
+    }
+    function sectionForKey(key){
+      if(key === 'start' || key === 'latest' || key === 'archive' || key === 'source' || key === 'rss' || key === 'random') return key;
+      if(key.startsWith('collection-')) return 'archive';
+      return 'latest';
+    }
+    function setActiveNav(key){
+      const active = sectionForKey(key);
+      document.querySelectorAll('[data-open]').forEach(el => el.classList.toggle('active', el.dataset.open === active));
+    }
+    function openRelic(key, options = {}){
+      const shouldScroll = options.scroll === true;
+      const shouldPush = options.push === true;
+      const shouldReplace = options.replace === true;
+      const mainWindow = document.querySelector('.window.main');
+      if(key === 'random'){
+        if(shouldPush) history.pushState({ key }, '', '#random');
+        setActiveNav('random');
+        mainWindow.classList.add('randomizing');
+        title.textContent = 'Random Relic / loading-random-find.mod';
+        statusLeft.textContent = 'status: loading random find…';
+        if(shouldScroll) mainWindow.scrollIntoView({ behavior:'smooth', block:'start' });
+        setTimeout(() => {
+          mainWindow.classList.remove('randomizing');
+          openRelic(randomKeys[Math.floor(Math.random()*randomKeys.length)], { scroll: shouldScroll, replace: shouldPush });
+        }, 420);
+        return;
+      }
+      const r = relics[key] || relics.start;
+      const safeKey = relics[key] ? key : 'start';
+      if(shouldPush) history.pushState({ key:safeKey }, '', safeKey === 'start' ? location.pathname : `#${safeKey}`);
+      if(shouldReplace) history.replaceState({ key:safeKey }, '', safeKey === 'start' ? location.pathname : `#${safeKey}`);
+      title.textContent = r.title;
+      statusLeft.textContent = r.status;
+      setActiveNav(safeKey);
+      if(r.tpl){ main.innerHTML = document.getElementById(r.tpl).innerHTML; }
+      else { main.innerHTML = r.html; }
+      prepareExternalLinks();
+      if(shouldScroll) mainWindow.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+    document.addEventListener('click', e => {
+      const trigger = e.target.closest('[data-open]');
+      if(trigger){ e.preventDefault(); openRelic(trigger.dataset.open, { scroll:true, push:true }); }
+    });
+    window.addEventListener('popstate', e => {
+      const key = e.state?.key || location.hash.replace('#','') || 'start';
+      openRelic(key, { scroll:true });
+    });
+    function tick(){ const d = new Date(); document.getElementById('clock').textContent = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
+    const initialKey = relics[location.hash.replace('#','')] ? location.hash.replace('#','') : 'start';
+    history.replaceState({ key:initialKey }, '', initialKey === 'start' ? location.pathname : `#${initialKey}`);
+    tick(); setInterval(tick, 30000); openRelic(initialKey);
+  </script>
+</body>
+</html>
