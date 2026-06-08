@@ -14,7 +14,7 @@ A retro web desktop / fake operating system for The Forgotten Web, inspired by P
 ## Included content
 
 - Web Architecture: Tim Berners-Lee — Cool URIs don’t change; John Allsopp — A Dao of Web Design
-- Pre-Platform Culture: Rebecca Blood — Weblogs: A History and Perspective; Clay Shirky — A Group Is Its Own Worst Enemy
+- Pre-Platform Culture: Julian Dibbell — A Rape in Cyberspace; Rebecca Blood — Weblogs: A History and Perspective; Clay Shirky — A Group Is Its Own Worst Enemy
 - Old Programming Blogs: Joel Spolsky — The Law of Leaky Abstractions; Richard P. Gabriel — The Rise of Worse is Better
 - Markets That Aged Well: Calculated Risk — Housing: Speculation is the Key; Warren Buffett — Mr. Buffett on the Stock Market
 - Weird Useful Corners: Jo Freeman — The Tyranny of Structurelessness; Bertrand Russell — In Praise of Idleness
@@ -22,9 +22,9 @@ A retro web desktop / fake operating system for The Forgotten Web, inspired by P
 ## Button behavior
 
 - **Start Here**: Opens the default intro window. Explains the product plainly, shows the launch finds, and gives quick actions into Latest Finds, Random Relic, Submit, and Source Notes.
-- **Latest Finds**: Opens a list of the current ten world-class finds, two per archive category. Each row shows sequence number, title, why it matters, and source status.
-- **Archive**: Opens five clickable collection folders: Web Architecture, Pre-Platform Culture, Old Programming Blogs, Markets That Aged Well, and Weird Useful Corners. Each folder opens a filtered collection view with exactly two top-tier finds.
-- **Random Relic**: Shows a short “loading random find…” state, then picks one of the ten real finds at random and opens it as a file in the main window. Keep this lightweight until the archive has 50+ relics.
+- **Latest Finds**: Opens a list of the current eleven world-class finds. Each row shows sequence number, title, why it matters, and source status.
+- **Archive**: Opens five clickable collection folders: Web Architecture, Pre-Platform Culture, Old Programming Blogs, Markets That Aged Well, and Weird Useful Corners. Each folder opens a filtered collection view; Pre-Platform Culture now carries a third LambdaMOO-era anchor.
+- **Random Relic**: Shows a short “loading random find…” state, then picks one of the eleven real finds at random and opens it as a file in the main window. Keep this lightweight until the archive has 50+ relics.
 - **Source Notes**: Opens rights/ethics policy plus “About the machine.” Core rule: link and contextualize, do not republish wholesale.
 - **RSS + Submit**: Opens a real submit flow first: `Email Winston` uses a prefilled `mailto:` for URL/archive link, why it matters now, and original author if known. The panel also includes a real local `feed.xml` link that opens separately.
 - **Menu bar**: File, Finds, Collections, and Utilities are real controls mapped to Start, Latest Finds, Archive, and RSS + Submit. The RSS label opens `feed.xml` separately.
@@ -46,6 +46,7 @@ A retro web desktop / fake operating system for The Forgotten Web, inspired by P
 - Each relic view now includes metadata cells: what it is, why now, status, and collection.
 - Relic pages include a short “Why it still matters” note, a best-opened-as quote, and original/archive buttons.
 - Launcher icons are intentionally distinct: monitor, document stack, archive folder, random device, clipboard, and RSS signal.
+- The prototype now includes essential metadata/social preview tags, a data-URL favicon, RSS discovery in the document head, meaningful internal hash links, and a fuller RSS feed with GUIDs, dates, language, last build date, and Atom self-discovery.
 
 ## Visual fix
 
