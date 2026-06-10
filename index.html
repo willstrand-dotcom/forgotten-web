@@ -153,6 +153,10 @@
     .meta-cell{ border:2px solid var(--ink); background:var(--aqua); padding:7px; font-size:11px; box-shadow:2px 2px 0 rgba(36,27,24,.2); }
     .meta-cell b{ display:block; font-family:Monaco,Consolas,monospace; font-size:9px; text-transform:uppercase; margin-bottom:3px; color:#5f4b43; }
     .quote{ margin:12px 0 0; border-left:0; border:2px dashed var(--ink); background:var(--lavender); padding:10px 12px; font-family:Georgia,serif; font-size:15px; line-height:1.35; }
+    .category-picker{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 16px; border:2px solid var(--ink); background:var(--banana); padding:10px 12px; box-shadow:4px 4px 0 rgba(36,27,24,.24); }
+    .category-picker label{ font-family:Monaco,Consolas,monospace; font-size:11px; font-weight:bold; text-transform:uppercase; }
+    .category-picker select{ flex:1; max-width:360px; border:2px solid var(--ink); background:var(--paper); color:var(--ink); padding:9px 38px 9px 10px; font:13px Monaco,Consolas,monospace; box-shadow:3px 3px 0 rgba(36,27,24,.2); cursor:pointer; appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--ink) 50%),linear-gradient(135deg, var(--ink) 50%, transparent 50%),linear-gradient(to right, var(--aqua), var(--aqua)); background-position:calc(100% - 18px) 16px, calc(100% - 12px) 16px, 100% 0; background-size:6px 6px, 6px 6px, 32px 100%; background-repeat:no-repeat; }
+    .category-picker select:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; background-color:#fffbe8; }
     .category-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:14px; }
     .category{ display:block; width:100%; text-align:left; color:var(--ink); cursor:pointer; border:2px solid var(--ink); background:var(--mint); padding:10px; box-shadow:3px 3px 0 rgba(36,27,24,.22); min-height:82px; }
     .category:hover,.category:focus-visible{ transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(36,27,24,.22); outline:2px solid var(--ink); outline-offset:2px; }
@@ -192,6 +196,9 @@
       .window,.window.main{ position:relative; left:auto; right:auto; top:auto; bottom:auto; width:100%; margin:14px 0; transform:none; }
       .intro{ grid-template-columns:1fr; }
       .rule-strip,.relic-meta,.category-grid,.about-machine{ grid-template-columns:1fr; }
+      .category-picker{ display:block; padding:12px; }
+      .category-picker label{ display:block; margin-bottom:8px; }
+      .category-picker select{ width:100%; max-width:none; }
       .content{ padding:20px 18px; }
       .sysline{ margin-bottom:12px; }
       .promise{ padding:17px 20px; margin:14px 0 30px; line-height:1.5; }
@@ -288,6 +295,17 @@
     <div class="sysline">/archive · folders mounted as collections</div>
     <h2>Archive folders</h2>
     <p class="manifesto">Five collection folders. Each one holds two world-class finds — no filler, no warm bodies.</p>
+    <div class="category-picker">
+      <label for="categorySelect">Choose category</label>
+      <select id="categorySelect" aria-label="Choose archive category">
+        <option value="">Select a folder…</option>
+        <option value="collection-web">Web Architecture</option>
+        <option value="collection-culture">Pre-Platform Culture</option>
+        <option value="collection-programming">Old Programming Blogs</option>
+        <option value="collection-markets">Markets That Aged Well</option>
+        <option value="collection-weird">Weird Useful Corners</option>
+      </select>
+    </div>
     <div class="category-grid">
       <button class="category" data-open="collection-web"><b>WEB ARCHITECTURE</b><p>Permalinks, standards, early arguments about how the web should hold together.</p></button>
       <button class="category" data-open="collection-culture"><b>PRE-PLATFORM CULTURE</b><p>Weblogs, blogrolls, directories, and personal routes before algorithmic feeds.</p></button>
@@ -406,6 +424,10 @@
     document.addEventListener('click', e => {
       const trigger = e.target.closest('[data-open]');
       if(trigger){ e.preventDefault(); openRelic(trigger.dataset.open, { scroll:true, push:true }); }
+    });
+    document.addEventListener('change', e => {
+      const picker = e.target.closest('#categorySelect');
+      if(picker && picker.value){ openRelic(picker.value, { scroll:true, push:true }); picker.value = ''; }
     });
     window.addEventListener('popstate', e => {
       const key = e.state?.key || location.hash.replace('#','') || 'start';
