@@ -298,17 +298,17 @@
     <section class="oracle-window hidden" id="oracleWindow" role="dialog" aria-modal="false" aria-labelledby="oracleTitle">
       <div class="oracle-titlebar"><span id="oracleTitle">RANDOM INTERNET ORACLE.EXE</span><button class="oracle-close" id="oracleClose" type="button" aria-label="Close Internet Oracle">X</button></div>
       <div class="oracle-body">
-        <div class="oracle-screen" id="oracleScreen">RANDOM INTERNET ORACLE v0.91
+        <div class="oracle-screen" id="oracleScreen">RANDOM INTERNET ORACLE v0.93
 LOCAL MODE: ENABLED
 NETWORK: UNNECESSARY
 
-ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
+ASK THE OLD MACHINE A QUESTION.
 &gt; <span class="oracle-cursor">_</span></div>
         <form class="oracle-form" id="oracleForm">
-          <input class="oracle-input" id="oracleInput" autocomplete="off" maxlength="180" placeholder="ASK: Will I drink alcohol tomorrow?" />
+          <input class="oracle-input" id="oracleInput" autocomplete="off" maxlength="180" placeholder="ASK: What is love?" />
           <button class="retro-btn" type="submit">CONSULT</button>
         </form>
-        <div class="oracle-actions"><button class="retro-btn" type="button" id="oracleAgain">REROLL OMEN</button><button class="retro-btn" type="button" id="oracleClear">CLEAR TERMINAL</button></div>
+        <div class="oracle-actions"><button class="retro-btn" type="button" id="oracleAgain">ASK AGAIN</button><button class="retro-btn" type="button" id="oracleClear">CLEAR TERMINAL</button></div>
         <div class="oracle-hint">Local randomized oracle. No AI, no server, no memory. Press ESC or X to close.</div>
       </div>
     </section>
@@ -859,7 +859,7 @@ ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
     const oracleAgain = document.getElementById('oracleAgain');
     const oracleClear = document.getElementById('oracleClear');
     let lastOracleQuestion = '';
-    const oracleBoot = 'RANDOM INTERNET ORACLE v0.92\nLOCAL MODE: ENABLED\nNETWORK: UNNECESSARY\n\nASK THE OLD MACHINE A QUESTION. YES/NO, ADVICE, OR WHAT-IS.\n> _';
+    const oracleBoot = 'RANDOM INTERNET ORACLE v0.93\nLOCAL MODE: ENABLED\nNETWORK: UNNECESSARY\n\nASK THE OLD MACHINE A QUESTION.\n> _';
     const oracleBanks = {
       generic: {
         define: ['It is the old machine admitting the question is larger than the room.', 'It is a pattern looking for a name, not a verdict.', 'It is the thing you understand better after you stop demanding a clean button.'],
@@ -912,15 +912,7 @@ ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
       },
       danger: ['No. Close the browser and contact a real person now.', 'This is not an oracle question. Get human help immediately.', 'Stop. Move toward a person, not a prediction.', 'The answer is safety first. Everything else can wait.', 'Do not handle this alone. Call someone now.']
     };
-    const oracleSignals = {
-      generic: ['The server returned 200 OK, emotionally 404.', 'A forgotten pop-up says the second step is the trap.', 'The future has opened a small suspicious tab.'],
-      alcohol: ['The browser history is already preparing an alibi.', 'A neon bar sign flickered exactly once.', 'The bottle is nearby; the morning is taking notes.'],
-      love: ['A guestbook heart loaded, then asked for context.', 'The modem made the sound of someone rereading an old message.', 'A tiny profile picture became louder than facts.'],
-      money: ['A checkout button started humming funeral music.', 'The subscription wore a fake moustache.', 'A receipt-shaped ghost walked through the room.'],
-      work: ['The calendar blinked like it was hiding a body.', 'A todo list tried to reproduce in captivity.', 'The blocker has a name and hates being written down.'],
-      health: ['The body sent a plain-text warning because rich text failed.', 'A glass of water filed a formal complaint.', 'The pillow has entered evidence.'],
-      travel: ['A departure board coughed politely.', 'The map zoomed out and looked disappointed.', 'A transfer window started sweating.']
-    };
+
     const questionWords = {
       define: /\b(what is|what are|define|meaning of|vad är|vad betyder|definiera)\b/i,
       yes: /\b(will|should|can|could|would|is|are|am|do|does|did|ska|bör|kan|kommer|är|borde)\b|\?$/i,
@@ -953,13 +945,7 @@ ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
       }
       const bank = oracleBanks[profile.cat] || oracleBanks.generic;
       const answer = oraclePick(bank[profile.mode] || bank.maybe || oracleBanks.generic.maybe);
-      const signal = oraclePick(oracleSignals[profile.cat] || oracleSignals.generic);
-      const adviceBank = bank.action || oracleBanks.generic.action;
-      let advice = oraclePick(adviceBank);
-      if(advice === answer && adviceBank.length > 1){
-        advice = oraclePick(adviceBank.filter(line => line !== answer));
-      }
-      return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nDIALING FORGOTTEN NODE...\nREADING QUESTION SHAPE...\nMATCHING TOPIC: '+profile.cat.toUpperCase()+' / '+profile.mode.toUpperCase()+'...\n\nORACLE:\n'+answer+'\n\nSIGNAL:\n'+signal+'\n\nADVICE:\n'+advice+'\n\n> _';
+      return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nDIALING FORGOTTEN NODE...\nREADING QUESTION SHAPE...\nMATCHING TOPIC: '+profile.cat.toUpperCase()+' / '+profile.mode.toUpperCase()+'...\n\nORACLE:\n'+answer+'\n\n> _';
     }
     function openOracle(){ oracleWindow.classList.remove('hidden'); setTimeout(()=>oracleInput.focus(), 30); }
     function closeOracle(){ oracleWindow.classList.add('hidden'); }
