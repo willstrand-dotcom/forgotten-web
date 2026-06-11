@@ -93,7 +93,7 @@
     .icon:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; box-shadow:0 0 0 5px var(--peach); }
     .icon:hover .ico,.icon:focus-visible .ico,.icon.active .ico{ transform:translateY(-2px); box-shadow:4px 4px 0 var(--ink); }
     .icon:hover .label,.icon:focus-visible .label,.icon.active .label{ background:var(--lime); border-color:var(--ink); box-shadow:2px 2px 0 rgba(36,27,24,.32); }
-    .icon.active .label{ color:#120014; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
+    .icon.active .label{ color:#120014; text-decoration:none; }
     .ico{ display:block; width:48px; height:42px; margin:0 auto 8px; border:2px solid var(--ink); background:var(--aqua); position:relative; transition:.12s; box-shadow:3px 3px 0 rgba(36,27,24,.36); }
     .icon:nth-child(2n) .ico{ background:var(--lavender); }
     .icon:nth-child(3n) .ico{ background:var(--mint); }
@@ -133,6 +133,7 @@
     .ctrl.max{ background:#8fbfa2; }
     .content{ padding:16px; }
     .sysline{ font-family: Monaco, Consolas, monospace; font-size:11px; color:#6a5850; text-transform:uppercase; letter-spacing:.03em; }
+    .content > .sysline:first-child{ margin-bottom:12px; }
     .content h2{ font-family: Georgia, 'Times New Roman', serif; font-size:35px; line-height:.94; letter-spacing:-.045em; margin:6px 0 10px; }
     .intro{ display:grid; grid-template-columns:1fr; gap:16px; align-items:start; }
     .week-card{ display:grid; grid-template-columns:116px 1fr; gap:16px; align-items:center; margin:0 0 16px; border:3px solid var(--ink); background:linear-gradient(135deg,var(--banana),var(--blush)); padding:13px 14px; box-shadow:6px 6px 0 rgba(36,27,24,.34); }
