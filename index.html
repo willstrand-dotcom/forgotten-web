@@ -859,45 +859,52 @@ ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
     const oracleAgain = document.getElementById('oracleAgain');
     const oracleClear = document.getElementById('oracleClear');
     let lastOracleQuestion = '';
-    const oracleBoot = 'RANDOM INTERNET ORACLE v0.91\nLOCAL MODE: ENABLED\nNETWORK: UNNECESSARY\n\nASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.\n> _';
+    const oracleBoot = 'RANDOM INTERNET ORACLE v0.92\nLOCAL MODE: ENABLED\nNETWORK: UNNECESSARY\n\nASK THE OLD MACHINE A QUESTION. YES/NO, ADVICE, OR WHAT-IS.\n> _';
     const oracleBanks = {
       generic: {
+        define: ['It is the old machine admitting the question is larger than the room.', 'It is a pattern looking for a name, not a verdict.', 'It is the thing you understand better after you stop demanding a clean button.'],
         yes: ['Yes, but keep it smaller than your appetite.', 'Yes. The useful version is boring and reversible.', 'Probably yes, if you do not turn it into theatre.', 'Yes, if you can explain it in one sentence tomorrow.'],
         no: ['No. The machine sees cleanup pretending to be opportunity.', 'Probably no. The cost is hiding behind the first click.', 'No, unless the boring facts change.', 'No. Future-you is already reaching for a mop.'],
         maybe: ['Maybe. The missing detail is the hinge, not decoration.', 'Unclear. Ask a narrower question and the fog will lose weight.', 'Maybe, but only after one sleep cycle.', 'The answer is conditional: reduce the blast radius first.'],
         action: ['Do the smallest test version first.', 'Make it reversible, then proceed.', 'Write the next step down. If it sounds stupid in text, it is stupid.', 'Remove one moving part before you move.']
       },
       alcohol: {
+        define: ['Alcohol is a shortcut that charges interest in judgment, sleep, and tomorrow morning.', 'Alcohol is social lubricant until it becomes administrative debt.', 'Alcohol is not the event. It is the amplifier.'],
         yes: ['Yes, drinking is likely if you leave the decision to the evening version of you.', 'Probably yes, unless you decide the rule before the room gets warm.', 'Yes, but the second drink is the trap wearing a nice jacket.'],
         no: ['No, if you choose it now and put a substitute in reach.', 'No. Food, water, and an early exit will do more than willpower theatre.', 'Probably no — but only if you do not negotiate with yourself later.'],
         maybe: ['Maybe. The trigger is not alcohol; it is the setting around it.', 'Unclear. Check who you are with, how tired you are, and whether tomorrow matters.', 'The bottle is not the decision. The first “why not” is.'],
         action: ['Decide the drink limit before the first drink.', 'Buy sparkling water before optimism starts lying.', 'Eat first. Leave before the second explanation.']
       },
       love: {
+        define: ['Love is attention plus responsibility, with chemistry making a lot of noise in the corridor.', 'Love is not the lightning. It is what still behaves kindly after the lightning has left.', 'Love is the dangerous wish to protect someone else’s future without owning it.'],
         yes: ['Yes, but send the daylight version, not the midnight speech.', 'Probably yes if the message is simple, kind, and contains no courtroom argument.', 'Yes — one clean signal beats twelve encrypted hints.'],
         no: ['No. That is nostalgia wearing perfume.', 'Probably no. The ache is real; the proposed action is not necessarily wise.', 'No if the question secretly asks for permission to reopen an old wound.'],
         maybe: ['Maybe. The difference between courage and loneliness is doing some heavy lifting here.', 'Unclear. If you want connection, be direct; if you want reassurance, pause.', 'Maybe, but chemistry is not an instruction manual.'],
         action: ['Write one honest sentence and stop.', 'Do not send anything that requires a jury to interpret it.', 'Wait until morning if the message is emotionally radioactive.']
       },
       money: {
+        define: ['Money is stored optionality. Spend it where it buys freedom, not decoration for anxiety.', 'Money is a tool that becomes a trap when it starts pretending to be identity.', 'Money is future choice wearing numbers.'],
         yes: ['Yes, if it solves a real problem twice this week.', 'Probably yes if the cost is known and the maintenance is small.', 'Yes, but only the planned version — not the upgraded goblin version.'],
         no: ['No purchase today. Cart it, sleep, then interrogate it.', 'Probably no. The price is visible; the maintenance cost is hiding.', 'No. A discount is not a purpose.'],
         maybe: ['Maybe. If you would still buy it bored and sober, continue.', 'Unclear. Separate “need”, “want”, and “want because tired”.', 'Maybe, but subscriptions age like wet cardboard.'],
         action: ['Wait 24 hours before buying.', 'Write what problem it solves. If the sentence limps, so does the purchase.', 'Check the exit cost before the entry price.']
       },
       work: {
+        define: ['Work is effort pointed at a useful change. Everything else is office weather.', 'Work is the part that survives when you remove performance, process, and decorative urgency.', 'Work is moving the load-bearing beam, not polishing the scaffolding.'],
         yes: ['Yes. Do the ugly first draft and stop decorating the scaffolding.', 'Probably yes: the next step is execution, not another framework.', 'Yes, but ship the small clean thing first.'],
         no: ['No. That meeting is a calendar-shaped decoy.', 'Probably no. You are polishing the handle while the door is still locked.', 'No, if the task only creates proof that you were busy.'],
         maybe: ['Maybe. Name the blocker; unnamed blockers breed in the walls.', 'Unclear. The useful question is who owns the next action.', 'Maybe, but reduce scope before adding process.'],
         action: ['Define the next visible deliverable.', 'Do the part that makes the rest easier.', 'Send the short version. Long versions are where weak decisions hide.']
       },
       health: {
+        define: ['Health is the system staying quiet enough that you can spend attention elsewhere.', 'Health is maintenance before drama, mostly paid in boring coins.', 'Health is not optimization. It is enough stability to live instead of constantly repair.'],
         yes: ['Yes, rest is the correct answer wearing boring shoes.', 'Probably yes: your body is not a committee memo.', 'Yes, but choose the sane version, not heroic self-improvement cosplay.'],
         no: ['No. Do not negotiate with exhaustion like it is a clever opponent.', 'Probably no if pain, sleep, or stress is already waving a flag.', 'No. The machine detects biological debt collection.'],
         maybe: ['Maybe. Check sleep, food, water, and daylight before philosophy.', 'Unclear. If the symptom persists, involve a real clinician.', 'Maybe, but lower intensity and increase honesty.'],
         action: ['Drink water, eat something plain, and reassess.', 'If it is acute, worsening, or scary, get real help.', 'Choose the version you can repeat tomorrow.']
       },
       travel: {
+        define: ['Travel is changing rooms while pretending logistics is not the main character.', 'Travel is distance plus friction, improved by slack and punished by fantasy.', 'Travel is an argument between curiosity and transfer time.'],
         yes: ['Yes, if the route has slack and the bag is not fantasy.', 'Probably yes. Leave earlier than your confidence suggests.', 'Yes, but book the boring option with fewer failure points.'],
         no: ['No if the plan depends on every connection behaving politely.', 'Probably no. The itinerary is balanced like glassware on a dog.', 'No. Too many moving parts for too little reward.'],
         maybe: ['Maybe. Weather, sleep, and transfer time are the three goblins.', 'Unclear. Add buffer and the answer improves.', 'Maybe, but the cheap route may be charging interest in stress.'],
@@ -915,6 +922,7 @@ ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
       travel: ['A departure board coughed politely.', 'The map zoomed out and looked disappointed.', 'A transfer window started sweating.']
     };
     const questionWords = {
+      define: /\b(what is|what are|define|meaning of|vad är|vad betyder|definiera)\b/i,
       yes: /\b(will|should|can|could|would|is|are|am|do|does|did|ska|bör|kan|kommer|är|borde)\b|\?$/i,
       no: /\b(avoid|skip|stop|cancel|not|inte|undvika|skippa|sluta|avboka)\b/i,
       action: /\b(how|what should|what do|hur|vad ska|vad bör|råd|advice)\b/i
@@ -931,7 +939,8 @@ ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
       else if(/health|sleep|tired|doctor|pain|träna|sjuk|hälsa|sova|trött|läkare|ont/.test(t)) cat='health';
       else if(/travel|flight|train|hotel|resa|flyg|tåg|hotell|åka/.test(t)) cat='travel';
       let mode='maybe';
-      if(questionWords.action.test(t)) mode='action';
+      if(questionWords.define.test(t)) mode='define';
+      else if(questionWords.action.test(t)) mode='action';
       else if(questionWords.no.test(t)) mode='no';
       else if(questionWords.yes.test(t)) mode=Math.random() < 0.58 ? 'yes' : (Math.random() < 0.5 ? 'maybe' : 'no');
       return {cat, mode};
