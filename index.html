@@ -372,8 +372,9 @@
     <div class="button-row">
       <button class="retro-btn" data-open="pong">Pong: CD-ROM Edition</button>
       <button class="retro-btn" data-open="flappy-browser">Flappy Browser</button>
+      <button class="retro-btn" data-open="worms-link-rot">Worms: Link Rot Artillery</button>
     </div>
-    <div class="sysline">2 games available · more recovering from the archive</div>
+    <div class="sysline">3 games available · more recovering from the archive</div>
     <div class="finds">
       <div class="find">
         <span class="year">1972<br>arcade</span>
@@ -385,7 +386,497 @@
         <div><a href="#flappy-browser" data-open="flappy-browser">Flappy Browser</a><p>Keep the tiny browser alive through modem pipes, banner ads, and 404 debris. Tap to flap. Try not to 404.</p></div>
         <span class="badge status-live">playable</span>
       </div>
+      <div class="find">
+        <span class="year">1995<br>artillery</span>
+        <div><a href="#worms-link-rot" data-open="worms-link-rot">Worms: Link Rot Artillery</a><p>2v2 turn-based artillery on a destructible web wasteland. Fire 404 Mortars and Banner Bombs at the other team before they rot your links first.</p></div>
+        <span class="badge status-live">playable</span>
+      </div>
     </div>
+  </template>
+
+  <template id="tpl-worms-link-rot">
+    <div class="sysline">worms.exe · link rot artillery · 2v2 turn-based</div>
+    <h2>Worms: Link Rot Artillery</h2>
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;">
+      <select id="wrWeapon" style="border:2px solid var(--ink);background:var(--banana);color:var(--ink);padding:4px 8px;font:11px Monaco,Consolas,monospace;box-shadow:2px 2px 0 rgba(36,27,24,.2);">
+        <option value="0">404 Mortar</option>
+        <option value="1">Broken Link Bazooka</option>
+        <option value="2">Banner Bomb</option>
+        <option value="3">Popup Mine</option>
+      </select>
+      <span id="wrWind" style="font:bold 10px Monaco,Consolas,monospace;border:2px solid var(--ink);background:var(--aqua);padding:3px 8px;box-shadow:2px 2px 0 rgba(36,27,24,.2);">WIND --</span>
+      <span id="wrTurn" style="font:bold 10px Monaco,Consolas,monospace;border:2px solid var(--ink);background:var(--mint);padding:3px 8px;box-shadow:2px 2px 0 rgba(36,27,24,.2);">--</span>
+      <button id="wrSound" class="retro-btn" style="min-height:28px;padding:3px 10px;font-size:10px;">&#9834; SND OFF</button>
+      <button id="wrRestart" class="retro-btn" style="min-height:28px;padding:3px 10px;font-size:10px;">&#8635; RESTART</button>
+    </div>
+    <div style="position:relative;border:3px solid var(--ink);box-shadow:5px 5px 0 rgba(36,27,24,.34);overflow:hidden;">
+      <canvas id="wrCanvas" style="display:block;width:100%;image-rendering:pixelated;"></canvas>
+      <div id="wrOverlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,0,30,.88);color:#fff25c;font-family:Monaco,Consolas,monospace;text-align:center;gap:10px;padding:16px;">
+        <div style="font-size:clamp(13px,3.5vw,18px);font-weight:bold;letter-spacing:.06em;">WORMS: LINK ROT ARTILLERY</div>
+        <div style="font-size:clamp(9px,2.2vw,11px);color:#7df9ff;line-height:1.7;">2v2 turn-based · Team 404 vs Team Spam<br>ARROWS to aim · SPACE/hold to charge &amp; fire<br>1-4 to pick weapon · P to pass turn</div>
+        <button id="wrStart" class="retro-btn" style="margin-top:8px;font-size:clamp(11px,3vw,14px);">&#9654; START BATTLE</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
+      <button id="wrLeft"  class="retro-btn" style="flex:1;min-height:40px;font-size:12px;touch-action:none;">&#9664; AIM L</button>
+      <button id="wrFire"  class="retro-btn" style="flex:2;min-height:40px;font-size:12px;touch-action:none;">FIRE (hold)</button>
+      <button id="wrRight" class="retro-btn" style="flex:1;min-height:40px;font-size:12px;touch-action:none;">AIM R &#9654;</button>
+    </div>
+    <div style="font:10px Monaco,Consolas,monospace;color:#6a5850;margin-top:4px;">Keys: &#8592;&#8594; aim &middot; SPACE charge+fire &middot; 1-4 weapon &middot; P pass</div>
+    <script>
+(function(){
+'use strict';
+var SESSION=Date.now()+'-'+Math.random();
+window._fwGameSession=SESSION;
+var ctl=window.AbortController?new AbortController():null;
+var sig=ctl?ctl.signal:undefined;
+
+var canvas=document.getElementById('wrCanvas');
+if(!canvas)return;
+var ctx=canvas.getContext('2d');
+var overlay=document.getElementById('wrOverlay');
+var weaponSel=document.getElementById('wrWeapon');
+var windEl=document.getElementById('wrWind');
+var turnEl=document.getElementById('wrTurn');
+var soundBtn=document.getElementById('wrSound');
+var restartBtn=document.getElementById('wrRestart');
+var leftBtn=document.getElementById('wrLeft');
+var rightBtn=document.getElementById('wrRight');
+var fireBtn=document.getElementById('wrFire');
+
+var W=560,H=340;
+canvas.width=W;canvas.height=H;
+
+/* ── Terrain ── */
+var groundY=[];
+function genTerrain(){
+  groundY=[];
+  var y=H*0.62;
+  for(var x=0;x<W;x++){
+    y+=(Math.random()-0.5)*5;
+    y=Math.max(H*0.28,Math.min(H*0.82,y));
+    groundY.push(y);
+  }
+  for(var p=0;p<16;p++){
+    for(var x=1;x<W-1;x++){
+      groundY[x]=(groundY[x-1]+groundY[x]*2+groundY[x+1])/4;
+    }
+  }
+}
+function carve(cx,cy,r){
+  var ir=Math.ceil(r);
+  for(var dx=-ir;dx<=ir;dx++){
+    var xi=Math.round(cx)+dx;
+    if(xi<0||xi>=W)continue;
+    var halfH=Math.sqrt(Math.max(0,r*r-dx*dx));
+    var ny=cy+halfH;
+    if(ny>groundY[xi])groundY[xi]=Math.min(H,ny);
+  }
+}
+function gnd(x){return groundY[Math.max(0,Math.min(W-1,Math.round(x)))||0];}
+
+/* ── Worms ── */
+var worms=[];
+var TCOL=['#7df9ff','#ff6bb5'];
+var TNAME=['Team 404','Team Spam'];
+function makeWorms(){
+  worms=[
+    {team:0,name:'GIF.rot', bx:100,x:100,y:0,hp:50,maxhp:50,alive:true},
+    {team:0,name:'404.exe', bx:172,x:172,y:0,hp:50,maxhp:50,alive:true},
+    {team:1,name:'Spam.dll',bx:388,x:388,y:0,hp:50,maxhp:50,alive:true},
+    {team:1,name:'Pop-Up',  bx:460,x:460,y:0,hp:50,maxhp:50,alive:true}
+  ];
+}
+function placeWorms(){
+  worms.forEach(function(w){w.x=w.bx;w.y=gnd(w.x)-7;});
+}
+function snapAll(){
+  worms.forEach(function(w){
+    if(!w.alive)return;
+    w.y=gnd(w.x)-7;
+    if(w.y>H+20)w.alive=false;
+  });
+}
+function liveTeam(t){return worms.some(function(w){return w.team===t&&w.alive;});}
+
+/* ── Weapons ── */
+var WPNS=[
+  {name:'404 Mortar',        grav:0.28,wm:1.0, spd:14,rad:38,dmg:48,col:'#ff6bb5'},
+  {name:'Broken Link Bazooka',grav:0.10,wm:0.3, spd:18,rad:26,dmg:36,col:'#ffb347'},
+  {name:'Banner Bomb',       grav:0.38,wm:1.5, spd:10,rad:52,dmg:42,col:'#d8b4ff'},
+  {name:'Popup Mine',        grav:0.45,wm:0.05,spd:8, rad:32,dmg:44,col:'#fff25c'}
+];
+
+/* ── State ── */
+var TSEQ=[0,2,1,3];
+var turnIdx=0,angle=50,power=0,wIdx=0,wind=0;
+var proj=null,booms=[];
+var state='idle';
+var keys={},leftHeld=false,rightHeld=false;
+var soundOn=false,audioCtx=null;
+
+function alive(){return window._fwGameSession===SESSION;}
+function cw(){return worms[TSEQ[turnIdx]];}
+
+/* ── Audio ── */
+function getAC(){
+  if(!audioCtx)try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}
+  return audioCtx;
+}
+function beep(f,d,t,v){
+  if(!soundOn)return;
+  try{
+    var a=getAC();if(!a)return;
+    var o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);
+    o.type=t||'square';o.frequency.value=f||440;
+    g.gain.setValueAtTime(v||0.12,a.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+(d||0.08));
+    o.start();o.stop(a.currentTime+(d||0.08));
+  }catch(e){}
+}
+function sndLaunch(){
+  if(!soundOn)return;
+  try{
+    var a=getAC();if(!a)return;
+    var o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(180,a.currentTime);
+    o.frequency.exponentialRampToValueAtTime(700,a.currentTime+0.38);
+    g.gain.setValueAtTime(0.1,a.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+0.4);
+    o.start();o.stop(a.currentTime+0.4);
+  }catch(e){}
+}
+function sndBoom(r){
+  if(!soundOn)return;
+  try{
+    var a=getAC();if(!a)return;
+    var len=Math.floor(a.sampleRate*0.35);
+    var buf=a.createBuffer(1,len,a.sampleRate);
+    var d=buf.getChannelData(0);
+    for(var i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len)*0.85;
+    var src=a.createBufferSource(),flt=a.createBiquadFilter(),g=a.createGain();
+    flt.type='lowpass';flt.frequency.value=320+r*9;
+    src.buffer=buf;src.connect(flt);flt.connect(g);g.connect(a.destination);
+    g.gain.setValueAtTime(0.45,a.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+0.35);
+    src.start();
+  }catch(e){}
+}
+
+/* ── Draw ── */
+function drawBg(){
+  var sg=ctx.createLinearGradient(0,0,0,H);
+  sg.addColorStop(0,'#8ac6e0');sg.addColorStop(1,'#cce8bb');
+  ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);
+  [[52,36,80,20],[228,26,64,17],[400,44,86,20],[505,25,54,15]].forEach(function(c){
+    ctx.fillStyle='rgba(255,255,255,.8)';
+    ctx.fillRect(c[0],c[1],c[2],c[3]);
+    ctx.fillRect(c[0]+8,c[1]-7,c[2]-16,c[3]-4);
+    ctx.strokeStyle='rgba(36,21,42,.1)';ctx.lineWidth=1;
+    ctx.strokeRect(c[0],c[1],c[2],c[3]);
+  });
+}
+function drawTerrain(){
+  ctx.beginPath();
+  ctx.moveTo(0,H);
+  for(var x=0;x<W;x++)ctx.lineTo(x,groundY[x]);
+  ctx.lineTo(W,H);ctx.closePath();
+  var dg=ctx.createLinearGradient(0,H*0.3,0,H);
+  dg.addColorStop(0,'#8a6a3a');dg.addColorStop(1,'#4a2a0a');
+  ctx.fillStyle=dg;ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(0,groundY[0]);
+  for(var x=1;x<W;x++)ctx.lineTo(x,groundY[x]);
+  ctx.strokeStyle='#5ab040';ctx.lineWidth=4;ctx.stroke();
+}
+function drawWorm(w){
+  if(!w.alive)return;
+  var x=Math.round(w.x),y=Math.round(w.y);
+  ctx.fillStyle='rgba(36,21,42,.18)';ctx.fillRect(x-6,y+6,12,3);
+  ctx.fillStyle=TCOL[w.team];ctx.strokeStyle='#24152a';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.ellipse(x,y,6,8,0,0,Math.PI*2);
+  ctx.fill();ctx.stroke();
+  ctx.fillStyle='#24152a';ctx.beginPath();ctx.arc(x+2,y-2,1.5,0,Math.PI*2);ctx.fill();
+  var bw=22,bh=3,hp=w.hp/w.maxhp;
+  ctx.fillStyle='rgba(0,0,0,.4)';ctx.fillRect(x-bw/2,y-13,bw,bh);
+  ctx.fillStyle=hp>0.5?'#8cffc1':hp>0.25?'#fff25c':'#ff6bb5';
+  ctx.fillRect(x-bw/2,y-13,bw*hp,bh);
+  ctx.strokeStyle='#24152a';ctx.lineWidth=1;ctx.strokeRect(x-bw/2,y-13,bw,bh);
+  ctx.font='6px Monaco,Consolas,monospace';ctx.textAlign='center';
+  ctx.fillStyle='#24152a';ctx.fillText(w.name,x,y-16);
+}
+function drawAim(){
+  if(state!=='aiming'&&state!=='charging')return;
+  var w=cw();if(!w||!w.alive)return;
+  var dir=w.team===0?1:-1;
+  var rad=angle*Math.PI/180;
+  var ex=w.x+Math.cos(rad)*dir*30,ey=w.y-Math.sin(rad)*30;
+  ctx.setLineDash([3,4]);
+  ctx.strokeStyle='rgba(255,255,200,.75)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(w.x,w.y);ctx.lineTo(ex,ey);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#fff25c';ctx.beginPath();ctx.arc(ex,ey,3,0,Math.PI*2);ctx.fill();
+  if(power>0||state==='charging'){
+    var bx=w.x-14,by=w.y+11;
+    ctx.fillStyle='rgba(0,0,0,.45)';ctx.fillRect(bx,by,28,5);
+    ctx.fillStyle=power>75?'#ff6bb5':power>40?'#fff25c':'#8cffc1';
+    ctx.fillRect(bx,by,28*(power/100),5);
+    ctx.strokeStyle='#24152a';ctx.lineWidth=1;ctx.strokeRect(bx,by,28,5);
+  }
+}
+function drawProj(){
+  if(!proj)return;
+  proj.trail.forEach(function(pt,i){
+    var a=(i/proj.trail.length)*0.45;
+    ctx.fillStyle='rgba(255,210,80,'+a+')';
+    ctx.beginPath();ctx.arc(pt[0],pt[1],2.5,0,Math.PI*2);ctx.fill();
+  });
+  ctx.fillStyle=WPNS[proj.wi].col;ctx.strokeStyle='#24152a';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(proj.x,proj.y,5,0,Math.PI*2);ctx.fill();ctx.stroke();
+}
+function drawBooms(){
+  booms.forEach(function(b){
+    var pg=b.t/b.maxT,r=b.maxR*pg,a=1-pg;
+    var g2=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,Math.max(1,r));
+    g2.addColorStop(0,'rgba(255,240,120,'+a+')');
+    g2.addColorStop(0.5,'rgba(255,100,20,'+(a*0.7)+')');
+    g2.addColorStop(1,'rgba(255,60,0,0)');
+    ctx.fillStyle=g2;ctx.beginPath();ctx.arc(b.x,b.y,Math.max(1,r),0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='rgba(255,200,80,'+(a*0.5)+')';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(b.x,b.y,Math.max(1,r),0,Math.PI*2);ctx.stroke();
+  });
+}
+function drawHUD(){
+  var windStr=(wind>=0?'E ':'W ')+Math.abs(wind).toFixed(1);
+  var al=Math.min(44,Math.abs(wind)*5.5);
+  if(al>2){
+    var ad=wind>=0?1:-1;
+    ctx.strokeStyle='rgba(255,242,92,.7)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(W/2-al*ad,18);ctx.lineTo(W/2+al*ad,18);ctx.stroke();
+    ctx.fillStyle='rgba(255,242,92,.7)';
+    ctx.beginPath();
+    ctx.moveTo(W/2+al*ad,15);ctx.lineTo(W/2+al*ad+5*ad,18);ctx.lineTo(W/2+al*ad,21);
+    ctx.closePath();ctx.fill();
+  }
+  [0,1].forEach(function(t){
+    var n=worms.filter(function(w){return w.team===t&&w.alive;}).length;
+    ctx.font='bold 9px Monaco,Consolas,monospace';
+    ctx.textAlign=t===0?'left':'right';
+    ctx.fillStyle=TCOL[t];
+    ctx.fillText(TNAME[t]+' ('+n+')',t===0?4:W-4,H-5);
+  });
+  if(state==='aiming'||state==='charging'){
+    var w=cw();
+    if(w&&w.alive){
+      ctx.font='9px Monaco,Consolas,monospace';ctx.textAlign='center';
+      ctx.fillStyle='rgba(255,255,200,.7)';
+      ctx.fillText(WPNS[wIdx].name,W/2,H-5);
+    }
+  }
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  drawBg();drawTerrain();
+  worms.forEach(drawWorm);
+  drawAim();drawProj();drawBooms();drawHUD();
+}
+
+/* ── Physics ── */
+function handleAimInput(){
+  if(state!=='aiming'&&state!=='charging')return;
+  if(keys['ArrowLeft']||leftHeld)  angle=Math.min(170,angle+2);
+  if(keys['ArrowRight']||rightHeld) angle=Math.max(10,angle-2);
+  if(state==='charging'){
+    power=Math.min(100,power+1.6);
+    if(Math.round(power)%10===0)beep(180+power*2,0.03,'square',0.05);
+  }
+}
+function startCharge(){
+  if(state!=='aiming')return;
+  state='charging';power=0;
+}
+function releaseCharge(){
+  if(state!=='charging')return;
+  if(power<4){state='aiming';power=0;return;}
+  fireProj();
+}
+function fireProj(){
+  var w=cw();if(!w||!w.alive)return;
+  var wp=WPNS[wIdx];
+  var dir=w.team===0?1:-1;
+  var rad=angle*Math.PI/180;
+  var spd=(power/100)*wp.spd;
+  proj={
+    x:w.x,y:w.y,
+    vx:Math.cos(rad)*dir*spd,
+    vy:-Math.sin(rad)*spd,
+    grav:wp.grav,wm:wp.wm,
+    maxR:wp.rad,dmg:wp.dmg,wi:wIdx,
+    trail:[]
+  };
+  power=0;state='flying';
+  sndLaunch();
+}
+function stepProj(){
+  if(!proj)return;
+  proj.vx+=wind*proj.wm*0.006;
+  proj.vy+=proj.grav;
+  proj.x+=proj.vx;proj.y+=proj.vy;
+  proj.trail.push([proj.x,proj.y]);
+  if(proj.trail.length>18)proj.trail.shift();
+  if(proj.x<-40||proj.x>W+40||proj.y>H+40){
+    proj=null;afterFlight();return;
+  }
+  if(proj.y>=gnd(proj.x)){
+    doBoom(proj.x,proj.y,proj.maxR,proj.dmg);proj=null;return;
+  }
+  for(var i=0;i<worms.length;i++){
+    var wm=worms[i];if(!wm.alive)continue;
+    var dx=wm.x-proj.x,dy=wm.y-proj.y;
+    if(dx*dx+dy*dy<100){doBoom(proj.x,proj.y,proj.maxR,proj.dmg);proj=null;return;}
+  }
+}
+function doBoom(cx,cy,r,dmg){
+  carve(cx,cy,r);sndBoom(r);
+  worms.forEach(function(w){
+    if(!w.alive)return;
+    var dx=w.x-cx,dy=w.y-cy,dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<r*1.3){
+      var d=Math.round(dmg*(1-dist/(r*1.3)));
+      w.hp=Math.max(0,w.hp-d);
+      if(w.hp<=0){w.hp=0;w.alive=false;}
+    }
+  });
+  booms.push({x:cx,y:cy,maxR:r*1.8,t:0,maxT:24});
+  state='booming';
+}
+function afterFlight(){
+  snapAll();
+  if(!liveTeam(0)){endGame(1);return;}
+  if(!liveTeam(1)){endGame(0);return;}
+  nextTurn();
+}
+function endGame(winT){
+  state='gameover';
+  if(overlay){
+    overlay.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,0,30,.9);color:'+TCOL[winT]+';font-family:Monaco,Consolas,monospace;text-align:center;gap:12px;padding:16px;';
+    overlay.innerHTML='<div style="font-size:clamp(15px,4.5vw,22px);font-weight:bold;">'+TNAME[winT]+' WINS!</div>'+
+      '<div style="font-size:11px;color:#7df9ff;">LINK ROT CONTAINED</div>'+
+      '<button id="wrR2" class="retro-btn" style="margin-top:8px;">&#8635; PLAY AGAIN</button>';
+    var r2=document.getElementById('wrR2');
+    if(r2)r2.addEventListener('click',startGame);
+  }
+}
+function nextTurn(){
+  var tries=0;
+  do{turnIdx=(turnIdx+1)%TSEQ.length;tries++;}
+  while(!worms[TSEQ[turnIdx]].alive&&tries<TSEQ.length+1);
+  wind=(Math.random()*10-5);
+  power=0;wIdx=0;
+  if(weaponSel)weaponSel.value=0;
+  var w=cw();
+  if(w){
+    angle=50;
+    if(turnEl)turnEl.textContent=TNAME[w.team]+': '+w.name;
+    if(windEl)windEl.textContent='WIND '+(wind>=0?'+':'')+wind.toFixed(1);
+  }
+  beep(440,0.06,'square',0.08);
+  state='aiming';
+}
+
+/* ── Game control ── */
+function startGame(){
+  genTerrain();makeWorms();placeWorms();
+  turnIdx=0;wind=(Math.random()*10-5);
+  angle=50;power=0;wIdx=0;
+  proj=null;booms=[];
+  if(weaponSel)weaponSel.value=0;
+  var w=cw();
+  if(w){
+    if(turnEl)turnEl.textContent=TNAME[w.team]+': '+w.name;
+    if(windEl)windEl.textContent='WIND '+(wind>=0?'+':'')+wind.toFixed(1);
+  }
+  if(overlay)overlay.style.display='none';
+  state='aiming';
+}
+
+/* ── Loop ── */
+function loop(){
+  if(!alive()){if(ctl)ctl.abort();return;}
+  handleAimInput();
+  if(state==='flying'){
+    for(var i=0;i<4&&proj&&state==='flying';i++)stepProj();
+  }
+  if(state==='booming'){
+    booms.forEach(function(b){b.t++;});
+    booms=booms.filter(function(b){return b.t<b.maxT;});
+    if(booms.length===0)afterFlight();
+  }
+  draw();
+  requestAnimationFrame(loop);
+}
+
+/* ── Input ── */
+function onKey(e){
+  keys[e.key]=true;
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'||e.key===' '||e.key==='ArrowUp')e.preventDefault();
+  if(e.key===' '||e.key==='ArrowUp')startCharge();
+  if(e.key==='p'||e.key==='P'){
+    if(state==='aiming'||state==='charging'){power=0;state='aiming';nextTurn();}
+  }
+  if(e.key>='1'&&e.key<='4'&&(state==='aiming'||state==='charging')){
+    wIdx=parseInt(e.key)-1;if(weaponSel)weaponSel.value=wIdx;
+  }
+}
+function onKeyUp(e){
+  keys[e.key]=false;
+  if(e.key===' '||e.key==='ArrowUp')releaseCharge();
+}
+if(sig){
+  document.addEventListener('keydown',onKey,{signal:sig});
+  document.addEventListener('keyup',onKeyUp,{signal:sig});
+}else{
+  document.addEventListener('keydown',onKey);
+  document.addEventListener('keyup',onKeyUp);
+}
+
+/* Mobile hold buttons */
+function holdBtn(btn,setFn){
+  if(!btn)return;
+  ['mousedown','touchstart'].forEach(function(ev){
+    btn.addEventListener(ev,function(e){if(ev==='touchstart')e.preventDefault();setFn(true);},{passive:false});
+  });
+  ['mouseup','mouseleave','touchend','touchcancel'].forEach(function(ev){
+    btn.addEventListener(ev,function(e){if(ev.startsWith('touch'))e.preventDefault();setFn(false);},{passive:false});
+  });
+}
+holdBtn(leftBtn,function(v){leftHeld=v;});
+holdBtn(rightBtn,function(v){rightHeld=v;});
+if(fireBtn){
+  ['mousedown','touchstart'].forEach(function(ev){
+    fireBtn.addEventListener(ev,function(e){if(ev==='touchstart')e.preventDefault();startCharge();},{passive:false});
+  });
+  ['mouseup','mouseleave','touchend','touchcancel'].forEach(function(ev){
+    fireBtn.addEventListener(ev,function(e){if(ev.startsWith('touch'))e.preventDefault();releaseCharge();},{passive:false});
+  });
+}
+if(weaponSel)weaponSel.addEventListener('change',function(){wIdx=parseInt(weaponSel.value)||0;});
+if(soundBtn)soundBtn.addEventListener('click',function(){
+  soundOn=!soundOn;
+  soundBtn.textContent=soundOn?'♪ SND ON':'♪ SND OFF';
+  if(soundOn)getAC();
+});
+if(restartBtn)restartBtn.addEventListener('click',startGame);
+var startOvBtn=document.getElementById('wrStart');
+if(startOvBtn)startOvBtn.addEventListener('click',startGame);
+
+genTerrain();makeWorms();placeWorms();
+loop();
+})();
+    </script>
   </template>
 
   <template id="tpl-flappy-browser">
@@ -1103,7 +1594,8 @@
       buffett:{ title:"Find 0010 / buffett.file", html:"<div class=\"sysline\">1999-11-22 · market essay · archive copy</div><h2>Mr. Buffett on the Stock Market</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Valuation argument about long-run stock returns.</div><div class=\"meta-cell\"><b>Why now</b>Euphoria made the sober math valuable.</div><div class=\"meta-cell\"><b>Status</b>archive copy</div><div class=\"meta-cell\"><b>Found in</b>markets that aged well</div></div><p class=\"manifesto\">Warren Buffett explains why market returns are bounded by business results, interest rates, and starting valuations.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It is a clean antidote to line-goes-up thinking: price still matters when everyone wants it not to.</div><blockquote class=\"quote\">Best opened when a boom has started calling arithmetic “old-fashioned.”</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm\">open archive</a></div>", status:"status: archive copy", folder:"folder: markets-that-aged-well", preview:"WARREN BUFFETT<br>valuation / returns / market euphoria" },
       tyranny:{ title:"Find 0011 / tyranny.file", html:"<div class=\"sysline\">1970 · organization essay · original online</div><h2>The Tyranny of Structurelessness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on informal power in groups.</div><div class=\"meta-cell\"><b>Why now</b>Flat groups still grow hidden hierarchies.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Jo Freeman argues that rejecting explicit structure often produces unaccountable informal structure instead.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It gives language to a recurring failure mode in collectives, startups, movements, and online communities.</div><blockquote class=\"quote\">Best opened whenever “we have no hierarchy” is said with a little too much confidence.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.jofreeman.com/joreen/tyranny.htm\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.jofreeman.com/joreen/tyranny.htm\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"JO FREEMAN<br>structurelessness / power / groups" },
       idleness:{ title:"Find 0012 / idleness.file", html:"<div class=\"sysline\">1932 · essay · original online</div><h2>In Praise of Idleness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on work, leisure, and civilization.</div><div class=\"meta-cell\"><b>Why now</b>Productivity cults did not age out.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Bertrand Russell argues that less compulsory work and more intelligent leisure would make civilization saner.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It punctures the idea that being constantly busy is evidence of virtue, value, or thought.</div><blockquote class=\"quote\">Best opened after the third productivity system has failed to explain what the work is actually for.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://harpers.org/archive/1932/10/in-praise-of-idleness/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://harpers.org/archive/1932/10/in-praise-of-idleness/\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"BERTRAND RUSSELL<br>idleness / work / civilization" },
-      games:{ title:'Games / playable.dir', tpl:'tpl-games', status:'status: 2 games available · no loot boxes · no login', folder:'folder: games', preview:'GAMES DIRECTORY<br>2 games available' },
+      games:{ title:'Games / playable.dir', tpl:'tpl-games', status:'status: 3 games available · no loot boxes · no login', folder:'folder: games', preview:'GAMES DIRECTORY<br>3 games available' },
+      'worms-link-rot':{ title:'Worms: Link Rot Artillery / worms.exe', tpl:'tpl-worms-link-rot', status:'status: 404 mortar armed · link rot active · 2v2', folder:'folder: games', preview:'WORMS LINK ROT<br>2v2 turn-based artillery' },
       pong:{ title:'Pong: CD-ROM Edition / pong.exe', tpl:'tpl-pong', status:'status: cd-rom spin active · insert coin? no.', folder:'folder: games', preview:'PONG CD-ROM EDITION<br>player vs cpu · first to 7' },
       'flappy-browser':{ title:'Flappy Browser / flappy.exe', tpl:'tpl-flappy-browser', status:'status: modem turbulence · browser bird airborne', folder:'folder: games', preview:'FLAPPY BROWSER<br>tap to flap · avoid 404' }
     };
@@ -1132,7 +1624,7 @@
     }
     function sectionForKey(key){
       if(key === 'start' || key === 'latest' || key === 'archive' || key === 'source' || key === 'rss' || key === 'random') return key;
-      if(key === 'games' || key === 'pong' || key === 'flappy-browser') return 'games';
+      if(key === 'games' || key === 'pong' || key === 'flappy-browser' || key === 'worms-link-rot') return 'games';
       if(key.startsWith('collection-')) return 'archive';
       return 'latest';
     }
