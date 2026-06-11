@@ -8,44 +8,12 @@
     <language>en</language>
     <lastBuildDate>Wed, 10 Jun 2026 18:30:00 +0200</lastBuildDate>
     <item>
-      <title>Julian Dibbell - A Rape in Cyberspace</title>
-      <link>https://www.juliandibbell.com/articles/a-rape-in-cyberspace/</link>
-      <guid isPermaLink="true">https://www.juliandibbell.com/articles/a-rape-in-cyberspace/</guid>
-      <pubDate>Fri, 01 Oct 1993 00:00:00 +0000</pubDate>
-      <description>The LambdaMOO article that made online harm, governance, and embodied text impossible to wave away.</description>
-      <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>Cameron Barrett - Anatomy of a Weblog</title>
-      <link>https://web.archive.org/web/19990428175931/http://www.camworld.com/journal/rants/99/0126.html</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,1999:barrett-anatomy-weblog</guid>
-      <pubDate>Tue, 26 Jan 1999 00:00:00 +0000</pubDate>
-      <description>An early attempt to describe what weblogs were becoming: links, commentary, voice, and human selection.</description>
-      <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>Tim Berners-Lee - Cool URIs don't change</title>
-      <link>https://www.w3.org/Provider/Style/URI</link>
-      <guid isPermaLink="true">https://www.w3.org/Provider/Style/URI</guid>
-      <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
-      <description>A small manifesto for permanent links: links as promises, not disposable plumbing.</description>
-      <category>web architecture</category>
-    </item>
-    <item>
-      <title>John Allsopp - A Dao of Web Design</title>
-      <link>https://alistapart.com/article/dao/</link>
-      <guid isPermaLink="true">https://alistapart.com/article/dao/</guid>
-      <pubDate>Fri, 07 Apr 2000 00:00:00 +0000</pubDate>
-      <description>Responsive web thinking before responsive design had a name.</description>
-      <category>web architecture</category>
-    </item>
-    <item>
-      <title>Rebecca Blood - Weblogs: A History and Perspective</title>
-      <link>https://web.archive.org/web/20001018220805/http://www.rebeccablood.net/essays/weblog_history.html</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,2000:blood-weblogs-history</guid>
-      <pubDate>Thu, 07 Sep 2000 00:00:00 +0000</pubDate>
-      <description>It preserves human selection: someone found a thing, thought about it, and linked with voice.</description>
-      <category>pre-platform culture</category>
+      <title>Calculated Risk - Housing: Speculation is the Key</title>
+      <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
+      <guid isPermaLink="true">https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</guid>
+      <pubDate>Mon, 04 Apr 2005 00:00:00 +0000</pubDate>
+      <description>Independent diagnosis from before the crash became obvious.</description>
+      <category>markets that aged well</category>
     </item>
     <item>
       <title>Clay Shirky - A Group Is Its Own Worst Enemy</title>
@@ -64,20 +32,20 @@
       <category>old programming blogs</category>
     </item>
     <item>
-      <title>Richard P. Gabriel - The Rise of Worse is Better</title>
-      <link>https://www.dreamsongs.com/RiseOfWorseIsBetter.html</link>
-      <guid isPermaLink="true">https://www.dreamsongs.com/RiseOfWorseIsBetter.html</guid>
-      <pubDate>Tue, 01 Jan 1991 00:00:00 +0000</pubDate>
-      <description>It explains half the software world with an uncomfortable little knife.</description>
-      <category>old programming blogs</category>
+      <title>Rebecca Blood - Weblogs: A History and Perspective</title>
+      <link>https://web.archive.org/web/20001018220805/http://www.rebeccablood.net/essays/weblog_history.html</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,2000:blood-weblogs-history</guid>
+      <pubDate>Thu, 07 Sep 2000 00:00:00 +0000</pubDate>
+      <description>It preserves human selection: someone found a thing, thought about it, and linked with voice.</description>
+      <category>pre-platform culture</category>
     </item>
     <item>
-      <title>Calculated Risk - Housing: Speculation is the Key</title>
-      <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
-      <guid isPermaLink="true">https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</guid>
-      <pubDate>Mon, 04 Apr 2005 00:00:00 +0000</pubDate>
-      <description>Independent diagnosis from before the crash became obvious.</description>
-      <category>markets that aged well</category>
+      <title>John Allsopp - A Dao of Web Design</title>
+      <link>https://alistapart.com/article/dao/</link>
+      <guid isPermaLink="true">https://alistapart.com/article/dao/</guid>
+      <pubDate>Fri, 07 Apr 2000 00:00:00 +0000</pubDate>
+      <description>Responsive web thinking before responsive design had a name.</description>
+      <category>web architecture</category>
     </item>
     <item>
       <title>Warren Buffett - Mr. Buffett on the Stock Market</title>
@@ -86,6 +54,38 @@
       <pubDate>Mon, 22 Nov 1999 00:00:00 +0000</pubDate>
       <description>A calm valuation note written while the room was drunk.</description>
       <category>markets that aged well</category>
+    </item>
+    <item>
+      <title>Cameron Barrett - Anatomy of a Weblog</title>
+      <link>https://web.archive.org/web/19990428175931/http://www.camworld.com/journal/rants/99/0126.html</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,1999:barrett-anatomy-weblog</guid>
+      <pubDate>Tue, 26 Jan 1999 00:00:00 +0000</pubDate>
+      <description>An early attempt to describe what weblogs were becoming: links, commentary, voice, and human selection.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Tim Berners-Lee - Cool URIs don't change</title>
+      <link>https://www.w3.org/Provider/Style/URI</link>
+      <guid isPermaLink="true">https://www.w3.org/Provider/Style/URI</guid>
+      <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
+      <description>A small manifesto for permanent links: links as promises, not disposable plumbing.</description>
+      <category>web architecture</category>
+    </item>
+    <item>
+      <title>Julian Dibbell - A Rape in Cyberspace</title>
+      <link>https://www.juliandibbell.com/articles/a-rape-in-cyberspace/</link>
+      <guid isPermaLink="true">https://www.juliandibbell.com/articles/a-rape-in-cyberspace/</guid>
+      <pubDate>Fri, 01 Oct 1993 00:00:00 +0000</pubDate>
+      <description>The LambdaMOO article that made online harm, governance, and embodied text impossible to wave away.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Richard P. Gabriel - The Rise of Worse is Better</title>
+      <link>https://www.dreamsongs.com/RiseOfWorseIsBetter.html</link>
+      <guid isPermaLink="true">https://www.dreamsongs.com/RiseOfWorseIsBetter.html</guid>
+      <pubDate>Tue, 01 Jan 1991 00:00:00 +0000</pubDate>
+      <description>It explains half the software world with an uncomfortable little knife.</description>
+      <category>old programming blogs</category>
     </item>
     <item>
       <title>Jo Freeman - The Tyranny of Structurelessness</title>
