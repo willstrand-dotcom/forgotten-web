@@ -220,6 +220,51 @@
     .oracle-hint{ color:var(--aqua); font-size:10px; margin-top:9px; line-height:1.4; }
     .oracle-cursor{ animation:blink .75s steps(1,end) infinite; }
     @media (max-width: 640px){ .oracle-window{ top:50%; width:calc(100vw - 18px); } .oracle-form{ grid-template-columns:1fr; } .oracle-screen{ min-height:250px; font-size:11px; } }
+    .synth-shell{ border:3px solid var(--ink); background:#15031d; color:var(--paper); box-shadow:6px 6px 0 rgba(36,21,42,.38); font-family:Monaco,Consolas,monospace; overflow:hidden; }
+    .synth-top{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:stretch; padding:12px; background:linear-gradient(90deg,var(--peach),var(--aqua) 48%,var(--banana)); border-bottom:3px solid var(--ink); color:var(--ink); }
+    .synth-cart{ border:3px solid var(--ink); background:#08040f; color:var(--lime); padding:10px; min-height:74px; box-shadow:inset 0 0 18px rgba(200,255,77,.16); text-shadow:0 0 5px rgba(200,255,77,.45); }
+    .synth-cart b{ display:block; color:var(--aqua); font-size:11px; margin-bottom:6px; }
+    .synth-note{ display:block; font-size:clamp(20px,5vw,34px); line-height:1; color:var(--banana); }
+    .synth-blink{ animation:blink .7s steps(1,end) infinite; color:var(--coral); font-size:10px; margin-top:5px; }
+    .synth-labels{ display:grid; gap:6px; min-width:142px; }
+    .synth-sticker{ border:2px solid var(--ink); background:var(--banana); padding:5px 7px; font-size:10px; box-shadow:2px 2px 0 rgba(36,21,42,.28); text-align:center; }
+    .synth-sticker:nth-child(2){ background:var(--mint); }
+    .synth-sticker:nth-child(3){ background:var(--coral); }
+    .synth-panel{ padding:12px; }
+    .synth-controls{ display:grid; grid-template-columns:1fr 1fr auto auto; gap:8px; align-items:end; margin-bottom:12px; }
+    .synth-control{ display:grid; gap:4px; color:var(--paper); font-size:10px; }
+    .synth-control select,.synth-control input{ width:100%; border:2px solid var(--ink); background:var(--paper); color:var(--ink); padding:7px; font:12px Monaco,Consolas,monospace; }
+    .synth-control input{ accent-color:#ff00ff; }
+    .synth-mini-btn{ border:2px solid var(--ink); background:var(--aqua); color:var(--ink); min-height:34px; padding:6px 9px; cursor:pointer; box-shadow:3px 3px 0 rgba(0,0,0,.35); font:bold 10px Monaco,Consolas,monospace; }
+    .synth-mini-btn:nth-of-type(2n){ background:var(--banana); }
+    .synth-mini-btn:hover,.synth-mini-btn:focus-visible{ transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(0,0,0,.35); outline:2px solid var(--paper); outline-offset:2px; }
+    .synth-keyboard{ position:relative; height:178px; border:3px solid var(--ink); background:#2b1730; box-shadow:inset 0 0 0 5px #ff00ff; overflow:hidden; touch-action:none; }
+    .synth-white-row{ display:grid; grid-template-columns:repeat(14, minmax(0,1fr)); height:100%; }
+    .synth-key{ border:0; border-right:2px solid var(--ink); border-bottom:0; color:var(--ink); cursor:pointer; font-family:Monaco,Consolas,monospace; position:relative; user-select:none; touch-action:none; }
+    .synth-key.white{ background:linear-gradient(#fffdf2,#ffe7fb); padding:0; min-width:0; }
+    .synth-key.white:nth-child(2n){ background:linear-gradient(#ffffff,#e9fbff); }
+    .synth-key.white:last-child{ border-right:0; }
+    .synth-key.black{ position:absolute; top:0; width:5.8%; height:62%; transform:translateX(-50%); background:linear-gradient(#24152a,#07020a); color:var(--aqua); border:2px solid var(--ink); border-top:0; z-index:3; box-shadow:3px 3px 0 rgba(0,0,0,.34); padding:0; }
+    .synth-key.active,.synth-key:active{ background:var(--lime); box-shadow:inset 0 0 0 4px var(--coral); }
+    .synth-key.black.active,.synth-key.black:active{ background:linear-gradient(var(--coral),#4a0630); color:var(--banana); }
+    .synth-key span{ position:absolute; left:2px; right:2px; bottom:7px; display:grid; gap:3px; place-items:center; font-size:10px; line-height:1; pointer-events:none; overflow:hidden; }
+    .synth-key.black span{ bottom:6px; font-size:9px; }
+    .synth-key small{ display:block; color:#6a5364; font-size:9px; }
+    .synth-key.black small{ color:var(--banana); }
+    .synth-map{ display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:5px; margin-top:10px; color:var(--ink); }
+    .synth-map span{ border:2px solid var(--ink); background:var(--mint); padding:5px 3px; text-align:center; font-size:9px; min-width:0; overflow:hidden; }
+    .synth-map span:nth-child(2n){ background:var(--aqua); }
+    .synth-foot{ display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-top:8px; color:#d8b4ff; font-size:10px; }
+    @media (max-width: 640px){
+      .synth-top,.synth-controls{ grid-template-columns:1fr; }
+      .synth-labels{ grid-template-columns:repeat(3,1fr); min-width:0; }
+      .synth-sticker{ padding:5px 3px; font-size:8px; }
+      .synth-keyboard{ height:154px; }
+      .synth-key span{ font-size:8px; bottom:5px; }
+      .synth-key small{ font-size:7px; }
+      .synth-key.black span{ font-size:7px; }
+      .synth-map{ grid-template-columns:repeat(6,minmax(0,1fr)); }
+    }
     .hidden{ display:none; }
 
     @media (max-width: 1100px){
@@ -410,12 +455,18 @@ ASK THE OLD MACHINE A QUESTION.
     <div class="promise">Recovered little time-wasters from the human web. No loot boxes. No login. Just bleeps.</div>
     <div class="button-row">
       <button class="retro-btn" data-open="pong">Press to play Pong: CD-ROM Edition</button>
+      <button class="retro-btn" data-open="synth">Press to play 8-Bit Web Synth</button>
     </div>
-    <div class="sysline">1 game available · more recovering from the archive</div>
+    <div class="sysline">2 games available · more recovering from the archive</div>
     <div class="finds">
       <div class="find">
         <span class="year">1972<br>arcade</span>
         <div><a href="#pong" data-open="pong">Pong: CD-ROM Edition</a><p>The original wall-bouncer, remastered with a spinning CD-ROM disc and original chiptune music. Player vs CPU. First to 7 wins.</p></div>
+        <span class="badge status-live">playable</span>
+      </div>
+      <div class="find">
+        <span class="year">1996<br>toy</span>
+        <div><a href="#synth" data-open="synth">8-Bit Web Synth</a><p>A two-octave shareware-style browser keyboard with square, triangle, and noise chirps. Plays by mouse, touch, or computer keys.</p></div>
         <span class="badge status-live">playable</span>
       </div>
     </div>
@@ -738,6 +789,243 @@ ASK THE OLD MACHINE A QUESTION.
     </script>
   </template>
 
+  <template id="tpl-synth">
+    <div class="sysline">synth.exe · cartridge audio · fwos sound driver v1.0</div>
+    <h2>8-Bit Web Synth</h2>
+    <div class="synth-shell" id="synthApp">
+      <div class="synth-top">
+        <div class="synth-cart">
+          <b>FAKE LCD DISPLAY / CURRENT NOTE</b>
+          <span class="synth-note" id="syNote">READY</span>
+          <div class="synth-blink" id="syStatus">MIDI NOT FOUND · PRESS A KEY</div>
+        </div>
+        <div class="synth-labels" aria-hidden="true">
+          <span class="synth-sticker">CARTRIDGE AUDIO</span>
+          <span class="synth-sticker">FWOS SOUND DRIVER</span>
+          <span class="synth-sticker">NO AUTOPLAY</span>
+        </div>
+      </div>
+      <div class="synth-panel">
+        <div class="synth-controls">
+          <label class="synth-control">WAVEFORM
+            <select id="syWave">
+              <option value="square">Square</option>
+              <option value="triangle">Triangle</option>
+              <option value="noise">Noise</option>
+            </select>
+          </label>
+          <label class="synth-control">VOLUME
+            <input id="syVolume" type="range" min="0" max="100" value="38" />
+          </label>
+          <button class="synth-mini-btn" type="button" id="syDemo">DEMO RIFF</button>
+          <button class="synth-mini-btn" type="button" id="syPanic">PANIC / STOP SOUND</button>
+        </div>
+        <div class="synth-keyboard" id="syKeyboard" aria-label="Two octave synthesizer keyboard">
+          <div class="synth-white-row" id="syWhiteRow"></div>
+        </div>
+        <div class="synth-map" id="syMap" aria-label="Keyboard mapping"></div>
+        <div class="synth-foot"><span>LOWER: A W S E D F T G Y H U J</span><span>UPPER: K O L P ; ' ] Z X C V B</span></div>
+      </div>
+    </div>
+    <script>
+(function(){
+  var SESSION = Date.now() + '-' + Math.random();
+  window._fwGameSession = SESSION;
+  var ctl = window.AbortController ? new AbortController() : null;
+  var sig = ctl ? ctl.signal : undefined;
+  var app = document.getElementById('synthApp');
+  if(!app) return;
+
+  var noteEl = document.getElementById('syNote');
+  var statusEl = document.getElementById('syStatus');
+  var waveEl = document.getElementById('syWave');
+  var volumeEl = document.getElementById('syVolume');
+  var whiteRow = document.getElementById('syWhiteRow');
+  var keyboard = document.getElementById('syKeyboard');
+  var mapEl = document.getElementById('syMap');
+  var panicBtn = document.getElementById('syPanic');
+  var demoBtn = document.getElementById('syDemo');
+  var audioCtx = null;
+  var master = null;
+  var active = {};
+  var pressed = {};
+  var demoTimers = [];
+  var whiteIndex = 0;
+  var whiteCount = 14;
+
+  var notes = [
+    ['C4','A',261.63,false],['C#4','W',277.18,true],['D4','S',293.66,false],['D#4','E',311.13,true],['E4','D',329.63,false],['F4','F',349.23,false],['F#4','T',369.99,true],['G4','G',392.00,false],['G#4','Y',415.30,true],['A4','H',440.00,false],['A#4','U',466.16,true],['B4','J',493.88,false],
+    ['C5','K',523.25,false],['C#5','O',554.37,true],['D5','L',587.33,false],['D#5','P',622.25,true],['E5',';',659.25,false],['F5',"'",698.46,false],['F#5',']',739.99,true],['G5','Z',783.99,false],['G#5','X',830.61,true],['A5','C',880.00,false],['A#5','V',932.33,true],['B5','B',987.77,false]
+  ];
+  var byName = {}, byKey = {};
+
+  function alive(){ return window._fwGameSession === SESSION; }
+  function keyId(k){ return String(k || '').toUpperCase(); }
+  function getAC(){
+    if(!audioCtx){
+      try{
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        master = audioCtx.createGain();
+        master.gain.value = Number(volumeEl.value) / 100;
+        master.connect(audioCtx.destination);
+      }catch(e){}
+    }
+    if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+  function setStatus(txt){ if(statusEl) statusEl.textContent = txt; }
+  function setNote(txt){ if(noteEl) noteEl.textContent = txt; }
+  function setActive(note, on){
+    var info = byName[note];
+    if(info && info.el) info.el.classList.toggle('active', on);
+  }
+  function stopNote(note){
+    var voice = active[note];
+    if(!voice) return;
+    delete active[note];
+    try{
+      var t = audioCtx ? audioCtx.currentTime : 0;
+      voice.gain.gain.cancelScheduledValues(t);
+      voice.gain.gain.setTargetAtTime(0.0001, t, 0.025);
+      if(voice.osc) voice.osc.stop(t + 0.09);
+      if(voice.noise) voice.noise.stop(t + 0.09);
+    }catch(e){}
+    setActive(note, false);
+    if(!Object.keys(active).length) setStatus('MIDI NOT FOUND · STANDING BY');
+  }
+  function playNote(note){
+    var info = byName[note];
+    var a = getAC();
+    if(!info || !a || !master) return;
+    stopNote(note);
+    var gain = a.createGain();
+    gain.connect(master);
+    var now = a.currentTime;
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.linearRampToValueAtTime(0.62, now + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.34, now + 0.09);
+    var wave = waveEl.value;
+    if(wave === 'noise'){
+      var len = Math.floor(a.sampleRate * 0.45);
+      var buf = a.createBuffer(1, len, a.sampleRate);
+      var data = buf.getChannelData(0);
+      for(var i=0;i<len;i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+      var noise = a.createBufferSource();
+      noise.buffer = buf;
+      noise.connect(gain);
+      noise.start(now);
+      active[note] = {gain:gain, noise:noise};
+    } else {
+      var osc = a.createOscillator();
+      var vibrato = a.createOscillator();
+      var vibGain = a.createGain();
+      osc.type = wave;
+      osc.frequency.setValueAtTime(info.freq, now);
+      vibrato.type = 'sine';
+      vibrato.frequency.value = 5.5;
+      vibGain.gain.value = 2.2;
+      vibrato.connect(vibGain);
+      vibGain.connect(osc.frequency);
+      osc.connect(gain);
+      osc.start(now);
+      vibrato.start(now);
+      active[note] = {gain:gain, osc:osc, vibrato:vibrato};
+    }
+    setActive(note, true);
+    setNote(note);
+    setStatus('CARTRIDGE AUDIO · KEY ' + info.key);
+  }
+  function panic(){
+    Object.keys(active).forEach(stopNote);
+    pressed = {};
+    demoTimers.forEach(clearTimeout);
+    demoTimers = [];
+    notes.forEach(function(n){ setActive(n[0], false); });
+    setNote('READY');
+    setStatus('PANIC SENT · ALL CHANNELS OFF');
+  }
+  function onKeyDown(e){
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+    var id = keyId(e.key);
+    var note = byKey[id];
+    if(!note) return;
+    e.preventDefault();
+    if(pressed[id]) return;
+    pressed[id] = true;
+    playNote(note);
+  }
+  function onKeyUp(e){
+    var id = keyId(e.key);
+    var note = byKey[id];
+    if(!note) return;
+    e.preventDefault();
+    pressed[id] = false;
+    stopNote(note);
+  }
+  function bindKey(el, note){
+    function down(e){ e.preventDefault(); playNote(note); }
+    function up(e){ e.preventDefault(); stopNote(note); }
+    el.addEventListener('pointerdown', down);
+    el.addEventListener('pointerup', up);
+    el.addEventListener('pointercancel', up);
+    el.addEventListener('pointerleave', function(e){ if(e.buttons) up(e); });
+  }
+  function render(){
+    notes.forEach(function(n){
+      var info = {name:n[0], key:n[1], freq:n[2], black:n[3], el:null};
+      byName[info.name] = info;
+      byKey[keyId(info.key)] = info.name;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'synth-key ' + (info.black ? 'black' : 'white');
+      btn.setAttribute('aria-label', info.name + ' key, keyboard ' + info.key);
+      btn.innerHTML = '<span>' + info.name + '<small>' + info.key + '</small></span>';
+      info.el = btn;
+      bindKey(btn, info.name);
+      if(info.black){
+        btn.style.left = ((whiteIndex / whiteCount) * 100) + '%';
+        keyboard.appendChild(btn);
+      } else {
+        whiteIndex++;
+        whiteRow.appendChild(btn);
+      }
+      var map = document.createElement('span');
+      map.textContent = info.key + '=' + info.name;
+      mapEl.appendChild(map);
+    });
+  }
+  function demo(){
+    panic();
+    var riff = ['C4','E4','G4','C5','G4','A4','B4','C5','E5','D5','C5'];
+    riff.forEach(function(note, i){
+      demoTimers.push(setTimeout(function(){ if(alive()) playNote(note); }, i * 130));
+      demoTimers.push(setTimeout(function(){ stopNote(note); }, i * 130 + 105));
+    });
+  }
+
+  render();
+  if(sig){
+    document.addEventListener('keydown', onKeyDown, {signal:sig});
+    document.addEventListener('keyup', onKeyUp, {signal:sig});
+  } else {
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+  }
+  if(volumeEl) volumeEl.addEventListener('input', function(){ if(master) master.gain.value = Number(volumeEl.value) / 100; });
+  if(panicBtn) panicBtn.addEventListener('click', panic);
+  if(demoBtn) demoBtn.addEventListener('click', demo);
+  window.addEventListener('pagehide', panic, sig ? {signal:sig} : undefined);
+  var cleanupTimer = setInterval(function(){
+    if(!alive()){
+      panic();
+      clearInterval(cleanupTimer);
+      if(ctl) ctl.abort();
+    }
+  }, 500);
+})();
+    </script>
+  </template>
+
   <script>
     const boot = document.querySelector('.boot');
 
@@ -769,8 +1057,9 @@ ASK THE OLD MACHINE A QUESTION.
       buffett:{ title:"Find 0010 / buffett.file", html:"<div class=\"sysline\">1999-11-22 · market essay · archive copy</div><h2>Mr. Buffett on the Stock Market</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Valuation argument about long-run stock returns.</div><div class=\"meta-cell\"><b>Why now</b>Euphoria made the sober math valuable.</div><div class=\"meta-cell\"><b>Status</b>archive copy</div><div class=\"meta-cell\"><b>Found in</b>markets that aged well</div></div><p class=\"manifesto\">Warren Buffett explains why market returns are bounded by business results, interest rates, and starting valuations.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It is a clean antidote to line-goes-up thinking: price still matters when everyone wants it not to.</div><blockquote class=\"quote\">Best opened when a boom has started calling arithmetic “old-fashioned.”</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm\">open archive</a></div>", status:"status: archive copy", folder:"folder: markets-that-aged-well", preview:"WARREN BUFFETT<br>valuation / returns / market euphoria" },
       tyranny:{ title:"Find 0012 / tyranny.file", html:"<div class=\"sysline\">1970 · organization essay · original online</div><h2>The Tyranny of Structurelessness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on informal power in groups.</div><div class=\"meta-cell\"><b>Why now</b>Flat groups still grow hidden hierarchies.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Jo Freeman argues that rejecting explicit structure often produces unaccountable informal structure instead.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It gives language to a recurring failure mode in collectives, startups, movements, and online communities.</div><blockquote class=\"quote\">Best opened whenever “we have no hierarchy” is said with a little too much confidence.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.jofreeman.com/joreen/tyranny.htm\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.jofreeman.com/joreen/tyranny.htm\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"JO FREEMAN<br>structurelessness / power / groups" },
       idleness:{ title:"Find 0013 / idleness.file", html:"<div class=\"sysline\">1932 · essay · original online</div><h2>In Praise of Idleness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on work, leisure, and civilization.</div><div class=\"meta-cell\"><b>Why now</b>Productivity cults did not age out.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Bertrand Russell argues that less compulsory work and more intelligent leisure would make civilization saner.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It punctures the idea that being constantly busy is evidence of virtue, value, or thought.</div><blockquote class=\"quote\">Best opened after the third productivity system has failed to explain what the work is actually for.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://harpers.org/archive/1932/10/in-praise-of-idleness/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://harpers.org/archive/1932/10/in-praise-of-idleness/\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"BERTRAND RUSSELL<br>idleness / work / civilization" },
-      games:{ title:'Games / playable.dir', tpl:'tpl-games', status:'status: 1 game available · no loot boxes · no login', folder:'folder: games', preview:'GAMES DIRECTORY<br>1 game available' },
-      pong:{ title:'Pong: CD-ROM Edition / pong.exe', tpl:'tpl-pong', status:'status: cd-rom spin active · insert coin? no.', folder:'folder: games', preview:'PONG CD-ROM EDITION<br>player vs cpu · first to 7' }
+      games:{ title:'Games / playable.dir', tpl:'tpl-games', status:'status: 2 games available · no loot boxes · no login', folder:'folder: games', preview:'GAMES DIRECTORY<br>2 games available' },
+      pong:{ title:'Pong: CD-ROM Edition / pong.exe', tpl:'tpl-pong', status:'status: cd-rom spin active · insert coin? no.', folder:'folder: games', preview:'PONG CD-ROM EDITION<br>player vs cpu · first to 7' },
+      synth:{ title:'8-Bit Web Synth / synth.exe', tpl:'tpl-synth', status:'status: cartridge audio waiting · no autoplay', folder:'folder: games', preview:'8-BIT WEB SYNTH<br>2 octaves / local audio' }
     };
     const randomKeys = ['uris','dao','cyberspace','barrett','blood','shirky','leaky','worse','risk','buffett','tyranny','idleness'];
     const main = document.getElementById('mainContent');
@@ -797,7 +1086,7 @@ ASK THE OLD MACHINE A QUESTION.
     }
     function sectionForKey(key){
       if(key === 'start' || key === 'latest' || key === 'archive' || key === 'source' || key === 'rss' || key === 'random') return key;
-      if(key === 'games' || key === 'pong') return 'games';
+      if(key === 'games' || key === 'pong' || key === 'synth') return 'games';
       if(key.startsWith('collection-')) return 'archive';
       return 'latest';
     }
@@ -912,7 +1201,6 @@ ASK THE OLD MACHINE A QUESTION.
       },
       danger: ['No. Close the browser and contact a real person now.', 'This is not an oracle question. Get human help immediately.', 'Stop. Move toward a person, not a prediction.', 'The answer is safety first. Everything else can wait.', 'Do not handle this alone. Call someone now.']
     };
-
     const questionWords = {
       define: /\b(what is|what are|define|meaning of|vad är|vad betyder|definiera)\b/i,
       yes: /\b(will|should|can|could|would|is|are|am|do|does|did|ska|bör|kan|kommer|är|borde)\b|\?$/i,
