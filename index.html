@@ -371,15 +371,388 @@
     <div class="promise">Recovered little time-wasters from the human web. No loot boxes. No login. Just bleeps.</div>
     <div class="button-row">
       <button class="retro-btn" data-open="pong">Pong: CD-ROM Edition</button>
+      <button class="retro-btn" data-open="flappy-browser">Flappy Browser</button>
     </div>
-    <div class="sysline">1 game available · more recovering from the archive</div>
+    <div class="sysline">2 games available · more recovering from the archive</div>
     <div class="finds">
       <div class="find">
         <span class="year">1972<br>arcade</span>
         <div><a href="#pong" data-open="pong">Pong: CD-ROM Edition</a><p>The original wall-bouncer, remastered with a spinning CD-ROM disc and original chiptune music. Player vs CPU. First to 7 wins.</p></div>
         <span class="badge status-live">playable</span>
       </div>
+      <div class="find">
+        <span class="year">1993<br>web</span>
+        <div><a href="#flappy-browser" data-open="flappy-browser">Flappy Browser</a><p>Keep the tiny browser alive through modem pipes, banner ads, and 404 debris. Tap to flap. Try not to 404.</p></div>
+        <span class="badge status-live">playable</span>
+      </div>
     </div>
+  </template>
+
+  <template id="tpl-flappy-browser">
+    <div class="sysline">flappy.exe · browser bird · modem turbulence</div>
+    <h2>Flappy Browser</h2>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px;">
+      <button id="fbPause" class="retro-btn" style="min-height:32px;padding:5px 12px;font-size:11px;">&#9646;&#9646; PAUSE</button>
+      <button id="fbRestart" class="retro-btn" style="min-height:32px;padding:5px 12px;font-size:11px;">&#8635; RESTART</button>
+      <button id="fbSound" class="retro-btn" style="min-height:32px;padding:5px 12px;font-size:11px;">&#9834; SOUND OFF</button>
+    </div>
+    <div style="display:flex;justify-content:center;">
+      <div style="position:relative;border:3px solid var(--ink);box-shadow:5px 5px 0 rgba(36,27,24,.34);overflow:hidden;width:min(320px,100%);">
+        <canvas id="fbCanvas" style="display:block;width:100%;image-rendering:pixelated;touch-action:none;"></canvas>
+        <div id="fbOverlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,30,100,.84);color:#fff25c;font-family:Monaco,Consolas,monospace;text-align:center;gap:10px;padding:16px;">
+          <div style="font-size:clamp(14px,4.5vw,20px);font-weight:bold;letter-spacing:.08em;">PRESS TO FLAP</div>
+          <div style="font-size:clamp(9px,2.5vw,11px);color:#7df9ff;line-height:1.6;">SPACE / CLICK / TAP<br>survive the modem pipes</div>
+          <button id="fbStart" class="retro-btn" style="margin-top:6px;font-size:clamp(11px,3vw,14px);">&#9654; START</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;font-family:Monaco,Consolas,monospace;font-size:10px;color:#6a5850;flex-wrap:wrap;gap:4px;">
+      <span>FLAPPY BROWSER &middot; MODEM TURBULENCE EDITION</span>
+      <span id="fbStatus">READY</span>
+    </div>
+    <script>
+(function(){
+  var SESSION = Date.now() + '-' + Math.random();
+  window._fwGameSession = SESSION;
+  var ctl = window.AbortController ? new AbortController() : null;
+  var sig = ctl ? ctl.signal : undefined;
+
+  var canvas = document.getElementById('fbCanvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var overlay  = document.getElementById('fbOverlay');
+  var startBtn  = document.getElementById('fbStart');
+  var pauseBtn  = document.getElementById('fbPause');
+  var restartBtn= document.getElementById('fbRestart');
+  var soundBtn  = document.getElementById('fbSound');
+  var statusEl  = document.getElementById('fbStatus');
+
+  var W=320, H=480;
+  canvas.width=W; canvas.height=H;
+
+  var GRAV=0.42, FLAP_V=-8.2;
+  var BIRD_W=30, BIRD_H=24;
+  var PIPE_W=44, PIPE_GAP=136, PIPE_BASE_SPD=2.2, PIPE_FRAMES=108;
+
+  var state='idle', soundOn=false, audioCtx=null, modemId=null;
+  var score=0, best=0;
+  var bird, pipes, debris, clouds, frameN, pipeTimer, wingN;
+
+  function alive(){ return window._fwGameSession===SESSION; }
+
+  function initGame(){
+    bird={x:80, y:H/2, vy:0};
+    pipes=[];
+    frameN=0; pipeTimer=PIPE_FRAMES/2; wingN=0; score=0;
+    debris=initDebris();
+    clouds=initClouds();
+  }
+
+  var DEBRIS_LABELS=['404','</>','http://','ERR','<br>','200 OK','NaN','null'];
+  function initDebris(){
+    var out=[];
+    for(var i=0;i<8;i++) out.push({
+      x:Math.random()*W, y:30+Math.random()*(H-80),
+      label:DEBRIS_LABELS[i%DEBRIS_LABELS.length],
+      spd:0.28+Math.random()*0.35,
+      alpha:0.07+Math.random()*0.09,
+      size:8+Math.floor(Math.random()*5)
+    });
+    return out;
+  }
+  function initClouds(){
+    var out=[];
+    for(var i=0;i<4;i++) out.push({
+      x:Math.random()*W, y:30+Math.random()*100,
+      w:40+Math.random()*50, h:16+Math.random()*12,
+      spd:0.16+Math.random()*0.14
+    });
+    return out;
+  }
+
+  function spawnPipe(){
+    var min=60, max=H-28-PIPE_GAP-60;
+    var gapTop=min+Math.random()*(max-min);
+    pipes.push({x:W+12, gapTop:gapTop, scored:false});
+  }
+
+  /* Audio */
+  function getAC(){
+    if(!audioCtx) try{ audioCtx=new(window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+    return audioCtx;
+  }
+  function blip(freq,dur,type,vol){
+    if(!soundOn) return;
+    try{
+      var a=getAC(); if(!a) return;
+      var o=a.createOscillator(),g=a.createGain();
+      o.connect(g); g.connect(a.destination);
+      o.type=type||'square'; o.frequency.value=freq||440;
+      g.gain.setValueAtTime(vol||0.15,a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+(dur||0.07));
+      o.start(); o.stop(a.currentTime+(dur||0.07));
+    }catch(e){}
+  }
+  function crash(){
+    if(!soundOn) return;
+    try{
+      var a=getAC(); if(!a) return;
+      var len=Math.floor(a.sampleRate*0.28);
+      var buf=a.createBuffer(1,len,a.sampleRate);
+      var d=buf.getChannelData(0);
+      for(var i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len)*0.9;
+      var src=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();
+      f.type='lowpass'; f.frequency.value=900;
+      src.buffer=buf; src.connect(f); f.connect(g); g.connect(a.destination);
+      g.gain.setValueAtTime(0.4,a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+0.28);
+      src.start();
+    }catch(e){}
+  }
+  function startModem(){
+    stopModem();
+    if(!soundOn) return;
+    modemId=setInterval(function(){
+      if(!soundOn||!alive()){ stopModem(); return; }
+      try{
+        var a=getAC(); if(!a) return;
+        var t=a.currentTime;
+        [1200,2400].forEach(function(f,i){
+          var o=a.createOscillator(),g=a.createGain();
+          o.connect(g); g.connect(a.destination);
+          o.type='sine'; o.frequency.value=f;
+          var st=t+i*0.09;
+          g.gain.setValueAtTime(0.04,st);
+          g.gain.exponentialRampToValueAtTime(0.0001,st+0.065);
+          o.start(st); o.stop(st+0.07);
+        });
+      }catch(e){}
+    },2400);
+  }
+  function stopModem(){ if(modemId){ clearInterval(modemId); modemId=null; } }
+
+  /* Drawing */
+  function drawBg(){
+    var g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#c8dff0'); g.addColorStop(0.6,'#ddf0d8'); g.addColorStop(1,'#fff9d8');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  }
+  function drawClouds(){
+    clouds.forEach(function(c){
+      var cx=Math.round(c.x), cy=Math.round(c.y);
+      ctx.fillStyle='rgba(255,255,255,.84)';
+      ctx.fillRect(cx,cy,c.w,c.h);
+      ctx.fillRect(cx+8,cy-7,c.w-14,c.h-4);
+      ctx.strokeStyle='rgba(36,21,42,.15)'; ctx.lineWidth=1;
+      ctx.strokeRect(cx,cy,c.w,c.h);
+    });
+  }
+  function drawDebris(){
+    debris.forEach(function(d){
+      ctx.save();
+      ctx.globalAlpha=d.alpha;
+      ctx.font='bold '+d.size+'px Monaco,Consolas,monospace';
+      ctx.fillStyle='#24152a';
+      ctx.fillText(d.label,Math.round(d.x),Math.round(d.y));
+      ctx.restore();
+    });
+  }
+  function drawGround(){
+    ctx.fillStyle='#c8a87a'; ctx.fillRect(0,H-28,W,28);
+    ctx.fillStyle='#a8885a'; ctx.fillRect(0,H-28,W,3);
+    ctx.fillStyle='#8ecf5a';
+    for(var i=0;i<W;i+=14) ctx.fillRect(i,H-30,10,4);
+    ctx.fillStyle='rgba(36,21,42,.25)'; ctx.fillRect(0,H-28,W,1);
+  }
+  function drawBird(){
+    var bx=Math.round(bird.x-BIRD_W/2), by=Math.round(bird.y-BIRD_H/2);
+    var wingUp=(wingN<8);
+    /* shadow */
+    ctx.fillStyle='rgba(36,21,42,.16)';
+    ctx.fillRect(bx+3,by+BIRD_H+1,BIRD_W-4,4);
+    /* body */
+    ctx.fillStyle='#e8e8e8'; ctx.fillRect(bx,by,BIRD_W,BIRD_H);
+    ctx.strokeStyle='#24152a'; ctx.lineWidth=2; ctx.strokeRect(bx,by,BIRD_W,BIRD_H);
+    /* titlebar */
+    ctx.fillStyle='#005bd8'; ctx.fillRect(bx+1,by+1,BIRD_W-2,7);
+    /* window controls */
+    [[5,'#e98b78'],[11,'#f2d979'],[17,'#8fbfa2']].forEach(function(c){
+      ctx.fillStyle=c[1]; ctx.beginPath(); ctx.arc(bx+c[0],by+4.5,2.2,0,Math.PI*2); ctx.fill();
+    });
+    /* page lines */
+    ctx.fillStyle='rgba(36,21,42,.14)';
+    [11,15,19].forEach(function(ly){ ctx.fillRect(bx+3,by+ly,BIRD_W-6,2); });
+    ctx.fillRect(bx+3,by+15,-(BIRD_W-10-(BIRD_W-6))+BIRD_W-10,2); /* shorter line */
+    /* wing */
+    ctx.fillStyle='#005bd8'; ctx.strokeStyle='#24152a'; ctx.lineWidth=1.5;
+    ctx.beginPath();
+    ctx.moveTo(bx+BIRD_W-1,by+BIRD_H/2);
+    if(wingUp){
+      ctx.lineTo(bx+BIRD_W+9,by+BIRD_H/2-6);
+      ctx.lineTo(bx+BIRD_W-1,by+4);
+    } else {
+      ctx.lineTo(bx+BIRD_W+9,by+BIRD_H/2+5);
+      ctx.lineTo(bx+BIRD_W-1,by+BIRD_H-2);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+  }
+  function drawPipe(p){
+    var px=Math.round(p.x);
+    var topH=p.gapTop;
+    var botY=p.gapTop+PIPE_GAP, botH=H-28-botY;
+    drawPipeSeg(px,0,PIPE_W,topH,true);
+    if(botH>0) drawPipeSeg(px,botY,PIPE_W,botH,false);
+  }
+  function drawPipeSeg(x,y,w,h,isTop){
+    if(h<=0) return;
+    var g=ctx.createLinearGradient(x,0,x+w,0);
+    g.addColorStop(0,'#1abf8a'); g.addColorStop(0.4,'#22dd9e');
+    g.addColorStop(0.7,'#0fa870'); g.addColorStop(1,'#087a50');
+    ctx.fillStyle=g; ctx.fillRect(x,y,w,h);
+    ctx.fillStyle='rgba(36,21,42,.22)'; ctx.fillRect(x+w,y+3,4,h);
+    ctx.strokeStyle='#24152a'; ctx.lineWidth=2; ctx.strokeRect(x,y,w,h);
+    /* cap */
+    var capH=14,capX=x-5,capW=w+10;
+    var capY=isTop?(y+h-capH):y;
+    ctx.fillStyle='#0fa870'; ctx.fillRect(capX,capY,capW,capH);
+    ctx.fillStyle='rgba(36,21,42,.18)'; ctx.fillRect(capX+capW,capY+3,4,capH);
+    ctx.strokeStyle='#24152a'; ctx.lineWidth=2; ctx.strokeRect(capX,capY,capW,capH);
+    /* label */
+    if(h>60){
+      ctx.save(); ctx.fillStyle='rgba(255,255,255,.32)';
+      ctx.font='bold 7px Monaco,Consolas,monospace'; ctx.textAlign='center';
+      ctx.fillText('MODEM',x+w/2,y+h/2+3);
+      ctx.restore();
+    }
+  }
+  function drawScore(){
+    ctx.font='bold 30px Monaco,Consolas,monospace';
+    ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillStyle='rgba(255,255,255,.92)';
+    ctx.shadowColor='rgba(0,0,0,.45)'; ctx.shadowBlur=4;
+    ctx.fillText(score,W/2,12);
+    ctx.shadowBlur=0; ctx.textBaseline='alphabetic';
+  }
+  function draw(){
+    drawBg(); drawClouds(); drawDebris(); drawGround();
+    pipes.forEach(drawPipe);
+    if(bird) drawBird();
+    drawScore();
+  }
+
+  /* Update */
+  function pipeSpd(){ return PIPE_BASE_SPD+score*0.06; }
+  function update(){
+    if(state!=='playing') return;
+    frameN++; wingN=(wingN+1)%16;
+    bird.vy+=GRAV; if(bird.vy>12) bird.vy=12;
+    bird.y+=bird.vy;
+    pipeTimer++;
+    if(pipeTimer>=PIPE_FRAMES){ pipeTimer=0; spawnPipe(); }
+    var spd=pipeSpd();
+    for(var i=pipes.length-1;i>=0;i--){
+      pipes[i].x-=spd;
+      if(!pipes[i].scored && pipes[i].x+PIPE_W<bird.x-BIRD_W/2){
+        pipes[i].scored=true; score++; if(score>best) best=score;
+        blip(880,0.12,'triangle',0.18);
+      }
+      if(pipes[i].x+PIPE_W+14<0) pipes.splice(i,1);
+    }
+    debris.forEach(function(d){ d.x-=d.spd; if(d.x<-50) d.x=W+10; });
+    clouds.forEach(function(c){ c.x-=c.spd; if(c.x+c.w+10<0) c.x=W+10; });
+    /* collisions */
+    if(bird.y+BIRD_H/2>=H-28||bird.y-BIRD_H/2<=0){ die(); return; }
+    var bxl=bird.x-BIRD_W/2+2, bxr=bird.x+BIRD_W/2-2;
+    var byt=bird.y-BIRD_H/2+2, byb=bird.y+BIRD_H/2-2;
+    for(var j=0;j<pipes.length;j++){
+      var p=pipes[j];
+      if(bxr>p.x&&bxl<p.x+PIPE_W){
+        if(byt<p.gapTop||byb>p.gapTop+PIPE_GAP){ die(); return; }
+      }
+    }
+  }
+
+  function die(){
+    if(state!=='playing') return;
+    state='over'; stopModem(); crash();
+    if(statusEl) statusEl.textContent='CONNECTION LOST';
+    setTimeout(function(){
+      if(!alive()) return;
+      if(overlay){
+        overlay.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,20,80,.88);color:#ff6bb5;font-family:Monaco,Consolas,monospace;text-align:center;gap:10px;padding:16px;';
+        overlay.innerHTML=
+          '<div style="font-size:clamp(16px,5vw,22px);font-weight:bold;color:#ff6bb5;">CONNECTION LOST</div>'+
+          '<div style="font-size:13px;color:#fff25c;">score: '+score+'</div>'+
+          '<div style="font-size:11px;color:#7df9ff;">best this session: '+best+'</div>'+
+          '<button id="fbRestart2" class="retro-btn" style="margin-top:10px;font-size:13px;">&#8635; TRY AGAIN</button>';
+        var r2=document.getElementById('fbRestart2');
+        if(r2) r2.addEventListener('click',startGame);
+      }
+    },600);
+  }
+
+  function loop(){
+    if(!alive()){ stopModem(); if(ctl) ctl.abort(); return; }
+    update(); draw(); requestAnimationFrame(loop);
+  }
+
+  function flap(){
+    if(state==='idle'||state==='over'){ startGame(); return; }
+    if(state==='paused') return;
+    bird.vy=FLAP_V; wingN=0;
+    blip(320,0.055,'square',0.15);
+  }
+
+  function startGame(){
+    initGame(); state='playing';
+    if(overlay) overlay.style.display='none';
+    if(pauseBtn) pauseBtn.textContent='⏸ PAUSE';
+    if(statusEl) statusEl.textContent='PLAYING';
+    if(soundOn) startModem();
+  }
+
+  function togglePause(){
+    if(state==='playing'){
+      state='paused';
+      if(pauseBtn) pauseBtn.textContent='▶ RESUME';
+      if(statusEl) statusEl.textContent='PAUSED';
+      stopModem();
+    } else if(state==='paused'){
+      state='playing';
+      if(pauseBtn) pauseBtn.textContent='⏸ PAUSE';
+      if(statusEl) statusEl.textContent='PLAYING';
+      if(soundOn) startModem();
+    }
+  }
+
+  function onKey(e){
+    if(e.key===' '||e.key==='ArrowUp'||e.key==='w'||e.key==='W'){
+      e.preventDefault(); flap();
+    }
+    if(e.key==='p'||e.key==='P'){ e.preventDefault(); togglePause(); }
+  }
+
+  if(sig){
+    document.addEventListener('keydown',onKey,{signal:sig});
+  } else {
+    document.addEventListener('keydown',onKey);
+  }
+  canvas.addEventListener('click',flap);
+  canvas.addEventListener('touchstart',function(e){ e.preventDefault(); flap(); },{passive:false});
+
+  if(startBtn)   startBtn.addEventListener('click',startGame);
+  if(pauseBtn)   pauseBtn.addEventListener('click',togglePause);
+  if(restartBtn) restartBtn.addEventListener('click',startGame);
+  if(soundBtn)   soundBtn.addEventListener('click',function(){
+    soundOn=!soundOn;
+    soundBtn.textContent=soundOn?'♪ SOUND ON':'♪ SOUND OFF';
+    if(!soundOn){ stopModem(); } else { getAC(); if(state==='playing') startModem(); }
+  });
+
+  initGame();
+  loop();
+})();
+    </script>
   </template>
 
   <template id="tpl-pong">
@@ -730,8 +1103,9 @@
       buffett:{ title:"Find 0010 / buffett.file", html:"<div class=\"sysline\">1999-11-22 · market essay · archive copy</div><h2>Mr. Buffett on the Stock Market</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Valuation argument about long-run stock returns.</div><div class=\"meta-cell\"><b>Why now</b>Euphoria made the sober math valuable.</div><div class=\"meta-cell\"><b>Status</b>archive copy</div><div class=\"meta-cell\"><b>Found in</b>markets that aged well</div></div><p class=\"manifesto\">Warren Buffett explains why market returns are bounded by business results, interest rates, and starting valuations.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It is a clean antidote to line-goes-up thinking: price still matters when everyone wants it not to.</div><blockquote class=\"quote\">Best opened when a boom has started calling arithmetic “old-fashioned.”</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm\">open archive</a></div>", status:"status: archive copy", folder:"folder: markets-that-aged-well", preview:"WARREN BUFFETT<br>valuation / returns / market euphoria" },
       tyranny:{ title:"Find 0011 / tyranny.file", html:"<div class=\"sysline\">1970 · organization essay · original online</div><h2>The Tyranny of Structurelessness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on informal power in groups.</div><div class=\"meta-cell\"><b>Why now</b>Flat groups still grow hidden hierarchies.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Jo Freeman argues that rejecting explicit structure often produces unaccountable informal structure instead.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It gives language to a recurring failure mode in collectives, startups, movements, and online communities.</div><blockquote class=\"quote\">Best opened whenever “we have no hierarchy” is said with a little too much confidence.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.jofreeman.com/joreen/tyranny.htm\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.jofreeman.com/joreen/tyranny.htm\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"JO FREEMAN<br>structurelessness / power / groups" },
       idleness:{ title:"Find 0012 / idleness.file", html:"<div class=\"sysline\">1932 · essay · original online</div><h2>In Praise of Idleness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on work, leisure, and civilization.</div><div class=\"meta-cell\"><b>Why now</b>Productivity cults did not age out.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Bertrand Russell argues that less compulsory work and more intelligent leisure would make civilization saner.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It punctures the idea that being constantly busy is evidence of virtue, value, or thought.</div><blockquote class=\"quote\">Best opened after the third productivity system has failed to explain what the work is actually for.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://harpers.org/archive/1932/10/in-praise-of-idleness/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://harpers.org/archive/1932/10/in-praise-of-idleness/\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"BERTRAND RUSSELL<br>idleness / work / civilization" },
-      games:{ title:'Games / playable.dir', tpl:'tpl-games', status:'status: 1 game available · no loot boxes · no login', folder:'folder: games', preview:'GAMES DIRECTORY<br>1 game available' },
-      pong:{ title:'Pong: CD-ROM Edition / pong.exe', tpl:'tpl-pong', status:'status: cd-rom spin active · insert coin? no.', folder:'folder: games', preview:'PONG CD-ROM EDITION<br>player vs cpu · first to 7' }
+      games:{ title:'Games / playable.dir', tpl:'tpl-games', status:'status: 2 games available · no loot boxes · no login', folder:'folder: games', preview:'GAMES DIRECTORY<br>2 games available' },
+      pong:{ title:'Pong: CD-ROM Edition / pong.exe', tpl:'tpl-pong', status:'status: cd-rom spin active · insert coin? no.', folder:'folder: games', preview:'PONG CD-ROM EDITION<br>player vs cpu · first to 7' },
+      'flappy-browser':{ title:'Flappy Browser / flappy.exe', tpl:'tpl-flappy-browser', status:'status: modem turbulence · browser bird airborne', folder:'folder: games', preview:'FLAPPY BROWSER<br>tap to flap · avoid 404' }
     };
     const randomKeys = ['uris','dao','cyberspace','barrett','blood','shirky','leaky','worse','risk','buffett','tyranny','idleness'];
     const main = document.getElementById('mainContent');
@@ -758,7 +1132,7 @@
     }
     function sectionForKey(key){
       if(key === 'start' || key === 'latest' || key === 'archive' || key === 'source' || key === 'rss' || key === 'random') return key;
-      if(key === 'games' || key === 'pong') return 'games';
+      if(key === 'games' || key === 'pong' || key === 'flappy-browser') return 'games';
       if(key.startsWith('collection-')) return 'archive';
       return 'latest';
     }
