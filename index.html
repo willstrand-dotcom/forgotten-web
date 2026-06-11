@@ -69,6 +69,11 @@
     .boot-line:nth-child(2){ animation-delay:.25s; } .boot-line:nth-child(3){ animation-delay:.65s; }
     .boot-line:nth-child(4){ animation-delay:1.05s; } .boot-line:nth-child(5){ animation-delay:1.45s; }
     .boot-line:nth-child(6){ animation-delay:1.95s; color:#90d1a7; }
+    .audio-driver{ margin-top:18px; padding-top:14px; border-top:1px dashed rgba(249,239,228,.55); opacity:0; animation:lineIn .18s steps(1,end) forwards; animation-delay:2.18s; }
+    .audio-driver b{ display:block; font-family:Monaco,Consolas,monospace; font-size:12px; letter-spacing:.08em; color:#7df9ff; margin-bottom:8px; }
+    .audio-driver p{ margin:8px 0 0; font-family:Monaco,Consolas,monospace; font-size:11px; line-height:1.4; color:#f9efe4; }
+    .audio-btn{ border:2px solid #f9efe4; background:#ff00ff; color:#f9efe4; box-shadow:4px 4px 0 #7df9ff; cursor:pointer; font-family:Monaco,Consolas,monospace; font-weight:bold; padding:8px 10px; }
+    .audio-btn:hover,.audio-btn:focus-visible{ background:#7df9ff; color:#191613; outline:2px solid #f9efe4; outline-offset:2px; }
     @keyframes lineIn{ to{ opacity:1; } }
     @keyframes bootAway{ to{ opacity:0; visibility:hidden; pointer-events:none; } }
     @media (prefers-reduced-motion: reduce){ .boot{ display:none; } *{ animation:none!important; transition:none!important; } }
@@ -80,6 +85,9 @@
       box-shadow:0 2px 0 rgba(36,27,24,.12);
     }
     .menu-left,.menu-right{ display:flex; gap:12px; align-items:center; white-space:nowrap; }
+    .audio-toggle{ border:2px solid var(--ink); background:var(--aqua); color:var(--ink); padding:1px 6px; cursor:pointer; font:11px Monaco,Consolas,monospace; box-shadow:2px 2px 0 rgba(36,27,24,.25); }
+    .audio-toggle.is-playing{ background:var(--mint); }
+    .audio-toggle:hover,.audio-toggle:focus-visible{ background:var(--lime); outline:2px solid var(--ink); outline-offset:2px; }
     .sun{ color:#c00078; font-weight:bold; }
     .menu-item{ border:0; background:transparent; color:var(--ink); padding:2px 4px; cursor:pointer; text-decoration:none; font:inherit; }
     .menu-item:hover,.menu-item:focus-visible,.menu-item.active{ background:var(--aqua); box-shadow:2px 2px 0 var(--ink); outline:2px solid var(--ink); outline-offset:2px; }
@@ -150,13 +158,14 @@
     .rule{ border:2px solid var(--ink); background:var(--mint); padding:8px; font-family:Monaco,Consolas,monospace; font-size:10px; line-height:1.3; box-shadow:2px 2px 0 rgba(36,27,24,.2); }
     .rule:nth-child(2){ background:var(--aqua); } .rule:nth-child(3){ background:var(--lavender); }
     .finds{ margin-top:15px; border-top:2px dotted #b78f7e; }
-    .find{ display:grid; grid-template-columns:86px 1fr auto; gap:10px; align-items:center; padding:12px 0; border-bottom:2px dotted #d5b8a6; }
-    .year{ font-family:Monaco, Consolas, monospace; font-size:12px; border:2px solid var(--ink); background:var(--aqua); padding:6px 7px; text-align:center; box-shadow:2px 2px 0 rgba(36,27,24,.25); }
+    .find{ display:grid; grid-template-columns:86px minmax(0,1fr) auto; gap:10px; align-items:start; padding:12px 0; border-bottom:2px dotted #d5b8a6; }
+    .find > div{ min-width:0; }
+    .year{ display:block; width:100%; font-family:Monaco, Consolas, monospace; font-size:12px; line-height:1.15; border:2px solid var(--ink); background:var(--aqua); padding:6px 7px; text-align:center; box-shadow:2px 2px 0 rgba(36,27,24,.25); overflow-wrap:normal; }
     .find:nth-child(2n) .year{ background:var(--lavender); }
     .find:nth-child(3n) .year{ background:var(--mint); }
-    .find a{ color:var(--blue); font-weight:bold; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
+    .find a{ display:block; min-width:0; color:var(--blue); font-weight:bold; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; overflow-wrap:anywhere; }
     .find a:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; background:var(--banana); }
-    .find p{ margin:4px 0 0; font-size:12px; line-height:1.35; color:#594941; }
+    .find p{ margin:4px 0 0; font-size:12px; line-height:1.35; color:#594941; overflow-wrap:anywhere; }
     .badge{ font-family:Monaco, Consolas, monospace; font-size:10px; border:1px solid var(--ink); padding:3px 5px; background:var(--banana); white-space:nowrap; box-shadow:1px 1px 0 rgba(36,27,24,.18); }
     .status-live{ background:var(--mint); } .status-archived{ background:var(--blush); }
     .relic-meta{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0; }
@@ -219,14 +228,17 @@
       .button-row{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px 16px; margin:18px 0 32px; padding-bottom:10px; }
       .retro-btn{ width:100%; padding:12px 10px; }
       .button-row + .sysline{ margin-top:12px; }
-      .find{ grid-template-columns:70px 1fr; }
-      .find .badge{ grid-column:2; justify-self:start; }
+      .find{ grid-template-columns:54px minmax(0,1fr); gap:8px; align-items:start; }
+      .year{ font-size:11px; padding:5px 3px; line-height:1.1; }
+      .find a{ font-size:clamp(20px, 5.2vw, 28px); line-height:1.02; }
+      .find p{ font-size:clamp(15px, 3.9vw, 22px); line-height:1.25; }
+      .find .badge{ grid-column:2; justify-self:start; font-size:9px; white-space:normal; }
       .menu-left{ gap:8px; } .menu-left .menu-item:nth-child(n+4){ display:none; }
     }
   </style>
 </head>
 <body>
-  <div class="boot" aria-hidden="true">
+  <div class="boot">
     <div class="boot-box">
       <div class="boot-title">THE FORGOTTEN WEB OS 0.9</div>
       <div class="boot-line">checking dead links..................OK</div>
@@ -234,13 +246,20 @@
       <div class="boot-line">loading recovered voices............OK</div>
       <div class="boot-line">indexing old blogroll residue.......OK</div>
       <div class="boot-line">ready. open the archive.</div>
+      <div class="audio-driver">
+        <b>FWOS AUDIO DRIVER</b>
+        <button class="audio-btn" type="button" data-audio-toggle>▶ Play entrance music</button>
+        <p>Jussi Björling — Nessun Dorma<br>78rpm ghost signal via Internet Archive.</p>
+      </div>
     </div>
   </div>
 
   <div class="menu-bar">
     <div class="menu-left"><strong class="sun">☼ FWOS</strong><button class="menu-item" data-open="start">File</button><button class="menu-item" data-open="latest">Finds</button><button class="menu-item" data-open="archive">Collections</button><button class="menu-item" data-open="rss">Utilities</button></div>
-    <div class="menu-right"><span id="clock">01:17</span><a class="menu-item" href="http://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
+    <div class="menu-right"><button class="audio-toggle" type="button" data-audio-toggle aria-label="Play or pause entrance music">♪ OFF</button><span id="clock">01:17</span><a class="menu-item" href="http://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
   </div>
+
+  <audio id="entranceAudio" preload="none" crossorigin="anonymous" src="https://archive.org/download/78_nessun-dorma-none-shall-sleep_jussi-bjrling-adami-simoni-puccini-nils-grevilli_gbia7015432a/NESSUN%20DORMA%20%28NONE%20SHALL%20SLEEP%29%20-%20JUSSI%20BJ%C3%96RLING.mp3"></audio>
 
   <main class="desktop">
     <div class="desktop-title">
@@ -355,6 +374,33 @@
 
   <script>
     const boot = document.querySelector('.boot');
+    const entranceAudio = document.getElementById('entranceAudio');
+    const audioToggles = document.querySelectorAll('[data-audio-toggle]');
+    function setAudioState(isPlaying){
+      audioToggles.forEach(button => {
+        button.classList.toggle('is-playing', isPlaying);
+        button.textContent = isPlaying ? '❚❚ Pause entrance music' : (button.classList.contains('audio-btn') ? '▶ Play entrance music' : '♪ OFF');
+        if(!button.classList.contains('audio-btn') && isPlaying) button.textContent = '♪ ON';
+      });
+    }
+    async function toggleEntranceMusic(){
+      if(entranceAudio.paused){
+        entranceAudio.volume = 0.72;
+        await entranceAudio.play();
+        boot.classList.add('is-hidden');
+        setAudioState(true);
+      } else {
+        entranceAudio.pause();
+        setAudioState(false);
+      }
+    }
+    audioToggles.forEach(button => button.addEventListener('click', async () => {
+      try { await toggleEntranceMusic(); }
+      catch { button.textContent = 'audio blocked — tap again'; }
+    }));
+    entranceAudio.addEventListener('play', () => setAudioState(true));
+    entranceAudio.addEventListener('pause', () => setAudioState(false));
+    entranceAudio.addEventListener('ended', () => setAudioState(false));
     if(sessionStorage.getItem('fwosBootSeen')){
       boot.classList.add('is-hidden');
     } else {
