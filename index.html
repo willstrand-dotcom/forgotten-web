@@ -201,6 +201,25 @@
     .retro-btn:nth-child(4n){ background:var(--coral); }
     .retro-btn:hover,.retro-btn:focus-visible{ transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(36,27,24,.42), 0 0 0 2px var(--ink), 0 0 0 5px var(--peach); outline:0; }
     .retro-btn:active{ transform:translate(5px,5px); box-shadow:0 0 0 rgba(36,27,24,.42); }
+
+    .ico.oracle-icon{ background:#111; border-color:var(--banana); box-shadow:3px 3px 0 rgba(36,27,24,.45), inset 0 0 0 4px #39104a; }
+    .ico.oracle-icon::before{ content:">_"; position:absolute; left:7px; top:9px; color:var(--lime); font:bold 18px Monaco,Consolas,monospace; text-shadow:0 0 6px var(--lime); }
+    .ico.oracle-icon::after{ content:""; position:absolute; right:6px; bottom:6px; width:8px; height:8px; background:var(--coral); border:1px solid var(--banana); box-shadow:-13px -16px 0 -3px var(--aqua), -24px 4px 0 -3px var(--banana); }
+    .oracle-window{ position:fixed; left:50%; top:52%; transform:translate(-50%,-50%); z-index:35; width:min(720px, calc(100vw - 28px)); max-height:calc(100vh - 56px); border:3px solid var(--ink); background:#0b0611; color:var(--lime); box-shadow:12px 12px 0 rgba(36,21,42,.55), 0 0 0 9999px rgba(36,21,42,.22); font-family:Monaco,Consolas,monospace; }
+    .oracle-window.hidden{ display:none; }
+    .oracle-titlebar{ min-height:30px; display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--banana); color:var(--ink); border-bottom:3px solid var(--ink); padding:4px 8px; font:bold 12px Monaco,Consolas,monospace; }
+    .oracle-close{ width:24px; height:22px; border:2px solid var(--ink); background:var(--coral); color:var(--ink); cursor:pointer; font:bold 14px Monaco,Consolas,monospace; line-height:1; box-shadow:2px 2px 0 rgba(36,21,42,.35); }
+    .oracle-close:hover,.oracle-close:focus-visible{ background:var(--aqua); outline:2px solid var(--ink); outline-offset:2px; }
+    .oracle-body{ padding:14px; background:linear-gradient(180deg,#08040f,#15051f); max-height:calc(100vh - 105px); overflow:auto; }
+    .oracle-screen{ min-height:236px; border:2px solid var(--lime); background:#020403; color:var(--lime); padding:12px; line-height:1.55; font-size:12px; box-shadow:inset 0 0 20px rgba(200,255,77,.13); white-space:pre-wrap; text-shadow:0 0 5px rgba(200,255,77,.55); }
+    .oracle-screen::selection{ background:var(--lime); color:#020403; }
+    .oracle-form{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; margin-top:10px; }
+    .oracle-input{ width:100%; border:2px solid var(--lime); background:#050208; color:var(--aqua); padding:10px; font:13px Monaco,Consolas,monospace; box-shadow:inset 0 0 9px rgba(125,249,255,.15); }
+    .oracle-input:focus{ outline:2px solid var(--banana); outline-offset:2px; }
+    .oracle-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:9px; }
+    .oracle-hint{ color:var(--aqua); font-size:10px; margin-top:9px; line-height:1.4; }
+    .oracle-cursor{ animation:blink .75s steps(1,end) infinite; }
+    @media (max-width: 640px){ .oracle-window{ top:50%; width:calc(100vw - 18px); } .oracle-form{ grid-template-columns:1fr; } .oracle-screen{ min-height:250px; font-size:11px; } }
     .hidden{ display:none; }
 
     @media (max-width: 1100px){
@@ -264,6 +283,7 @@
       <button class="icon" data-open="latest"><span class="ico doc latest-icon"></span><span class="label">Latest Finds</span></button>
       <button class="icon" data-open="archive"><span class="ico folder archive-icon"></span><span class="label">Archive</span></button>
       <button class="icon" data-open="random"><span class="ico radio"></span><span class="label">Random Relic</span></button>
+      <button class="icon" data-oracle-open><span class="ico oracle-icon"></span><span class="label">Internet Oracle</span></button>
       <button class="icon" data-open="source"><span class="ico source-icon"></span><span class="label">Source Notes</span></button>
       <button class="icon" data-open="rss"><span class="ico rss-icon"></span><span class="label">RSS + Submit</span></button>
       <button class="icon" data-open="games"><span class="ico game-icon"></span><span class="label">Games</span></button>
@@ -274,6 +294,25 @@
       <div class="content" id="mainContent"></div>
       <div class="statusbar"><span id="statusLeft">status: mounted / human-selected</span><span>source policy: link + contextualize</span></div>
     </section>
+
+    <section class="oracle-window hidden" id="oracleWindow" role="dialog" aria-modal="false" aria-labelledby="oracleTitle">
+      <div class="oracle-titlebar"><span id="oracleTitle">RANDOM INTERNET ORACLE.EXE</span><button class="oracle-close" id="oracleClose" type="button" aria-label="Close Internet Oracle">X</button></div>
+      <div class="oracle-body">
+        <div class="oracle-screen" id="oracleScreen">RANDOM INTERNET ORACLE v0.91
+LOCAL MODE: ENABLED
+NETWORK: UNNECESSARY
+
+ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
+&gt; <span class="oracle-cursor">_</span></div>
+        <form class="oracle-form" id="oracleForm">
+          <input class="oracle-input" id="oracleInput" autocomplete="off" maxlength="180" placeholder="ASK: Will I drink alcohol tomorrow?" />
+          <button class="retro-btn" type="submit">CONSULT</button>
+        </form>
+        <div class="oracle-actions"><button class="retro-btn" type="button" id="oracleAgain">REROLL OMEN</button><button class="retro-btn" type="button" id="oracleClear">CLEAR TERMINAL</button></div>
+        <div class="oracle-hint">Local randomized oracle. No AI, no server, no memory. Press ESC or X to close.</div>
+      </div>
+    </section>
+
 
   </main>
 
@@ -811,6 +850,56 @@
       const key = e.state?.key || location.hash.replace('#','') || 'start';
       openRelic(key, { scroll:true });
     });
+
+    const oracleWindow = document.getElementById('oracleWindow');
+    const oracleInput = document.getElementById('oracleInput');
+    const oracleScreen = document.getElementById('oracleScreen');
+    const oracleForm = document.getElementById('oracleForm');
+    const oracleClose = document.getElementById('oracleClose');
+    const oracleAgain = document.getElementById('oracleAgain');
+    const oracleClear = document.getElementById('oracleClear');
+    let lastOracleQuestion = '';
+    const oracleBoot = 'RANDOM INTERNET ORACLE v0.91\nLOCAL MODE: ENABLED\nNETWORK: UNNECESSARY\n\nASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.\n> _';
+    const oracleBanks = {
+      openings: ['Yes.', 'No.', 'Probably.', 'Unclear, but leaning yes.', 'Unclear, but leaning no.', 'The machine says maybe.', 'Not today, not cleanly.', 'Yes, but not for the reason you think.', 'No, unless pride starts driving.', 'Ask again after the room stops lying.', 'The omen is warm but badly wired.', 'The answer is technically yes and spiritually no.', 'The archive coughs up a cautious yes.', 'The modem refuses certainty.', 'The signal says wait.', 'The signal says move.', 'The answer is hiding in the boring option.', 'The future has opened a small suspicious tab.', 'Yes, with paperwork.', 'No, with dignity.'],
+      signals: ['The cursor blinked twice. That is rarely innocent.', 'A banner ad tried to warn you, then crashed.', 'Your optimism has entered compatibility mode.', 'The packets arrived smelling faintly of consequence.', 'Someone in 1998 would call this a bad idea and still click it.', 'The modem made the sound of a chair scraping backward.', 'The ghost of a guestbook signed “absolutely not”.', 'The server returned 200 OK, emotionally 404.', 'A forgotten pop-up says the second step is the trap.', 'The machine sees desire wearing a fake moustache.', 'The archive has detected avoidable nonsense nearby.', 'Three dead links formed an arrow pointing at restraint.', 'The old web says: fewer tabs, cleaner choices.', 'A tiny under-construction GIF is shaking its head.', 'The browser history is already preparing an alibi.', 'The webring has voted: proceed carefully.', 'A GeoCities starfield briefly became judgmental.', 'The floppy spins, but the label is peeling.', 'A suspiciously calm answer has appeared in the logs.', 'The oracle has smelled future admin work.'],
+      advice: ['Decide before momentum gets a costume.', 'If it still looks wise in daylight, continue.', 'Do the smaller version first.', 'Leave yourself an exit you do not have to explain.', 'Write the message, then delete the theatrical parts.', 'Drink water before making philosophy out of appetite.', 'Spend ten minutes removing friction, not adding drama.', 'If the answer needs three justifications, it is probably no.', 'Ask what this costs tomorrow morning.', 'Choose the option that creates the least cleanup.', 'Do not let boredom sign contracts.', 'Make the boring plan and let chaos apply for permission.', 'If you need secrecy, check whether you actually need the thing.', 'Delay by one sleep cycle. The truth hates that trick.', 'Turn the volume down on nostalgia.', 'If two paths are equal, pick the one with fewer witnesses.', 'Do the kind thing, but not the vague thing.', 'Give future-you a receipt, not a crime scene.', 'Try the reversible version first.', 'Stop before the second explanation.'],
+      alcohol: ['Yes, but the second drink is the trap.', 'No, if you decide before 18:00. After that the committee gets loud.', 'Probably. Buy sparkling water before optimism starts lying.', 'The bottle is nearby. Your dignity has not fully left the building.', 'The oracle recommends food first and heroics never.'],
+      love: ['No. The signal is nostalgia wearing perfume.', 'Maybe, but send the daylight version, not the midnight version.', 'Yes, if the message is simple and contains no courtroom speech.', 'The heart is online. The judgment server is unstable.', 'Do not confuse chemistry with instruction.'],
+      money: ['No purchase today. Cart it, sleep, then interrogate it.', 'Yes, if it solves a real problem twice this week.', 'The price is visible. The maintenance cost is hiding.', 'The oracle sees a subscription wearing a fake moustache.', 'If you would not buy it sober and bored, do not buy it glowing and tired.'],
+      work: ['Do the ugly first draft. Elegance can arrive by train.', 'The meeting is not the work. Beware the calendar-shaped decoy.', 'Ship the small clean thing before building a cathedral.', 'The blocker has a name. Write it down and it gets smaller.', 'Today wants execution, not another framework.'],
+      danger: ['No. Close the browser and contact a real person now.', 'This is not an oracle question. Get human help immediately.', 'Stop. Move toward a person, not a prediction.', 'The answer is safety first. Everything else can wait.', 'Do not handle this alone. Call someone now.']
+    };
+    function oraclePick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+    function oracleCategory(q){
+      const t=q.toLowerCase();
+      if(/hurt myself|kill myself|suicide|självmord|skada mig/.test(t)) return 'danger';
+      if(/alcohol|drink|drunk|beer|wine|vodka|öl|vin|sprit|alkohol/.test(t)) return 'alcohol';
+      if(/love|text her|text him|date|relationship|crush|kärlek|dejta|sms/.test(t)) return 'love';
+      if(/buy|money|stock|invest|price|expensive|köpa|pengar|aktie/.test(t)) return 'money';
+      if(/work|job|meeting|deadline|project|jobb|möte|projekt/.test(t)) return 'work';
+      return 'generic';
+    }
+    function oracleAnswer(question){
+      const q=(question || '').trim();
+      const cat=oracleCategory(q);
+      if(cat==='danger'){
+        return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nORACLE BREAKS CHARACTER:\n'+oraclePick(oracleBanks.danger)+'\n\nACTION:\nContact a real person or emergency service now.';
+      }
+      const opener = cat==='generic' ? oraclePick(oracleBanks.openings) : oraclePick(oracleBanks[cat]);
+      return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nDIALING FORGOTTEN NODE...\nPARSING BAD DECISIONS...\nCHECKING MODEM OMENS...\n\nORACLE:\n'+opener+'\n\nSIGNAL:\n'+oraclePick(oracleBanks.signals)+'\n\nADVICE:\n'+oraclePick(oracleBanks.advice)+'\n\n> _';
+    }
+    function openOracle(){ oracleWindow.classList.remove('hidden'); setTimeout(()=>oracleInput.focus(), 30); }
+    function closeOracle(){ oracleWindow.classList.add('hidden'); }
+    document.addEventListener('click', e => {
+      if(e.target.closest('[data-oracle-open]')){ e.preventDefault(); openOracle(); }
+    });
+    oracleForm.addEventListener('submit', e => { e.preventDefault(); lastOracleQuestion = oracleInput.value.trim(); oracleScreen.textContent = oracleAnswer(lastOracleQuestion); });
+    oracleAgain.addEventListener('click', () => { oracleScreen.textContent = oracleAnswer(lastOracleQuestion || oracleInput.value.trim()); });
+    oracleClear.addEventListener('click', () => { oracleScreen.textContent = oracleBoot; oracleInput.value=''; lastOracleQuestion=''; oracleInput.focus(); });
+    oracleClose.addEventListener('click', closeOracle);
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && !oracleWindow.classList.contains('hidden')) closeOracle(); });
+
     function tick(){ const d = new Date(); document.getElementById('clock').textContent = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
     const initialKey = relics[location.hash.replace('#','')] ? location.hash.replace('#','') : 'start';
     history.replaceState({ key:initialKey }, '', initialKey === 'start' ? location.pathname : `#${initialKey}`);
