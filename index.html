@@ -155,7 +155,7 @@
     .finds{ margin-top:15px; border-top:2px dotted #b78f7e; }
     .find{ display:grid; grid-template-columns:86px minmax(0,1fr) auto; gap:10px; align-items:start; padding:12px 0; border-bottom:2px dotted #d5b8a6; }
     .find > div{ min-width:0; }
-    .year{ display:block; width:100%; font-family:Monaco, Consolas, monospace; font-size:12px; line-height:1.15; border:2px solid var(--ink); background:var(--aqua); padding:6px 7px; text-align:center; box-shadow:2px 2px 0 rgba(36,27,24,.25); overflow-wrap:normal; }
+    .year{ display:block; width:100%; box-sizing:border-box; font-family:Monaco, Consolas, monospace; font-size:12px; line-height:1.15; border:2px solid var(--ink); background:var(--aqua); padding:6px 7px; text-align:center; box-shadow:2px 2px 0 rgba(36,27,24,.25); overflow-wrap:normal; }
     .find:nth-child(2n) .year{ background:var(--lavender); }
     .find:nth-child(3n) .year{ background:var(--mint); }
     .find a{ display:block; min-width:0; color:var(--blue); font-weight:bold; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; overflow-wrap:anywhere; }
@@ -223,8 +223,8 @@
       .button-row{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px 16px; margin:18px 0 32px; padding-bottom:10px; }
       .retro-btn{ width:100%; padding:12px 10px; }
       .button-row + .sysline{ margin-top:12px; }
-      .find{ grid-template-columns:54px minmax(0,1fr); gap:8px; align-items:start; }
-      .year{ font-size:11px; padding:5px 3px; line-height:1.1; }
+      .find{ grid-template-columns:74px minmax(0,1fr); gap:10px; align-items:start; }
+      .year{ font-size:clamp(8.5px, 2.55vw, 11px); padding:5px 2px; line-height:1.08; overflow-wrap:anywhere; word-break:break-word; }
       .find a{ font-size:clamp(20px, 5.2vw, 28px); line-height:1.02; }
       .find p{ font-size:clamp(15px, 3.9vw, 22px); line-height:1.25; }
       .find .badge{ grid-column:2; justify-self:start; font-size:9px; white-space:normal; }
