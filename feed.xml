@@ -6,13 +6,21 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 18:30:00 +0200</lastBuildDate>
     <item>
       <title>Julian Dibbell - A Rape in Cyberspace</title>
       <link>https://www.juliandibbell.com/articles/a-rape-in-cyberspace/</link>
       <guid isPermaLink="true">https://www.juliandibbell.com/articles/a-rape-in-cyberspace/</guid>
       <pubDate>Fri, 01 Oct 1993 00:00:00 +0000</pubDate>
       <description>The LambdaMOO article that made online harm, governance, and embodied text impossible to wave away.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Cameron Barrett - Anatomy of a Weblog</title>
+      <link>https://web.archive.org/web/19990428175931/http://www.camworld.com/journal/rants/99/0126.html</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,1999:barrett-anatomy-weblog</guid>
+      <pubDate>Tue, 26 Jan 1999 00:00:00 +0000</pubDate>
+      <description>An early attempt to describe what weblogs were becoming: links, commentary, voice, and human selection.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
