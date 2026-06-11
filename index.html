@@ -196,10 +196,11 @@
     .retro-btn:active{ transform:translate(5px,5px); box-shadow:0 0 0 rgba(36,27,24,.42); }
     .hidden{ display:none; }
 
-    @media (max-width: 900px){
+    @media (max-width: 1100px){
       body{ overflow:auto; }
       .desktop{ padding:38px 12px 80px; }
-      .desktop-title{ position:static; text-align:left; margin:12px 0 14px; }
+      .desktop-title{ position:static; text-align:left; margin:12px 0 14px; max-width:none; }
+      .desktop-title p{ max-width:640px; }
       .icons{ grid-template-columns:repeat(3,92px); width:100%; gap:14px 10px; padding-top:0; justify-content:start; }
       .icon{ width:92px; min-height:90px; }
       .label{ font-size:10.5px; max-width:86px; min-height:24px; }
