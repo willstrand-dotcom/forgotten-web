@@ -861,33 +861,96 @@ ASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.
     let lastOracleQuestion = '';
     const oracleBoot = 'RANDOM INTERNET ORACLE v0.91\nLOCAL MODE: ENABLED\nNETWORK: UNNECESSARY\n\nASK THE OLD MACHINE A YES/NO/MAYBE QUESTION.\n> _';
     const oracleBanks = {
-      openings: ['Yes.', 'No.', 'Probably.', 'Unclear, but leaning yes.', 'Unclear, but leaning no.', 'The machine says maybe.', 'Not today, not cleanly.', 'Yes, but not for the reason you think.', 'No, unless pride starts driving.', 'Ask again after the room stops lying.', 'The omen is warm but badly wired.', 'The answer is technically yes and spiritually no.', 'The archive coughs up a cautious yes.', 'The modem refuses certainty.', 'The signal says wait.', 'The signal says move.', 'The answer is hiding in the boring option.', 'The future has opened a small suspicious tab.', 'Yes, with paperwork.', 'No, with dignity.'],
-      signals: ['The cursor blinked twice. That is rarely innocent.', 'A banner ad tried to warn you, then crashed.', 'Your optimism has entered compatibility mode.', 'The packets arrived smelling faintly of consequence.', 'Someone in 1998 would call this a bad idea and still click it.', 'The modem made the sound of a chair scraping backward.', 'The ghost of a guestbook signed “absolutely not”.', 'The server returned 200 OK, emotionally 404.', 'A forgotten pop-up says the second step is the trap.', 'The machine sees desire wearing a fake moustache.', 'The archive has detected avoidable nonsense nearby.', 'Three dead links formed an arrow pointing at restraint.', 'The old web says: fewer tabs, cleaner choices.', 'A tiny under-construction GIF is shaking its head.', 'The browser history is already preparing an alibi.', 'The webring has voted: proceed carefully.', 'A GeoCities starfield briefly became judgmental.', 'The floppy spins, but the label is peeling.', 'A suspiciously calm answer has appeared in the logs.', 'The oracle has smelled future admin work.'],
-      advice: ['Decide before momentum gets a costume.', 'If it still looks wise in daylight, continue.', 'Do the smaller version first.', 'Leave yourself an exit you do not have to explain.', 'Write the message, then delete the theatrical parts.', 'Drink water before making philosophy out of appetite.', 'Spend ten minutes removing friction, not adding drama.', 'If the answer needs three justifications, it is probably no.', 'Ask what this costs tomorrow morning.', 'Choose the option that creates the least cleanup.', 'Do not let boredom sign contracts.', 'Make the boring plan and let chaos apply for permission.', 'If you need secrecy, check whether you actually need the thing.', 'Delay by one sleep cycle. The truth hates that trick.', 'Turn the volume down on nostalgia.', 'If two paths are equal, pick the one with fewer witnesses.', 'Do the kind thing, but not the vague thing.', 'Give future-you a receipt, not a crime scene.', 'Try the reversible version first.', 'Stop before the second explanation.'],
-      alcohol: ['Yes, but the second drink is the trap.', 'No, if you decide before 18:00. After that the committee gets loud.', 'Probably. Buy sparkling water before optimism starts lying.', 'The bottle is nearby. Your dignity has not fully left the building.', 'The oracle recommends food first and heroics never.'],
-      love: ['No. The signal is nostalgia wearing perfume.', 'Maybe, but send the daylight version, not the midnight version.', 'Yes, if the message is simple and contains no courtroom speech.', 'The heart is online. The judgment server is unstable.', 'Do not confuse chemistry with instruction.'],
-      money: ['No purchase today. Cart it, sleep, then interrogate it.', 'Yes, if it solves a real problem twice this week.', 'The price is visible. The maintenance cost is hiding.', 'The oracle sees a subscription wearing a fake moustache.', 'If you would not buy it sober and bored, do not buy it glowing and tired.'],
-      work: ['Do the ugly first draft. Elegance can arrive by train.', 'The meeting is not the work. Beware the calendar-shaped decoy.', 'Ship the small clean thing before building a cathedral.', 'The blocker has a name. Write it down and it gets smaller.', 'Today wants execution, not another framework.'],
+      generic: {
+        yes: ['Yes, but keep it smaller than your appetite.', 'Yes. The useful version is boring and reversible.', 'Probably yes, if you do not turn it into theatre.', 'Yes, if you can explain it in one sentence tomorrow.'],
+        no: ['No. The machine sees cleanup pretending to be opportunity.', 'Probably no. The cost is hiding behind the first click.', 'No, unless the boring facts change.', 'No. Future-you is already reaching for a mop.'],
+        maybe: ['Maybe. The missing detail is the hinge, not decoration.', 'Unclear. Ask a narrower question and the fog will lose weight.', 'Maybe, but only after one sleep cycle.', 'The answer is conditional: reduce the blast radius first.'],
+        action: ['Do the smallest test version first.', 'Make it reversible, then proceed.', 'Write the next step down. If it sounds stupid in text, it is stupid.', 'Remove one moving part before you move.']
+      },
+      alcohol: {
+        yes: ['Yes, drinking is likely if you leave the decision to the evening version of you.', 'Probably yes, unless you decide the rule before the room gets warm.', 'Yes, but the second drink is the trap wearing a nice jacket.'],
+        no: ['No, if you choose it now and put a substitute in reach.', 'No. Food, water, and an early exit will do more than willpower theatre.', 'Probably no — but only if you do not negotiate with yourself later.'],
+        maybe: ['Maybe. The trigger is not alcohol; it is the setting around it.', 'Unclear. Check who you are with, how tired you are, and whether tomorrow matters.', 'The bottle is not the decision. The first “why not” is.'],
+        action: ['Decide the drink limit before the first drink.', 'Buy sparkling water before optimism starts lying.', 'Eat first. Leave before the second explanation.']
+      },
+      love: {
+        yes: ['Yes, but send the daylight version, not the midnight speech.', 'Probably yes if the message is simple, kind, and contains no courtroom argument.', 'Yes — one clean signal beats twelve encrypted hints.'],
+        no: ['No. That is nostalgia wearing perfume.', 'Probably no. The ache is real; the proposed action is not necessarily wise.', 'No if the question secretly asks for permission to reopen an old wound.'],
+        maybe: ['Maybe. The difference between courage and loneliness is doing some heavy lifting here.', 'Unclear. If you want connection, be direct; if you want reassurance, pause.', 'Maybe, but chemistry is not an instruction manual.'],
+        action: ['Write one honest sentence and stop.', 'Do not send anything that requires a jury to interpret it.', 'Wait until morning if the message is emotionally radioactive.']
+      },
+      money: {
+        yes: ['Yes, if it solves a real problem twice this week.', 'Probably yes if the cost is known and the maintenance is small.', 'Yes, but only the planned version — not the upgraded goblin version.'],
+        no: ['No purchase today. Cart it, sleep, then interrogate it.', 'Probably no. The price is visible; the maintenance cost is hiding.', 'No. A discount is not a purpose.'],
+        maybe: ['Maybe. If you would still buy it bored and sober, continue.', 'Unclear. Separate “need”, “want”, and “want because tired”.', 'Maybe, but subscriptions age like wet cardboard.'],
+        action: ['Wait 24 hours before buying.', 'Write what problem it solves. If the sentence limps, so does the purchase.', 'Check the exit cost before the entry price.']
+      },
+      work: {
+        yes: ['Yes. Do the ugly first draft and stop decorating the scaffolding.', 'Probably yes: the next step is execution, not another framework.', 'Yes, but ship the small clean thing first.'],
+        no: ['No. That meeting is a calendar-shaped decoy.', 'Probably no. You are polishing the handle while the door is still locked.', 'No, if the task only creates proof that you were busy.'],
+        maybe: ['Maybe. Name the blocker; unnamed blockers breed in the walls.', 'Unclear. The useful question is who owns the next action.', 'Maybe, but reduce scope before adding process.'],
+        action: ['Define the next visible deliverable.', 'Do the part that makes the rest easier.', 'Send the short version. Long versions are where weak decisions hide.']
+      },
+      health: {
+        yes: ['Yes, rest is the correct answer wearing boring shoes.', 'Probably yes: your body is not a committee memo.', 'Yes, but choose the sane version, not heroic self-improvement cosplay.'],
+        no: ['No. Do not negotiate with exhaustion like it is a clever opponent.', 'Probably no if pain, sleep, or stress is already waving a flag.', 'No. The machine detects biological debt collection.'],
+        maybe: ['Maybe. Check sleep, food, water, and daylight before philosophy.', 'Unclear. If the symptom persists, involve a real clinician.', 'Maybe, but lower intensity and increase honesty.'],
+        action: ['Drink water, eat something plain, and reassess.', 'If it is acute, worsening, or scary, get real help.', 'Choose the version you can repeat tomorrow.']
+      },
+      travel: {
+        yes: ['Yes, if the route has slack and the bag is not fantasy.', 'Probably yes. Leave earlier than your confidence suggests.', 'Yes, but book the boring option with fewer failure points.'],
+        no: ['No if the plan depends on every connection behaving politely.', 'Probably no. The itinerary is balanced like glassware on a dog.', 'No. Too many moving parts for too little reward.'],
+        maybe: ['Maybe. Weather, sleep, and transfer time are the three goblins.', 'Unclear. Add buffer and the answer improves.', 'Maybe, but the cheap route may be charging interest in stress.'],
+        action: ['Add 30 minutes of slack.', 'Pack the night before.', 'Choose fewer transfers over theoretical elegance.']
+      },
       danger: ['No. Close the browser and contact a real person now.', 'This is not an oracle question. Get human help immediately.', 'Stop. Move toward a person, not a prediction.', 'The answer is safety first. Everything else can wait.', 'Do not handle this alone. Call someone now.']
     };
+    const oracleSignals = {
+      generic: ['The server returned 200 OK, emotionally 404.', 'A forgotten pop-up says the second step is the trap.', 'The future has opened a small suspicious tab.'],
+      alcohol: ['The browser history is already preparing an alibi.', 'A neon bar sign flickered exactly once.', 'The bottle is nearby; the morning is taking notes.'],
+      love: ['A guestbook heart loaded, then asked for context.', 'The modem made the sound of someone rereading an old message.', 'A tiny profile picture became louder than facts.'],
+      money: ['A checkout button started humming funeral music.', 'The subscription wore a fake moustache.', 'A receipt-shaped ghost walked through the room.'],
+      work: ['The calendar blinked like it was hiding a body.', 'A todo list tried to reproduce in captivity.', 'The blocker has a name and hates being written down.'],
+      health: ['The body sent a plain-text warning because rich text failed.', 'A glass of water filed a formal complaint.', 'The pillow has entered evidence.'],
+      travel: ['A departure board coughed politely.', 'The map zoomed out and looked disappointed.', 'A transfer window started sweating.']
+    };
+    const questionWords = {
+      yes: /\b(will|should|can|could|would|is|are|am|do|does|did|ska|bör|kan|kommer|är|borde)\b|\?$/i,
+      no: /\b(avoid|skip|stop|cancel|not|inte|undvika|skippa|sluta|avboka)\b/i,
+      action: /\b(how|what should|what do|hur|vad ska|vad bör|råd|advice)\b/i
+    };
     function oraclePick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-    function oracleCategory(q){
+    function oracleProfile(q){
       const t=q.toLowerCase();
-      if(/hurt myself|kill myself|suicide|självmord|skada mig/.test(t)) return 'danger';
-      if(/alcohol|drink|drunk|beer|wine|vodka|öl|vin|sprit|alkohol/.test(t)) return 'alcohol';
-      if(/love|text her|text him|date|relationship|crush|kärlek|dejta|sms/.test(t)) return 'love';
-      if(/buy|money|stock|invest|price|expensive|köpa|pengar|aktie/.test(t)) return 'money';
-      if(/work|job|meeting|deadline|project|jobb|möte|projekt/.test(t)) return 'work';
-      return 'generic';
+      if(/hurt myself|kill myself|suicide|självmord|skada mig|ta livet/.test(t)) return {cat:'danger', mode:'action'};
+      let cat='generic';
+      if(/alcohol|drink|drunk|beer|wine|vodka|öl|vin|sprit|alkohol|dricka/.test(t)) cat='alcohol';
+      else if(/love|text her|text him|date|relationship|crush|kärlek|dejta|sms|förhållande|älskar|ex\b/.test(t)) cat='love';
+      else if(/buy|money|stock|invest|price|expensive|subscription|köpa|pengar|aktie|investera|dyrt|prenumeration/.test(t)) cat='money';
+      else if(/work|job|meeting|deadline|project|jobb|möte|projekt|chef|kund|deadline/.test(t)) cat='work';
+      else if(/health|sleep|tired|doctor|pain|träna|sjuk|hälsa|sova|trött|läkare|ont/.test(t)) cat='health';
+      else if(/travel|flight|train|hotel|resa|flyg|tåg|hotell|åka/.test(t)) cat='travel';
+      let mode='maybe';
+      if(questionWords.action.test(t)) mode='action';
+      else if(questionWords.no.test(t)) mode='no';
+      else if(questionWords.yes.test(t)) mode=Math.random() < 0.58 ? 'yes' : (Math.random() < 0.5 ? 'maybe' : 'no');
+      return {cat, mode};
     }
     function oracleAnswer(question){
       const q=(question || '').trim();
-      const cat=oracleCategory(q);
-      if(cat==='danger'){
+      const profile=oracleProfile(q);
+      if(profile.cat==='danger'){
         return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nORACLE BREAKS CHARACTER:\n'+oraclePick(oracleBanks.danger)+'\n\nACTION:\nContact a real person or emergency service now.';
       }
-      const opener = cat==='generic' ? oraclePick(oracleBanks.openings) : oraclePick(oracleBanks[cat]);
-      return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nDIALING FORGOTTEN NODE...\nPARSING BAD DECISIONS...\nCHECKING MODEM OMENS...\n\nORACLE:\n'+opener+'\n\nSIGNAL:\n'+oraclePick(oracleBanks.signals)+'\n\nADVICE:\n'+oraclePick(oracleBanks.advice)+'\n\n> _';
+      const bank = oracleBanks[profile.cat] || oracleBanks.generic;
+      const answer = oraclePick(bank[profile.mode] || bank.maybe || oracleBanks.generic.maybe);
+      const signal = oraclePick(oracleSignals[profile.cat] || oracleSignals.generic);
+      const adviceBank = bank.action || oracleBanks.generic.action;
+      let advice = oraclePick(adviceBank);
+      if(advice === answer && adviceBank.length > 1){
+        advice = oraclePick(adviceBank.filter(line => line !== answer));
+      }
+      return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nDIALING FORGOTTEN NODE...\nREADING QUESTION SHAPE...\nMATCHING TOPIC: '+profile.cat.toUpperCase()+' / '+profile.mode.toUpperCase()+'...\n\nORACLE:\n'+answer+'\n\nSIGNAL:\n'+signal+'\n\nADVICE:\n'+advice+'\n\n> _';
     }
     function openOracle(){ oracleWindow.classList.remove('hidden'); setTimeout(()=>oracleInput.focus(), 30); }
     function closeOracle(){ oracleWindow.classList.add('hidden'); }
