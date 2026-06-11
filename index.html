@@ -118,6 +118,9 @@
     .ico.rss-icon{ background:var(--apricot); clip-path:none; border-radius:1px; }
     .ico.rss-icon::before{ content:""; position:absolute; left:8px; bottom:8px; width:8px; height:8px; border-radius:50%; background:var(--ink); }
     .ico.rss-icon::after{ content:""; position:absolute; left:7px; bottom:7px; width:22px; height:22px; border:3px solid var(--ink); border-left-color:transparent; border-bottom-color:transparent; border-radius:50%; box-shadow:7px -7px 0 -3px var(--apricot), 7px -7px 0 0 var(--ink); }
+    .ico.game-icon{ background:var(--lime); }
+    .ico.game-icon::before{ content:""; position:absolute; left:5px; right:5px; top:11px; bottom:11px; border:2px solid var(--ink); background:var(--banana); border-radius:4px; }
+    .ico.game-icon::after{ content:""; position:absolute; left:11px; top:18px; width:7px; height:7px; border:2px solid var(--ink); background:var(--ink); border-radius:50%; box-shadow:14px 0 0 var(--ink), 21px -3px 0 -1px var(--coral), 21px 7px 0 -1px var(--aqua); }
     .label{ display:inline-flex; align-items:center; justify-content:center; min-height:26px; max-width:88px; background:rgba(255,248,223,.92); border:2px solid var(--ink); padding:3px 7px; font-size:11px; line-height:1.05; box-shadow:3px 3px 0 rgba(36,27,24,.26); }
 
     .window{
@@ -246,7 +249,7 @@
   </div>
 
   <div class="menu-bar">
-    <div class="menu-left"><strong class="sun">☼ FWOS</strong><button class="menu-item" data-open="start">File</button><button class="menu-item" data-open="latest">Finds</button><button class="menu-item" data-open="archive">Collections</button><button class="menu-item" data-open="rss">Utilities</button></div>
+    <div class="menu-left"><strong class="sun">☼ FWOS</strong><button class="menu-item" data-open="start">File</button><button class="menu-item" data-open="latest">Finds</button><button class="menu-item" data-open="archive">Collections</button><button class="menu-item" data-open="rss">Utilities</button><button class="menu-item" data-open="games">Games</button></div>
     <div class="menu-right"><span id="clock">01:17</span><a class="menu-item" href="http://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
   </div>
 
@@ -263,6 +266,7 @@
       <button class="icon" data-open="random"><span class="ico radio"></span><span class="label">Random Relic</span></button>
       <button class="icon" data-open="source"><span class="ico source-icon"></span><span class="label">Source Notes</span></button>
       <button class="icon" data-open="rss"><span class="ico rss-icon"></span><span class="label">RSS + Submit</span></button>
+      <button class="icon" data-open="games"><span class="ico game-icon"></span><span class="label">Games</span></button>
     </nav>
 
     <section class="window main" aria-live="polite">
@@ -362,6 +366,340 @@
     </div>
   </template>
 
+  <template id="tpl-games">
+    <div class="sysline">/games · recovered time-wasters from the human web</div>
+    <h2>Games</h2>
+    <div class="promise">Recovered little time-wasters from the human web. No loot boxes. No login. Just bleeps.</div>
+    <div class="button-row">
+      <button class="retro-btn" data-open="pong">Pong: CD-ROM Edition</button>
+    </div>
+    <div class="sysline">1 game available · more recovering from the archive</div>
+    <div class="finds">
+      <div class="find">
+        <span class="year">1972<br>arcade</span>
+        <div><a href="#pong" data-open="pong">Pong: CD-ROM Edition</a><p>The original wall-bouncer, remastered with a spinning CD-ROM disc and original chiptune music. Player vs CPU. First to 7 wins.</p></div>
+        <span class="badge status-live">playable</span>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-pong">
+    <div class="sysline">pong.exe · cd-rom edition · fwos game driver v1.0</div>
+    <h2>Pong: CD-ROM Edition</h2>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px;">
+      <button id="pgPause" class="retro-btn" style="min-height:32px;padding:5px 12px;font-size:11px;">&#9646;&#9646; PAUSE</button>
+      <button id="pgRestart" class="retro-btn" style="min-height:32px;padding:5px 12px;font-size:11px;">&#8635; RESTART</button>
+      <button id="pgSound" class="retro-btn" style="min-height:32px;padding:5px 12px;font-size:11px;">&#9834; SOUND OFF</button>
+    </div>
+    <div style="position:relative;border:3px solid var(--ink);box-shadow:5px 5px 0 rgba(36,27,24,.34);background:#0a0014;overflow:hidden;">
+      <canvas id="pgCanvas" style="display:block;width:100%;aspect-ratio:16/9;image-rendering:pixelated;touch-action:none;"></canvas>
+      <div id="pgOverlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,0,20,.88);color:#fff25c;font-family:Monaco,Consolas,monospace;text-align:center;gap:10px;padding:16px;">
+        <div style="font-size:clamp(12px,3vw,16px);font-weight:bold;letter-spacing:.08em;">FWOS GAME DRIVER v1.0</div>
+        <div style="font-size:clamp(9px,2.2vw,11px);color:#7df9ff;line-height:1.6;">CD-ROM SPIN ACTIVE &middot; INSERT COIN? NO.<br>W/S or UP/DOWN &middot; TOUCH: drag your paddle</div>
+        <button id="pgStart" class="retro-btn" style="margin-top:6px;font-size:clamp(11px,2.8vw,14px);">&#9654; START GAME</button>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;font-family:Monaco,Consolas,monospace;font-size:10px;color:#6a5850;flex-wrap:wrap;gap:4px;">
+      <span>FWOS GAME DRIVER &middot; CD-ROM EDITION &middot; NO LOOT BOXES</span>
+      <span id="pgStatus">READY</span>
+    </div>
+    <script>
+(function(){
+  var SESSION = Date.now() + '-' + Math.random();
+  window._fwGameSession = SESSION;
+  var ctl = window.AbortController ? new AbortController() : null;
+  var sig = ctl ? ctl.signal : undefined;
+
+  var canvas = document.getElementById('pgCanvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var overlay = document.getElementById('pgOverlay');
+  var startBtn = document.getElementById('pgStart');
+  var pauseBtn = document.getElementById('pgPause');
+  var restartBtn = document.getElementById('pgRestart');
+  var soundBtn = document.getElementById('pgSound');
+  var statusEl = document.getElementById('pgStatus');
+
+  var W = 640, H = 360;
+  canvas.width = W; canvas.height = H;
+
+  var PAD_W = 12, PAD_H = 70, PAD_SPEED = 5.5;
+  var BALL_R = 16;
+  var state = 'idle', soundOn = false;
+  var audioCtx = null, musicLoopId = null;
+  var scoreL = 0, scoreR = 0;
+  var keys = {};
+  var touchStartY = 0, touchPadY = 0;
+  var lPad = {y: H/2 - PAD_H/2};
+  var rPad = {y: H/2 - PAD_H/2};
+  var ball = {x: W/2, y: H/2, dx: 3.5, dy: 2, spin: 0, spinV: 0.035};
+
+  function alive(){ return window._fwGameSession === SESSION; }
+  function clamp(p){ p.y = Math.max(0, Math.min(H - PAD_H, p.y)); }
+
+  function resetBall(dir){
+    ball.x = W/2; ball.y = H/2 + (Math.random()-0.5)*60;
+    ball.dx = (dir||1) * (3.4 + Math.random()*0.6);
+    ball.dy = (Math.random()*0.5 - 0.25) * 5;
+    ball.spinV = (Math.random()>0.5?1:-1)*0.04;
+  }
+  function resetGame(){
+    scoreL = 0; scoreR = 0;
+    lPad.y = H/2 - PAD_H/2; rPad.y = H/2 - PAD_H/2;
+    resetBall(1);
+  }
+
+  function getAC(){
+    if(!audioCtx) try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+    return audioCtx;
+  }
+  function blip(freq, dur, type, vol){
+    if(!soundOn) return;
+    try{
+      var a=getAC(); if(!a) return;
+      var o=a.createOscillator(), g=a.createGain();
+      o.connect(g); g.connect(a.destination);
+      o.type=type||'square'; o.frequency.value=freq||440;
+      g.gain.setValueAtTime(vol||0.18, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, a.currentTime+(dur||0.07));
+      o.start(); o.stop(a.currentTime+(dur||0.07));
+    }catch(e){}
+  }
+
+  function startMusic(){
+    stopMusic();
+    if(!soundOn) return;
+    try{
+      var a=getAC(); if(!a) return;
+      if(a.state==='suspended') a.resume();
+      var BPM=152, step=60/BPM/4;
+      var bass=[65.4,98.0,65.4,110.0,73.4,98.0,65.4,87.3];
+      var mel=[523.3,659.3,784.0,1046.5,784.0,659.3,523.3,392.0];
+      var BARS=4, SPB=8;
+      var master=a.createGain(); master.gain.value=0.09; master.connect(a.destination);
+      function sched(){
+        var t=a.currentTime+0.05;
+        for(var b=0;b<BARS;b++){
+          for(var i=0;i<SPB;i++){
+            var nt=t+(b*SPB+i)*step;
+            var bo=a.createOscillator(),bg=a.createGain();
+            bo.connect(bg); bg.connect(master);
+            bo.type='square'; bo.frequency.value=bass[i%bass.length];
+            bg.gain.setValueAtTime(0.55,nt);
+            bg.gain.exponentialRampToValueAtTime(0.0001,nt+step*0.75);
+            bo.start(nt); bo.stop(nt+step*0.75);
+            if(i%2===0){
+              var mo=a.createOscillator(),mg=a.createGain();
+              mo.connect(mg); mg.connect(master);
+              mo.type='triangle'; mo.frequency.value=mel[(i/2)%mel.length];
+              mg.gain.setValueAtTime(0.45,nt);
+              mg.gain.exponentialRampToValueAtTime(0.0001,nt+step*1.5);
+              mo.start(nt); mo.stop(nt+step*1.5);
+            }
+            if(i%4===0){
+              try{
+                var buf=a.createBuffer(1,Math.floor(a.sampleRate*0.04),a.sampleRate);
+                var d=buf.getChannelData(0); for(var j=0;j<d.length;j++) d[j]=Math.random()*2-1;
+                var ns=a.createBufferSource(),ng=a.createGain();
+                ns.buffer=buf; ns.connect(ng); ng.connect(master);
+                ng.gain.setValueAtTime(0.2,nt);
+                ng.gain.exponentialRampToValueAtTime(0.0001,nt+0.035);
+                ns.start(nt);
+              }catch(e){}
+            }
+          }
+        }
+        return BARS*SPB*step*1000-80;
+      }
+      var delay=sched();
+      musicLoopId=setInterval(function(){ if(!soundOn||!alive()){stopMusic();return;} sched(); }, delay);
+    }catch(e){}
+  }
+  function stopMusic(){
+    if(musicLoopId){ clearInterval(musicLoopId); musicLoopId=null; }
+  }
+
+  function drawBg(){
+    ctx.fillStyle='#0a0014'; ctx.fillRect(0,0,W,H);
+    ctx.save();
+    ctx.setLineDash([10,10]);
+    ctx.strokeStyle='rgba(255,255,255,.15)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle='rgba(0,0,0,.08)';
+    for(var y=0;y<H;y+=4) ctx.fillRect(0,y,W,2);
+  }
+  function drawPad(x,y,left){
+    var g=ctx.createLinearGradient(x,0,x+PAD_W,0);
+    if(left){ g.addColorStop(0,'#7df9ff'); g.addColorStop(1,'#0040b0'); }
+    else { g.addColorStop(0,'#ff6bb5'); g.addColorStop(1,'#990050'); }
+    ctx.fillStyle=g; ctx.fillRect(x,y,PAD_W,PAD_H);
+    ctx.strokeStyle='rgba(255,255,255,.6)'; ctx.lineWidth=1.5;
+    ctx.strokeRect(x+1,y+1,PAD_W-2,PAD_H-2);
+  }
+  function drawCD(x,y,r,spin){
+    ctx.save(); ctx.translate(x,y);
+    var sg=ctx.createRadialGradient(-r*0.3,-r*0.3,r*0.05,0,0,r);
+    sg.addColorStop(0,'#f2f2f4'); sg.addColorStop(0.35,'#c4c4cc');
+    sg.addColorStop(0.7,'#9898a8'); sg.addColorStop(1,'#606070');
+    ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2);
+    ctx.fillStyle=sg; ctx.fill();
+    for(var ri=0.38;ri<0.93;ri+=0.11){
+      ctx.beginPath(); ctx.arc(0,0,r*ri,0,Math.PI*2);
+      ctx.strokeStyle='rgba(160,160,190,.22)'; ctx.lineWidth=1; ctx.stroke();
+    }
+    ctx.save(); ctx.rotate(spin);
+    ctx.beginPath(); ctx.moveTo(0,0);
+    ctx.arc(0,0,r-1,-0.5,1.0); ctx.closePath();
+    var rb=ctx.createLinearGradient(-r,0,r,0);
+    rb.addColorStop(0,'rgba(255,0,128,.62)'); rb.addColorStop(0.2,'rgba(255,160,0,.58)');
+    rb.addColorStop(0.4,'rgba(255,242,0,.58)'); rb.addColorStop(0.6,'rgba(0,255,120,.58)');
+    rb.addColorStop(0.8,'rgba(0,200,255,.58)'); rb.addColorStop(1,'rgba(160,0,255,.58)');
+    ctx.fillStyle=rb; ctx.fill(); ctx.restore();
+    ctx.save(); ctx.rotate(spin+Math.PI*0.7);
+    ctx.beginPath(); ctx.moveTo(0,0);
+    ctx.arc(0,0,r-1,-0.3,0.7); ctx.closePath();
+    var rb2=ctx.createLinearGradient(-r,0,r,0);
+    rb2.addColorStop(0,'rgba(0,200,255,.28)');
+    rb2.addColorStop(0.5,'rgba(255,0,200,.28)');
+    rb2.addColorStop(1,'rgba(255,242,0,.28)');
+    ctx.fillStyle=rb2; ctx.fill(); ctx.restore();
+    ctx.beginPath(); ctx.arc(0,0,r*0.3,0,Math.PI*2);
+    ctx.fillStyle='#fff25c'; ctx.fill();
+    ctx.strokeStyle='#24152a'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(0,0,r*0.09,0,Math.PI*2);
+    ctx.fillStyle='#0a0014'; ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,.5)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2);
+    ctx.strokeStyle='rgba(36,21,42,.5)'; ctx.lineWidth=2; ctx.stroke();
+    ctx.restore();
+  }
+  function drawScore(){
+    ctx.font='bold 38px Monaco,Consolas,monospace';
+    ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillStyle='rgba(255,255,255,.9)';
+    ctx.fillText(scoreL, W/2-65, 12);
+    ctx.fillText(scoreR, W/2+65, 12);
+    ctx.textBaseline='alphabetic';
+  }
+  function drawHUD(){
+    ctx.font='9px Monaco,Consolas,monospace';
+    ctx.textAlign='left'; ctx.fillStyle='rgba(125,249,255,.55)';
+    ctx.fillText('PLAYER', 22, H-8);
+    ctx.textAlign='right'; ctx.fillStyle='rgba(255,107,181,.55)';
+    ctx.fillText('CPU', W-22, H-8);
+  }
+  function draw(){
+    drawBg();
+    drawPad(20,lPad.y,true);
+    drawPad(W-20-PAD_W,rPad.y,false);
+    drawCD(ball.x,ball.y,BALL_R,ball.spin);
+    drawScore(); drawHUD();
+  }
+
+  function update(){
+    if(state!=='playing') return;
+    if(keys['ArrowUp']||keys['w']||keys['W']) lPad.y-=PAD_SPEED;
+    if(keys['ArrowDown']||keys['s']||keys['S']) lPad.y+=PAD_SPEED;
+    clamp(lPad);
+    var cpuTarget=ball.y-PAD_H/2;
+    var cpuSpeed=3.0+scoreR*0.12;
+    var diff=cpuTarget-rPad.y;
+    rPad.y+=Math.sign(diff)*Math.min(Math.abs(diff),cpuSpeed);
+    clamp(rPad);
+    ball.x+=ball.dx; ball.y+=ball.dy; ball.spin+=ball.spinV;
+    if(ball.y-BALL_R<0){ ball.y=BALL_R; ball.dy=Math.abs(ball.dy); blip(220,0.05,'triangle',0.12); }
+    if(ball.y+BALL_R>H){ ball.y=H-BALL_R; ball.dy=-Math.abs(ball.dy); blip(220,0.05,'triangle',0.12); }
+    if(ball.dx<0&&ball.x-BALL_R<=20+PAD_W&&ball.x-BALL_R>18&&ball.y>=lPad.y-2&&ball.y<=lPad.y+PAD_H+2){
+      ball.x=20+PAD_W+BALL_R; ball.dx=Math.abs(ball.dx)*1.04;
+      ball.dy+=(ball.y-(lPad.y+PAD_H/2))*0.1;
+      ball.spinV=(Math.random()>0.5?1:-1)*0.055; blip(480,0.06,'square',0.22);
+    }
+    if(ball.dx>0&&ball.x+BALL_R>=W-20-PAD_W&&ball.x+BALL_R<W-18&&ball.y>=rPad.y-2&&ball.y<=rPad.y+PAD_H+2){
+      ball.x=W-20-PAD_W-BALL_R; ball.dx=-Math.abs(ball.dx)*1.04;
+      ball.dy+=(ball.y-(rPad.y+PAD_H/2))*0.1;
+      ball.spinV=(Math.random()>0.5?1:-1)*0.055; blip(480,0.06,'square',0.22);
+    }
+    var spd=Math.sqrt(ball.dx*ball.dx+ball.dy*ball.dy);
+    if(spd>14){ ball.dx=ball.dx/spd*14; ball.dy=ball.dy/spd*14; }
+    if(ball.x+BALL_R<0){
+      scoreR++; blip(120,0.35,'sawtooth',0.22);
+      if(statusEl) statusEl.textContent='CPU SCORES!';
+      setTimeout(function(){ if(state==='playing'&&statusEl) statusEl.textContent='PLAYING'; },1200);
+      resetBall(1); if(scoreR>=7) endGame(false);
+    }
+    if(ball.x-BALL_R>W){
+      scoreL++; blip(880,0.25,'triangle',0.18);
+      if(statusEl) statusEl.textContent='YOU SCORE!';
+      setTimeout(function(){ if(state==='playing'&&statusEl) statusEl.textContent='PLAYING'; },1200);
+      resetBall(-1); if(scoreL>=7) endGame(true);
+    }
+  }
+
+  function loop(){
+    if(!alive()){ stopMusic(); if(ctl) ctl.abort(); return; }
+    update(); draw(); requestAnimationFrame(loop);
+  }
+
+  function startGame(){
+    resetGame(); state='playing';
+    if(overlay) overlay.style.display='none';
+    if(pauseBtn) pauseBtn.textContent='⏸ PAUSE';
+    if(statusEl) statusEl.textContent='PLAYING';
+    if(soundOn) startMusic();
+  }
+  function endGame(won){
+    state='over'; stopMusic();
+    if(statusEl) statusEl.textContent=won?'YOU WIN!':'CPU WINS!';
+    if(overlay){
+      overlay.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,0,20,.88);color:#fff25c;font-family:Monaco,Consolas,monospace;text-align:center;gap:10px;padding:16px;';
+      overlay.innerHTML='<div style="font-size:clamp(14px,4vw,22px);font-weight:bold;color:'+(won?'#8cffc1':'#ff6bb5')+'">'+(won?'YOU WIN!':'CPU WINS. AGAIN.')+
+        '</div><div style="font-size:11px;color:#7df9ff;">'+scoreL+' — '+scoreR+'</div>'+
+        '<button id="pgRestart2" class="retro-btn" style="margin-top:10px;font-size:13px;">↺ PLAY AGAIN</button>';
+      var r2=document.getElementById('pgRestart2');
+      if(r2) r2.addEventListener('click',startGame);
+    }
+  }
+
+  function onKey(e){
+    keys[e.key]=true;
+    if(e.key==='ArrowUp'||e.key==='ArrowDown') e.preventDefault();
+    if(e.key===' '||e.key==='p'||e.key==='P'){
+      e.preventDefault();
+      if(state==='playing'){ state='paused'; if(pauseBtn) pauseBtn.textContent='▶ RESUME'; if(statusEl) statusEl.textContent='PAUSED'; stopMusic(); }
+      else if(state==='paused'){ state='playing'; if(pauseBtn) pauseBtn.textContent='⏸ PAUSE'; if(statusEl) statusEl.textContent='PLAYING'; if(soundOn) startMusic(); }
+    }
+  }
+  function onKeyUp(e){ keys[e.key]=false; }
+
+  if(sig){
+    document.addEventListener('keydown',onKey,{signal:sig});
+    document.addEventListener('keyup',onKeyUp,{signal:sig});
+  } else {
+    document.addEventListener('keydown',onKey);
+    document.addEventListener('keyup',onKeyUp);
+  }
+
+  canvas.addEventListener('touchstart',function(e){ touchStartY=e.touches[0].clientY; touchPadY=lPad.y; e.preventDefault(); },{passive:false});
+  canvas.addEventListener('touchmove',function(e){ var dy=e.touches[0].clientY-touchStartY; lPad.y=touchPadY+dy*(H/canvas.getBoundingClientRect().height); clamp(lPad); e.preventDefault(); },{passive:false});
+
+  if(startBtn) startBtn.addEventListener('click',startGame);
+  if(pauseBtn) pauseBtn.addEventListener('click',function(){
+    if(state==='playing'){ state='paused'; pauseBtn.textContent='▶ RESUME'; if(statusEl) statusEl.textContent='PAUSED'; stopMusic(); }
+    else if(state==='paused'){ state='playing'; pauseBtn.textContent='⏸ PAUSE'; if(statusEl) statusEl.textContent='PLAYING'; if(soundOn) startMusic(); }
+  });
+  if(restartBtn) restartBtn.addEventListener('click',startGame);
+  if(soundBtn) soundBtn.addEventListener('click',function(){
+    soundOn=!soundOn;
+    soundBtn.textContent=soundOn?'♪ SOUND ON':'♪ SOUND OFF';
+    if(!soundOn){ stopMusic(); } else { getAC(); if(state==='playing') startMusic(); }
+  });
+
+  loop();
+})();
+    </script>
+  </template>
+
   <script>
     const boot = document.querySelector('.boot');
 
@@ -393,7 +731,9 @@
       buffett:{ title:"Find 0010 / buffett.file", html:"<div class=\"sysline\">1999-11-22 · market essay · archive copy</div><h2>Mr. Buffett on the Stock Market</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Valuation argument about long-run stock returns.</div><div class=\"meta-cell\"><b>Why now</b>Euphoria made the sober math valuable.</div><div class=\"meta-cell\"><b>Status</b>archive copy</div><div class=\"meta-cell\"><b>Found in</b>markets that aged well</div></div><p class=\"manifesto\">Warren Buffett explains why market returns are bounded by business results, interest rates, and starting valuations.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It is a clean antidote to line-goes-up thinking: price still matters when everyone wants it not to.</div><blockquote class=\"quote\">Best opened when a boom has started calling arithmetic “old-fashioned.”</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm\">open archive</a></div>", status:"status: archive copy", folder:"folder: markets-that-aged-well", preview:"WARREN BUFFETT<br>valuation / returns / market euphoria" },
       coates:{ title:"Find 0011 / coates.file", html:"<div class=\"sysline\">2009-08-11 · public libraries / civic web · original online</div><h2>Delane’s War / The Good Library Campaigner</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>A Berkshire Publishing post about Tim Coates and his library campaign.</div><div class=\"meta-cell\"><b>Why now</b>Libraries are still civic memory infrastructure.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">A 2009 trace of Tim Coates: bookseller, library campaigner, and persistent critic of how public library systems are managed, measured, and allowed to decay.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>The Forgotten Web is about memory systems. Coates’s fight for libraries sits in the same machine: public access, catalogues, preservation, budgets, and the boring infrastructure that keeps culture reachable.</div><blockquote class=\"quote\">Best opened when “library” starts sounding like nostalgia instead of civic plumbing.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.berkshirepublishing.com/blog/delanes-war-by-tim-coates-the-good-library-campaigner/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.berkshirepublishing.com/blog/delanes-war-by-tim-coates-the-good-library-campaigner/\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"TIM COATES<br>libraries / civic memory / public access" },
       tyranny:{ title:"Find 0012 / tyranny.file", html:"<div class=\"sysline\">1970 · organization essay · original online</div><h2>The Tyranny of Structurelessness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on informal power in groups.</div><div class=\"meta-cell\"><b>Why now</b>Flat groups still grow hidden hierarchies.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Jo Freeman argues that rejecting explicit structure often produces unaccountable informal structure instead.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It gives language to a recurring failure mode in collectives, startups, movements, and online communities.</div><blockquote class=\"quote\">Best opened whenever “we have no hierarchy” is said with a little too much confidence.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://www.jofreeman.com/joreen/tyranny.htm\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://www.jofreeman.com/joreen/tyranny.htm\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"JO FREEMAN<br>structurelessness / power / groups" },
-      idleness:{ title:"Find 0013 / idleness.file", html:"<div class=\"sysline\">1932 · essay · original online</div><h2>In Praise of Idleness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on work, leisure, and civilization.</div><div class=\"meta-cell\"><b>Why now</b>Productivity cults did not age out.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Bertrand Russell argues that less compulsory work and more intelligent leisure would make civilization saner.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It punctures the idea that being constantly busy is evidence of virtue, value, or thought.</div><blockquote class=\"quote\">Best opened after the third productivity system has failed to explain what the work is actually for.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://harpers.org/archive/1932/10/in-praise-of-idleness/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://harpers.org/archive/1932/10/in-praise-of-idleness/\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"BERTRAND RUSSELL<br>idleness / work / civilization" }
+      idleness:{ title:"Find 0013 / idleness.file", html:"<div class=\"sysline\">1932 · essay · original online</div><h2>In Praise of Idleness</h2><div class=\"relic-meta\"><div class=\"meta-cell\"><b>What</b>Essay on work, leisure, and civilization.</div><div class=\"meta-cell\"><b>Why now</b>Productivity cults did not age out.</div><div class=\"meta-cell\"><b>Status</b>original online</div><div class=\"meta-cell\"><b>Found in</b>weird useful corners</div></div><p class=\"manifesto\">Bertrand Russell argues that less compulsory work and more intelligent leisure would make civilization saner.</p><div class=\"stamp\"><b>WHY IT STILL MATTERS</b>It punctures the idea that being constantly busy is evidence of virtue, value, or thought.</div><blockquote class=\"quote\">Best opened after the third productivity system has failed to explain what the work is actually for.</blockquote><div class=\"button-row\"><a class=\"retro-btn\" href=\"https://harpers.org/archive/1932/10/in-praise-of-idleness/\">open original</a><a class=\"retro-btn\" href=\"https://web.archive.org/web/*/https://harpers.org/archive/1932/10/in-praise-of-idleness/\">archive index</a></div>", status:"status: original online", folder:"folder: weird-useful-corners", preview:"BERTRAND RUSSELL<br>idleness / work / civilization" },
+      games:{ title:'Games / playable.dir', tpl:'tpl-games', status:'status: 1 game available · no loot boxes · no login', folder:'folder: games', preview:'GAMES DIRECTORY<br>1 game available' },
+      pong:{ title:'Pong: CD-ROM Edition / pong.exe', tpl:'tpl-pong', status:'status: cd-rom spin active · insert coin? no.', folder:'folder: games', preview:'PONG CD-ROM EDITION<br>player vs cpu · first to 7' }
     };
     const randomKeys = ['coates','uris','dao','cyberspace','barrett','blood','shirky','leaky','worse','risk','buffett','tyranny','idleness'];
     const main = document.getElementById('mainContent');
@@ -411,8 +751,16 @@
         link.href = `#${link.dataset.open}`;
       });
     }
+    function executeScripts(container){
+      container.querySelectorAll('script').forEach(function(old){
+        var s = document.createElement('script');
+        s.textContent = old.textContent;
+        old.parentNode.replaceChild(s, old);
+      });
+    }
     function sectionForKey(key){
       if(key === 'start' || key === 'latest' || key === 'archive' || key === 'source' || key === 'rss' || key === 'random') return key;
+      if(key === 'games' || key === 'pong') return 'games';
       if(key.startsWith('collection-')) return 'archive';
       return 'latest';
     }
@@ -445,10 +793,12 @@
       title.textContent = r.title;
       statusLeft.textContent = r.status;
       setActiveNav(safeKey);
+      window._fwGameSession = null;
       if(r.tpl){ main.innerHTML = document.getElementById(r.tpl).innerHTML; }
       else { main.innerHTML = r.html; }
       prepareInternalLinks();
       prepareExternalLinks();
+      executeScripts(main);
       if(shouldScroll) mainWindow.scrollIntoView({ behavior:'smooth', block:'start' });
     }
     document.addEventListener('click', e => {
