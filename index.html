@@ -69,11 +69,7 @@
     .boot-line:nth-child(2){ animation-delay:.25s; } .boot-line:nth-child(3){ animation-delay:.65s; }
     .boot-line:nth-child(4){ animation-delay:1.05s; } .boot-line:nth-child(5){ animation-delay:1.45s; }
     .boot-line:nth-child(6){ animation-delay:1.95s; color:#90d1a7; }
-    .audio-driver{ margin-top:18px; padding-top:14px; border-top:1px dashed rgba(249,239,228,.55); opacity:0; animation:lineIn .18s steps(1,end) forwards; animation-delay:2.18s; }
-    .audio-driver b{ display:block; font-family:Monaco,Consolas,monospace; font-size:12px; letter-spacing:.08em; color:#7df9ff; margin-bottom:8px; }
-    .audio-driver p{ margin:8px 0 0; font-family:Monaco,Consolas,monospace; font-size:11px; line-height:1.4; color:#f9efe4; }
-    .audio-btn{ border:2px solid #f9efe4; background:#ff00ff; color:#f9efe4; box-shadow:4px 4px 0 #7df9ff; cursor:pointer; font-family:Monaco,Consolas,monospace; font-weight:bold; padding:8px 10px; }
-    .audio-btn:hover,.audio-btn:focus-visible{ background:#7df9ff; color:#191613; outline:2px solid #f9efe4; outline-offset:2px; }
+
     @keyframes lineIn{ to{ opacity:1; } }
     @keyframes bootAway{ to{ opacity:0; visibility:hidden; pointer-events:none; } }
     @media (prefers-reduced-motion: reduce){ .boot{ display:none; } *{ animation:none!important; transition:none!important; } }
@@ -85,9 +81,7 @@
       box-shadow:0 2px 0 rgba(36,27,24,.12);
     }
     .menu-left,.menu-right{ display:flex; gap:12px; align-items:center; white-space:nowrap; }
-    .audio-toggle{ border:2px solid var(--ink); background:var(--aqua); color:var(--ink); padding:1px 6px; cursor:pointer; font:11px Monaco,Consolas,monospace; box-shadow:2px 2px 0 rgba(36,27,24,.25); }
-    .audio-toggle.is-playing{ background:var(--mint); }
-    .audio-toggle:hover,.audio-toggle:focus-visible{ background:var(--lime); outline:2px solid var(--ink); outline-offset:2px; }
+
     .sun{ color:#c00078; font-weight:bold; }
     .menu-item{ border:0; background:transparent; color:var(--ink); padding:2px 4px; cursor:pointer; text-decoration:none; font:inherit; }
     .menu-item:hover,.menu-item:focus-visible,.menu-item.active{ background:var(--aqua); box-shadow:2px 2px 0 var(--ink); outline:2px solid var(--ink); outline-offset:2px; }
@@ -246,20 +240,14 @@
       <div class="boot-line">loading recovered voices............OK</div>
       <div class="boot-line">indexing old blogroll residue.......OK</div>
       <div class="boot-line">ready. open the archive.</div>
-      <div class="audio-driver">
-        <b>FWOS AUDIO DRIVER</b>
-        <button class="audio-btn" type="button" data-audio-toggle>▶ Play entrance music</button>
-        <p>Jussi Björling — Nessun Dorma<br>78rpm ghost signal via Internet Archive.</p>
-      </div>
+
     </div>
   </div>
 
   <div class="menu-bar">
     <div class="menu-left"><strong class="sun">☼ FWOS</strong><button class="menu-item" data-open="start">File</button><button class="menu-item" data-open="latest">Finds</button><button class="menu-item" data-open="archive">Collections</button><button class="menu-item" data-open="rss">Utilities</button></div>
-    <div class="menu-right"><button class="audio-toggle" type="button" data-audio-toggle aria-label="Play or pause entrance music">♪ OFF</button><span id="clock">01:17</span><a class="menu-item" href="http://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
+    <div class="menu-right"><span id="clock">01:17</span><a class="menu-item" href="http://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
   </div>
-
-  <audio id="entranceAudio" preload="none" crossorigin="anonymous" src="https://archive.org/download/78_nessun-dorma-none-shall-sleep_jussi-bjrling-adami-simoni-puccini-nils-grevilli_gbia7015432a/NESSUN%20DORMA%20%28NONE%20SHALL%20SLEEP%29%20-%20JUSSI%20BJ%C3%96RLING.mp3"></audio>
 
   <main class="desktop">
     <div class="desktop-title">
@@ -374,33 +362,7 @@
 
   <script>
     const boot = document.querySelector('.boot');
-    const entranceAudio = document.getElementById('entranceAudio');
-    const audioToggles = document.querySelectorAll('[data-audio-toggle]');
-    function setAudioState(isPlaying){
-      audioToggles.forEach(button => {
-        button.classList.toggle('is-playing', isPlaying);
-        button.textContent = isPlaying ? '❚❚ Pause entrance music' : (button.classList.contains('audio-btn') ? '▶ Play entrance music' : '♪ OFF');
-        if(!button.classList.contains('audio-btn') && isPlaying) button.textContent = '♪ ON';
-      });
-    }
-    async function toggleEntranceMusic(){
-      if(entranceAudio.paused){
-        entranceAudio.volume = 0.72;
-        await entranceAudio.play();
-        boot.classList.add('is-hidden');
-        setAudioState(true);
-      } else {
-        entranceAudio.pause();
-        setAudioState(false);
-      }
-    }
-    audioToggles.forEach(button => button.addEventListener('click', async () => {
-      try { await toggleEntranceMusic(); }
-      catch { button.textContent = 'audio blocked — tap again'; }
-    }));
-    entranceAudio.addEventListener('play', () => setAudioState(true));
-    entranceAudio.addEventListener('pause', () => setAudioState(false));
-    entranceAudio.addEventListener('ended', () => setAudioState(false));
+
     if(sessionStorage.getItem('fwosBootSeen')){
       boot.classList.add('is-hidden');
     } else {
