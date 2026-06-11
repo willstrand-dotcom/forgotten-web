@@ -7,13 +7,13 @@
   <meta name="description" content="Forgotten writing from the human web, resurfaced with context in a small retro archive machine." />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#ff00ff" />
-  <link rel="canonical" href="http://theforgottenweb.com/" />
-  <link rel="alternate" type="application/rss+xml" title="The Forgotten Web RSS" href="http://theforgottenweb.com/feed.xml" />
+  <link rel="canonical" href="https://theforgottenweb.com/" />
+  <link rel="alternate" type="application/rss+xml" title="The Forgotten Web RSS" href="https://theforgottenweb.com/feed.xml" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ff00ff'/%3E%3Crect x='5' y='7' width='22' height='16' fill='%237df9ff' stroke='%2324152a' stroke-width='3'/%3E%3Crect x='11' y='24' width='10' height='3' fill='%2324152a'/%3E%3C/svg%3E" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="The Forgotten Web OS" />
   <meta property="og:description" content="Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source." />
-  <meta property="og:url" content="http://theforgottenweb.com/" />
+  <meta property="og:url" content="https://theforgottenweb.com/" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="The Forgotten Web OS" />
   <meta name="twitter:description" content="A haunted human-web archive for durable old writing." />
@@ -251,10 +251,6 @@
     .synth-key.black span{ bottom:6px; font-size:9px; }
     .synth-key small{ display:block; color:#6a5364; font-size:9px; }
     .synth-key.black small{ color:var(--banana); }
-    .synth-map{ display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:5px; margin-top:10px; color:var(--ink); }
-    .synth-map span{ border:2px solid var(--ink); background:var(--mint); padding:5px 3px; text-align:center; font-size:9px; min-width:0; overflow:hidden; }
-    .synth-map span:nth-child(2n){ background:var(--aqua); }
-    .synth-foot{ display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-top:8px; color:#d8b4ff; font-size:10px; }
     @media (max-width: 640px){
       .synth-top,.synth-controls{ grid-template-columns:1fr; }
       .synth-labels{ grid-template-columns:repeat(3,1fr); min-width:0; }
@@ -263,7 +259,6 @@
       .synth-key span{ font-size:8px; bottom:5px; }
       .synth-key small{ font-size:7px; }
       .synth-key.black span{ font-size:7px; }
-      .synth-map{ grid-template-columns:repeat(6,minmax(0,1fr)); }
     }
     .hidden{ display:none; }
 
@@ -314,7 +309,7 @@
 
   <div class="menu-bar">
     <div class="menu-left"><strong class="sun">☼ FWOS</strong><button class="menu-item" data-open="start">File</button><button class="menu-item" data-open="latest">Finds</button><button class="menu-item" data-open="archive">Collections</button><button class="menu-item" data-open="rss">Utilities</button><button class="menu-item" data-open="games">Games</button></div>
-    <div class="menu-right"><span id="clock">01:17</span><a class="menu-item" href="http://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
+    <div class="menu-right"><span id="clock">01:17</span><a class="menu-item" href="https://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">RSS</a></div>
   </div>
 
   <main class="desktop">
@@ -445,7 +440,7 @@ ASK THE OLD MACHINE A QUESTION.
     <h2>RSS + Submit</h2>
     <div class="about-machine">
       <div class="submit-card"><b>Submit a relic</b><p>Found an old essay, blog, forum post, personal page, or weird useful corner worth contextualizing? Send it to Winston.</p><div class="button-row"><a class="retro-btn" href="mailto:winston.kilby@gmail.com?subject=Forgotten%20Web%20submission&body=URL%20or%20archive%20link%3A%0A%0AWhy%20it%20matters%20now%3A%0A%0AOriginal%20author%20if%20known%3A%0A">Email Winston</a></div><ul><li>URL or archive link</li><li>Why it matters now</li><li>Original author if known</li></ul></div>
-      <div class="submit-card"><b>Subscribe without surrendering</b><p>Visible from day one. No growth-hack sludge. Just a feed for new relics.</p><div class="button-row"><a class="retro-btn" href="http://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">feed.xml</a></div></div>
+      <div class="submit-card"><b>Subscribe without surrendering</b><p>Visible from day one. No growth-hack sludge. Just a feed for new relics.</p><div class="button-row"><a class="retro-btn" href="https://theforgottenweb.com/feed.xml" target="_blank" rel="noopener noreferrer">feed.xml</a></div></div>
     </div>
   </template>
 
@@ -823,8 +818,6 @@ ASK THE OLD MACHINE A QUESTION.
         <div class="synth-keyboard" id="syKeyboard" aria-label="Two octave synthesizer keyboard">
           <div class="synth-white-row" id="syWhiteRow"></div>
         </div>
-        <div class="synth-map" id="syMap" aria-label="Keyboard mapping"></div>
-        <div class="synth-foot"><span>LOWER: A W S E D F T G Y H U J</span><span>UPPER: K O L P ; ' ] Z X C V B</span></div>
       </div>
     </div>
     <script>
@@ -842,7 +835,6 @@ ASK THE OLD MACHINE A QUESTION.
   var volumeEl = document.getElementById('syVolume');
   var whiteRow = document.getElementById('syWhiteRow');
   var keyboard = document.getElementById('syKeyboard');
-  var mapEl = document.getElementById('syMap');
   var panicBtn = document.getElementById('syPanic');
   var demoBtn = document.getElementById('syDemo');
   var audioCtx = null;
@@ -989,9 +981,6 @@ ASK THE OLD MACHINE A QUESTION.
         whiteIndex++;
         whiteRow.appendChild(btn);
       }
-      var map = document.createElement('span');
-      map.textContent = info.key + '=' + info.name;
-      mapEl.appendChild(map);
     });
   }
   function demo(){
