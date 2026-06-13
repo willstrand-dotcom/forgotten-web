@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Thu, 11 Jun 2026 18:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 21:29:19 +0200</lastBuildDate>
+    <item>
+      <title>Olia Lialina - A Vernacular Web</title>
+      <link>https://art.teleportacia.org/observation/vernacular/</link>
+      <guid isPermaLink="true">https://art.teleportacia.org/observation/vernacular/</guid>
+      <pubDate>Sat, 01 Jan 2005 00:00:00 +0000</pubDate>
+      <description>Early personal homepage aesthetics as a real folk language of the human web.</description>
+      <category>pre-platform culture</category>
+    </item>
     <item>
       <title>Calculated Risk - Housing: Speculation is the Key</title>
       <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
