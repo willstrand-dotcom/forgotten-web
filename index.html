@@ -857,13 +857,26 @@ ASK THE OLD MACHINE A QUESTION.
   function getAC(){
     if(!audioCtx){
       try{
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        var AudioDriver = window.AudioContext || window.webkitAudioContext;
+        if(!AudioDriver){
+          setStatus('AUDIO DRIVER NOT FOUND · TRY SAFARI/CHROME');
+          return null;
+        }
+        audioCtx = new AudioDriver();
         master = audioCtx.createGain();
         master.gain.value = Number(volumeEl.value) / 100;
         master.connect(audioCtx.destination);
-      }catch(e){}
+      }catch(e){
+        setStatus('AUDIO BLOCKED · TAP AGAIN OR TRY BROWSER');
+        return null;
+      }
     }
-    if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if(audioCtx && audioCtx.state === 'suspended'){
+      try{
+        var resume = audioCtx.resume();
+        if(resume && resume.catch) resume.catch(function(){ setStatus('AUDIO BLOCKED · TAP AGAIN'); });
+      }catch(e){ setStatus('AUDIO BLOCKED · TAP AGAIN'); }
+    }
     return audioCtx;
   }
   function setStatus(txt){ if(statusEl) statusEl.textContent = txt; }
@@ -970,31 +983,42 @@ ASK THE OLD MACHINE A QUESTION.
     stopNote(note);
   }
   function bindKey(el, note){
+    var tapTimer = null;
+    var lastPointerAt = 0;
     function down(e){ e.preventDefault(); playNote(note); }
     function up(e){ e.preventDefault(); stopNote(note); }
+    function tap(e){
+      e.preventDefault();
+      playNote(note);
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(function(){ stopNote(note); }, 260);
+    }
     if(window.PointerEvent){
       el.addEventListener('pointerdown', function(e){
+        lastPointerAt = Date.now();
         if(el.setPointerCapture && e.pointerId != null){
           try{ el.setPointerCapture(e.pointerId); }catch(err){}
         }
-        down(e);
+        if(e.pointerType === 'touch' || e.pointerType === 'pen') tap(e);
+        else down(e);
       });
-      el.addEventListener('pointerup', up);
+      el.addEventListener('pointerup', function(e){
+        if(e.pointerType === 'touch' || e.pointerType === 'pen') e.preventDefault();
+        else up(e);
+      });
       el.addEventListener('pointercancel', up);
-      el.addEventListener('pointerleave', function(e){ if(e.buttons) up(e); });
+      el.addEventListener('pointerleave', function(e){ if(e.buttons && e.pointerType !== 'touch' && e.pointerType !== 'pen') up(e); });
     } else {
       el.addEventListener('mousedown', down);
       el.addEventListener('mouseup', up);
       el.addEventListener('mouseleave', function(e){ if(e.buttons) up(e); });
-      el.addEventListener('touchstart', down, {passive:false});
-      el.addEventListener('touchend', up, {passive:false});
+      el.addEventListener('touchstart', tap, {passive:false});
+      el.addEventListener('touchend', function(e){ e.preventDefault(); }, {passive:false});
       el.addEventListener('touchcancel', up, {passive:false});
     }
     el.addEventListener('click', function(e){
-      if(e.detail === 0){
-        playNote(note);
-        setTimeout(function(){ stopNote(note); }, 180);
-      }
+      if(Date.now() - lastPointerAt < 450) return;
+      tap(e);
     });
   }
   function render(){
