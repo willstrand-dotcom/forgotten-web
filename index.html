@@ -872,17 +872,31 @@ ASK THE OLD MACHINE A QUESTION.
     var info = byName[note];
     if(info && info.el) info.el.classList.toggle('active', on);
   }
-  function stopNote(note){
-    var voice = active[note];
+  function stopVoice(voice){
     if(!voice) return;
-    delete active[note];
     try{
       var t = audioCtx ? audioCtx.currentTime : 0;
       voice.gain.gain.cancelScheduledValues(t);
       voice.gain.gain.setTargetAtTime(0.0001, t, 0.025);
       if(voice.osc) voice.osc.stop(t + 0.09);
+      if(voice.vibrato) voice.vibrato.stop(t + 0.09);
       if(voice.noise) voice.noise.stop(t + 0.09);
+      setTimeout(function(){
+        try{
+          if(voice.osc) voice.osc.disconnect();
+          if(voice.vibrato) voice.vibrato.disconnect();
+          if(voice.vibGain) voice.vibGain.disconnect();
+          if(voice.noise) voice.noise.disconnect();
+          voice.gain.disconnect();
+        }catch(e){}
+      }, 140);
     }catch(e){}
+  }
+  function stopNote(note){
+    var voice = active[note];
+    if(!voice) return;
+    delete active[note];
+    stopVoice(voice);
     setActive(note, false);
     if(!Object.keys(active).length) setStatus('MIDI NOT FOUND · STANDING BY');
   }
@@ -922,7 +936,7 @@ ASK THE OLD MACHINE A QUESTION.
       osc.connect(gain);
       osc.start(now);
       vibrato.start(now);
-      active[note] = {gain:gain, osc:osc, vibrato:vibrato};
+      active[note] = {gain:gain, osc:osc, vibrato:vibrato, vibGain:vibGain};
     }
     setActive(note, true);
     setNote(note);
@@ -958,10 +972,30 @@ ASK THE OLD MACHINE A QUESTION.
   function bindKey(el, note){
     function down(e){ e.preventDefault(); playNote(note); }
     function up(e){ e.preventDefault(); stopNote(note); }
-    el.addEventListener('pointerdown', down);
-    el.addEventListener('pointerup', up);
-    el.addEventListener('pointercancel', up);
-    el.addEventListener('pointerleave', function(e){ if(e.buttons) up(e); });
+    if(window.PointerEvent){
+      el.addEventListener('pointerdown', function(e){
+        if(el.setPointerCapture && e.pointerId != null){
+          try{ el.setPointerCapture(e.pointerId); }catch(err){}
+        }
+        down(e);
+      });
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+      el.addEventListener('pointerleave', function(e){ if(e.buttons) up(e); });
+    } else {
+      el.addEventListener('mousedown', down);
+      el.addEventListener('mouseup', up);
+      el.addEventListener('mouseleave', function(e){ if(e.buttons) up(e); });
+      el.addEventListener('touchstart', down, {passive:false});
+      el.addEventListener('touchend', up, {passive:false});
+      el.addEventListener('touchcancel', up, {passive:false});
+    }
+    el.addEventListener('click', function(e){
+      if(e.detail === 0){
+        playNote(note);
+        setTimeout(function(){ stopNote(note); }, 180);
+      }
+    });
   }
   function render(){
     notes.forEach(function(n){
@@ -985,6 +1019,7 @@ ASK THE OLD MACHINE A QUESTION.
     });
   }
   function demo(){
+    getAC();
     panic();
     var riff = ['C4','E4','G4','C5','G4','A4','B4','C5','E5','D5','C5'];
     riff.forEach(function(note, i){
