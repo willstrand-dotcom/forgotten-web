@@ -6,7 +6,7 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 13 Jun 2026 21:29:19 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 21:47:14 +0200</lastBuildDate>
     <item>
       <title>Olia Lialina - A Vernacular Web</title>
       <link>https://art.teleportacia.org/observation/vernacular/</link>
@@ -78,6 +78,14 @@
       <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
       <description>A small manifesto for permanent links: links as promises, not disposable plumbing.</description>
       <category>web architecture</category>
+    </item>
+    <item>
+      <title>Mark Bernstein - Hypertext Gardens: Delightful Vistas</title>
+      <link>https://www.eastgate.com/garden/Enter.html</link>
+      <guid isPermaLink="true">https://www.eastgate.com/garden/Enter.html</guid>
+      <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
+      <description>The web as a landscaped place of paths, surprise, and authored structure instead of navigation plumbing.</description>
+      <category>pre-platform culture</category>
     </item>
     <item>
       <title>Julian Dibbell - A Rape in Cyberspace</title>
