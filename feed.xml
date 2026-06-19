@@ -6,7 +6,7 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Tue, 16 Jun 2026 23:35:12 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 10:01:57 +0200</lastBuildDate>
     <item>
       <title>Olia Lialina - A Vernacular Web</title>
       <link>https://art.teleportacia.org/observation/vernacular/</link>
@@ -30,6 +30,14 @@
       <pubDate>Tue, 01 Jul 2003 00:00:00 +0000</pubDate>
       <description>It reads like a field manual for every platform community failure that followed.</description>
       <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Doc Searls &amp; David Weinberger - World of Ends</title>
+      <link>https://web.archive.org/web/20030326190750/http://worldofends.com/</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,2003:world-of-ends</guid>
+      <pubDate>Thu, 20 Mar 2003 00:00:00 +0000</pubDate>
+      <description>The internet as a world of edges, not gates — and a useful antidote to every platform that later tried to become the middle.</description>
+      <category>web architecture</category>
     </item>
     <item>
       <title>Joel Spolsky - The Law of Leaky Abstractions</title>
