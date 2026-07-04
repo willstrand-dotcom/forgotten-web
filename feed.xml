@@ -1,90 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>The Forgotten Web</title>
     <link>https://theforgottenweb.com/</link>
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Fri, 19 Jun 2026 10:01:57 +0200</lastBuildDate>
-    <item>
-      <title>Olia Lialina - A Vernacular Web</title>
-      <link>https://art.teleportacia.org/observation/vernacular/</link>
-      <guid isPermaLink="true">https://art.teleportacia.org/observation/vernacular/</guid>
-      <pubDate>Sat, 01 Jan 2005 00:00:00 +0000</pubDate>
-      <description>Early personal homepage aesthetics as a real folk language of the human web.</description>
-      <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>Calculated Risk - Housing: Speculation is the Key</title>
-      <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
-      <guid isPermaLink="true">https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</guid>
-      <pubDate>Mon, 04 Apr 2005 00:00:00 +0000</pubDate>
-      <description>Independent diagnosis from before the crash became obvious.</description>
-      <category>markets that aged well</category>
-    </item>
-    <item>
-      <title>Clay Shirky - A Group Is Its Own Worst Enemy</title>
-      <link>https://web.archive.org/web/20030713130936/http://shirky.com/writings/group_enemy.html</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,2003:shirky-group-enemy</guid>
-      <pubDate>Tue, 01 Jul 2003 00:00:00 +0000</pubDate>
-      <description>It reads like a field manual for every platform community failure that followed.</description>
-      <category>pre-platform culture</category>
-    </item>
+    <lastBuildDate>Sat, 04 Jul 2026 12:11:13 +0200</lastBuildDate>
     <item>
       <title>Doc Searls &amp; David Weinberger - World of Ends</title>
       <link>https://web.archive.org/web/20030326190750/http://worldofends.com/</link>
       <guid isPermaLink="false">tag:forgotten-web.local,2003:world-of-ends</guid>
       <pubDate>Thu, 20 Mar 2003 00:00:00 +0000</pubDate>
       <description>The internet as a world of edges, not gates — and a useful antidote to every platform that later tried to become the middle.</description>
-      <category>web architecture</category>
-    </item>
-    <item>
-      <title>Joel Spolsky - The Law of Leaky Abstractions</title>
-      <link>https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</link>
-      <guid isPermaLink="true">https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</guid>
-      <pubDate>Mon, 11 Nov 2002 00:00:00 +0000</pubDate>
-      <description>A durable warning against smooth tools, black boxes, and fake simplicity.</description>
-      <category>old programming blogs</category>
-    </item>
-    <item>
-      <title>Rebecca Blood - Weblogs: A History and Perspective</title>
-      <link>https://web.archive.org/web/20001018220805/http://www.rebeccablood.net/essays/weblog_history.html</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,2000:blood-weblogs-history</guid>
-      <pubDate>Thu, 07 Sep 2000 00:00:00 +0000</pubDate>
-      <description>It preserves human selection: someone found a thing, thought about it, and linked with voice.</description>
-      <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>John Allsopp - A Dao of Web Design</title>
-      <link>https://alistapart.com/article/dao/</link>
-      <guid isPermaLink="true">https://alistapart.com/article/dao/</guid>
-      <pubDate>Fri, 07 Apr 2000 00:00:00 +0000</pubDate>
-      <description>Responsive web thinking before responsive design had a name.</description>
-      <category>web architecture</category>
-    </item>
-    <item>
-      <title>Warren Buffett - Mr. Buffett on the Stock Market</title>
-      <link>https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,1999:buffett-stock-market</guid>
-      <pubDate>Mon, 22 Nov 1999 00:00:00 +0000</pubDate>
-      <description>A calm valuation note written while the room was drunk.</description>
-      <category>markets that aged well</category>
-    </item>
-    <item>
-      <title>Cameron Barrett - Anatomy of a Weblog</title>
-      <link>https://web.archive.org/web/19990428175931/http://www.camworld.com/journal/rants/99/0126.html</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,1999:barrett-anatomy-weblog</guid>
-      <pubDate>Tue, 26 Jan 1999 00:00:00 +0000</pubDate>
-      <description>An early attempt to describe what weblogs were becoming: links, commentary, voice, and human selection.</description>
-      <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>Tim Berners-Lee - Cool URIs don't change</title>
-      <link>https://www.w3.org/Provider/Style/URI</link>
-      <guid isPermaLink="true">https://www.w3.org/Provider/Style/URI</guid>
-      <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
-      <description>A small manifesto for permanent links: links as promises, not disposable plumbing.</description>
       <category>web architecture</category>
     </item>
     <item>
@@ -96,12 +24,44 @@
       <category>pre-platform culture</category>
     </item>
     <item>
-      <title>Julian Dibbell - A Rape in Cyberspace</title>
-      <link>http://www.juliandibbell.com/articles/a-rape-in-cyberspace/</link>
-      <guid isPermaLink="true">http://www.juliandibbell.com/articles/a-rape-in-cyberspace/</guid>
-      <pubDate>Fri, 01 Oct 1993 00:00:00 +0000</pubDate>
-      <description>The LambdaMOO article that made online harm, governance, and embodied text impossible to wave away.</description>
+      <title>Bertrand Russell - In Praise of Idleness</title>
+      <link>https://harpers.org/archive/1932/10/in-praise-of-idleness/</link>
+      <guid isPermaLink="true">https://harpers.org/archive/1932/10/in-praise-of-idleness/</guid>
+      <pubDate>Sat, 01 Oct 1932 00:00:00 +0000</pubDate>
+      <description>Old enough to be public-domain furniture, sharp enough to cut modern work culture.</description>
+      <category>weird useful corners</category>
+    </item>
+  <item>
+      <title>Jo Freeman - The Tyranny of Structurelessness</title>
+      <link>https://www.jofreeman.com/joreen/tyranny.htm</link>
+      <guid isPermaLink="true">https://www.jofreeman.com/joreen/tyranny.htm</guid>
+      <pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
+      <description>Still one of the sharpest texts about organizations, communities, and informal control.</description>
+      <category>weird useful corners</category>
+    </item>
+    <item>
+      <title>Olia Lialina - A Vernacular Web</title>
+      <link>https://art.teleportacia.org/observation/vernacular/</link>
+      <guid isPermaLink="true">https://art.teleportacia.org/observation/vernacular/</guid>
+      <pubDate>Sat, 01 Jan 2005 00:00:00 +0000</pubDate>
+      <description>Early personal homepage aesthetics as a real folk language of the human web.</description>
       <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Warren Buffett - Mr. Buffett on the Stock Market</title>
+      <link>https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,1999:buffett-stock-market</guid>
+      <pubDate>Mon, 22 Nov 1999 00:00:00 +0000</pubDate>
+      <description>A calm valuation note written while the room was drunk.</description>
+      <category>markets that aged well</category>
+    </item>
+    <item>
+      <title>Calculated Risk - Housing: Speculation is the Key</title>
+      <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
+      <guid isPermaLink="true">https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</guid>
+      <pubDate>Mon, 04 Apr 2005 00:00:00 +0000</pubDate>
+      <description>Independent diagnosis from before the crash became obvious.</description>
+      <category>markets that aged well</category>
     </item>
     <item>
       <title>Richard P. Gabriel - The Rise of Worse is Better</title>
@@ -112,20 +72,60 @@
       <category>old programming blogs</category>
     </item>
     <item>
-      <title>Jo Freeman - The Tyranny of Structurelessness</title>
-      <link>https://www.jofreeman.com/joreen/tyranny.htm</link>
-      <guid isPermaLink="true">https://www.jofreeman.com/joreen/tyranny.htm</guid>
-      <pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
-      <description>Still one of the sharpest texts about organizations, communities, and informal control.</description>
-      <category>weird useful corners</category>
+      <title>Joel Spolsky - The Law of Leaky Abstractions</title>
+      <link>https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</link>
+      <guid isPermaLink="true">https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</guid>
+      <pubDate>Mon, 11 Nov 2002 00:00:00 +0000</pubDate>
+      <description>A durable warning against smooth tools, black boxes, and fake simplicity.</description>
+      <category>old programming blogs</category>
     </item>
     <item>
-      <title>Bertrand Russell - In Praise of Idleness</title>
-      <link>https://harpers.org/archive/1932/10/in-praise-of-idleness/</link>
-      <guid isPermaLink="true">https://harpers.org/archive/1932/10/in-praise-of-idleness/</guid>
-      <pubDate>Sat, 01 Oct 1932 00:00:00 +0000</pubDate>
-      <description>Old enough to be public-domain furniture, sharp enough to cut modern work culture.</description>
-      <category>weird useful corners</category>
+      <title>Clay Shirky - A Group Is Its Own Worst Enemy</title>
+      <link>https://web.archive.org/web/20030713130936/http://shirky.com/writings/group_enemy.html</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,2003:shirky-group-enemy</guid>
+      <pubDate>Tue, 01 Jul 2003 00:00:00 +0000</pubDate>
+      <description>It reads like a field manual for every platform community failure that followed.</description>
+      <category>pre-platform culture</category>
     </item>
-  </channel>
+    <item>
+      <title>Rebecca Blood - Weblogs: A History and Perspective</title>
+      <link>https://web.archive.org/web/20001018220805/http://www.rebeccablood.net/essays/weblog_history.html</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,2000:blood-weblogs-history</guid>
+      <pubDate>Thu, 07 Sep 2000 00:00:00 +0000</pubDate>
+      <description>It preserves human selection: someone found a thing, thought about it, and linked with voice.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Cameron Barrett - Anatomy of a Weblog</title>
+      <link>https://web.archive.org/web/19990428175931/http://www.camworld.com/journal/rants/99/0126.html</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,1999:barrett-anatomy-weblog</guid>
+      <pubDate>Tue, 26 Jan 1999 00:00:00 +0000</pubDate>
+      <description>An early attempt to describe what weblogs were becoming: links, commentary, voice, and human selection.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Julian Dibbell - A Rape in Cyberspace</title>
+      <link>http://www.juliandibbell.com/articles/a-rape-in-cyberspace/</link>
+      <guid isPermaLink="true">http://www.juliandibbell.com/articles/a-rape-in-cyberspace/</guid>
+      <pubDate>Fri, 01 Oct 1993 00:00:00 +0000</pubDate>
+      <description>The LambdaMOO article that made online harm, governance, and embodied text impossible to wave away.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>John Allsopp - A Dao of Web Design</title>
+      <link>https://alistapart.com/article/dao/</link>
+      <guid isPermaLink="true">https://alistapart.com/article/dao/</guid>
+      <pubDate>Fri, 07 Apr 2000 00:00:00 +0000</pubDate>
+      <description>Responsive web thinking before responsive design had a name.</description>
+      <category>web architecture</category>
+    </item>
+    <item>
+      <title>Tim Berners-Lee - Cool URIs don't change</title>
+      <link>https://www.w3.org/Provider/Style/URI</link>
+      <guid isPermaLink="true">https://www.w3.org/Provider/Style/URI</guid>
+      <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
+      <description>A small manifesto for permanent links: links as promises, not disposable plumbing.</description>
+      <category>web architecture</category>
+    </item>
+    </channel>
 </rss>
