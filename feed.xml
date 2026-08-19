@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 04 Jul 2026 12:11:13 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 19 Aug 2026 21:01:19 +0200</lastBuildDate>
+    <item>
+      <title>J. R. Carpenter - A Handmade Web</title>
+      <link>https://luckysoap.com/statements/handmadeweb.html</link>
+      <guid isPermaLink="true">https://luckysoap.com/statements/handmadeweb.html</guid>
+      <pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate>
+      <description>Small, handmade, inspectable pages as an antidote to industrial publishing systems.</description>
+      <category>pre-platform culture</category>
+    </item>
     <item>
       <title>Doc Searls &amp; David Weinberger - World of Ends</title>
       <link>https://web.archive.org/web/20030326190750/http://worldofends.com/</link>
