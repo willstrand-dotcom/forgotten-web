@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 19 Aug 2026 21:01:19 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2026 21:02:15 +0200</lastBuildDate>
+    <item>
+      <title>Olia Lialina - My Boyfriend Came Back from the War</title>
+      <link>http://www.teleportacia.org/war/</link>
+      <guid isPermaLink="true">http://www.teleportacia.org/war/</guid>
+      <pubDate>Mon, 01 Jan 1996 00:00:00 +0000</pubDate>
+      <description>A tiny frame-based net.art work that turns the browser into broken memory.</description>
+      <category>pre-platform culture</category>
+    </item>
     <item>
       <title>J. R. Carpenter - A Handmade Web</title>
       <link>https://luckysoap.com/statements/handmadeweb.html</link>
