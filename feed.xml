@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 26 Aug 2026 21:02:15 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2026 21:01:25 +0200</lastBuildDate>
+    <item>
+      <title>Eric S. Raymond - The Cathedral and the Bazaar</title>
+      <link>http://catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/</link>
+      <guid isPermaLink="true">http://catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/</guid>
+      <pubDate>Tue, 27 May 1997 00:00:00 +0000</pubDate>
+      <description>A firsthand map of open-source collaboration before it became corporate infrastructure and content-marketing wallpaper.</description>
+      <category>old programming blogs</category>
+    </item>
     <item>
       <title>Olia Lialina - My Boyfriend Came Back from the War</title>
       <link>http://www.teleportacia.org/war/</link>
