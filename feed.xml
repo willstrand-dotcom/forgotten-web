@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 02 Sep 2026 21:01:25 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2026 21:00:54 +0200</lastBuildDate>
+    <item>
+      <title>Rick Levine, Christopher Locke, Doc Searls &amp; David Weinberger - The Cluetrain Manifesto: 95 Theses</title>
+      <link>https://www.cluetrain.com/book/95-theses.html</link>
+      <guid isPermaLink="true">https://www.cluetrain.com/book/95-theses.html</guid>
+      <pubDate>Mon, 01 Mar 1999 00:00:00 +0000</pubDate>
+      <description>Markets as conversations, written before the social web was turned into engagement plumbing.</description>
+      <category>pre-platform culture</category>
+    </item>
     <item>
       <title>Eric S. Raymond - The Cathedral and the Bazaar</title>
       <link>http://catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/</link>
