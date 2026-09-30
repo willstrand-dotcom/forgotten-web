@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 23 Sep 2026 21:01:02 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 30 Sep 2026 21:01:35 +0200</lastBuildDate>
+    <item>
+      <title>Warner Bros. - Space Jam Official Site</title>
+      <link>https://www.spacejam.com/1996/</link>
+      <guid isPermaLink="true">https://www.spacejam.com/1996/</guid>
+      <pubDate>Fri, 15 Nov 1996 00:00:00 +0000</pubDate>
+      <description>A still-live 1996 promotional site: starfields, image maps, table layouts, and a movie lobby built by hand in HTML.</description>
+      <category>pre-platform culture</category>
+    </item>
     <item>
       <title>Justin Hall - Justin’s Home Page</title>
       <link>https://www.links.net/vita/web/start/original.html</link>
