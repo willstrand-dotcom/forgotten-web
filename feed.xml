@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 30 Sep 2026 21:01:35 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 07 Oct 2026 21:01:11 +0200</lastBuildDate>
+    <item>
+      <title>Mike Caulfield - The Garden and the Stream: A Technopastoral</title>
+      <link>https://hapgood.us/2015/10/17/the-garden-and-the-stream-a-technopastoral/</link>
+      <guid isPermaLink="true">https://hapgood.us/2015/10/17/the-garden-and-the-stream-a-technopastoral/</guid>
+      <pubDate>Sat, 17 Oct 2015 00:00:00 +0000</pubDate>
+      <description>A durable argument for gardens, paths, and tended knowledge instead of endless streams.</description>
+      <category>web architecture</category>
+    </item>
     <item>
       <title>Warner Bros. - Space Jam Official Site</title>
       <link>https://www.spacejam.com/1996/</link>

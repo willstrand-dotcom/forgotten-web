@@ -22,9 +22,9 @@ A retro web desktop / fake operating system for The Forgotten Web, inspired by P
 ## Button behavior
 
 - **Start Here**: Opens the default intro window. Explains the product plainly, shows the launch finds, and gives quick actions into Latest Finds, Random Relic, Submit, and Source Notes.
-- **Latest Finds**: Opens a list of the current eleven world-class finds. Each row shows sequence number, title, why it matters, and source status.
+- **Latest Finds**: Opens a list of the current twenty-two world-class finds. Each row shows sequence number, title, why it matters, and source status.
 - **Archive**: Opens five clickable collection folders: Web Architecture, Pre-Platform Culture, Old Programming Blogs, Markets That Aged Well, and Weird Useful Corners. Each folder opens a filtered collection view; Pre-Platform Culture now carries a third LambdaMOO-era anchor.
-- **Random Relic**: Shows a short “loading random find…” state, then picks one of the eleven real finds at random and opens it as a file in the main window. Keep this lightweight until the archive has 50+ relics.
+- **Random Relic**: Shows a short “loading random find…” state, then picks one of the twenty-two real finds at random and opens it as a file in the main window. Keep this lightweight until the archive has 50+ relics.
 - **Source Notes**: Opens rights/ethics policy plus “About the machine.” Core rule: link and contextualize, do not republish wholesale.
 - **RSS + Submit**: Opens a real submit flow first: `Email Winston` uses a prefilled `mailto:` for URL/archive link, why it matters now, and original author if known. The panel also includes a real local `feed.xml` link that opens separately.
 - **Menu bar**: File, Finds, Collections, and Utilities are real controls mapped to Start, Latest Finds, Archive, and RSS + Submit. The RSS label opens `feed.xml` separately.
