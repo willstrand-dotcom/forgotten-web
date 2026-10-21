@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>The Forgotten Web</title>
@@ -6,182 +6,182 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 07 Oct 2026 21:01:11 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 02:19:29 +0000</lastBuildDate>
     <item>
       <title>Mike Caulfield - The Garden and the Stream: A Technopastoral</title>
       <link>https://hapgood.us/2015/10/17/the-garden-and-the-stream-a-technopastoral/</link>
       <guid isPermaLink="true">https://hapgood.us/2015/10/17/the-garden-and-the-stream-a-technopastoral/</guid>
-      <pubDate>Sat, 17 Oct 2015 00:00:00 +0000</pubDate>
-      <description>A durable argument for gardens, paths, and tended knowledge instead of endless streams.</description>
+      <pubDate>Wed, 07 Oct 2026 21:04:22 +0200</pubDate>
+      <description>A durable argument for gardens, paths, and tended knowledge instead of endless streams. Originally published: Sat, 17 Oct 2015 00:00:00 +0000. Added to The Forgotten Web: 2026-10-07.</description>
       <category>web architecture</category>
     </item>
     <item>
       <title>Warner Bros. - Space Jam Official Site</title>
       <link>https://www.spacejam.com/1996/</link>
       <guid isPermaLink="true">https://www.spacejam.com/1996/</guid>
-      <pubDate>Fri, 15 Nov 1996 00:00:00 +0000</pubDate>
-      <description>A still-live 1996 promotional site: starfields, image maps, table layouts, and a movie lobby built by hand in HTML.</description>
+      <pubDate>Wed, 30 Sep 2026 21:05:34 +0200</pubDate>
+      <description>A still-live 1996 promotional site: starfields, image maps, table layouts, and a movie lobby built by hand in HTML. Originally published: Fri, 15 Nov 1996 00:00:00 +0000. Added to The Forgotten Web: 2026-09-30.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>Justin Hall - Justin’s Home Page</title>
       <link>https://www.links.net/vita/web/start/original.html</link>
       <guid isPermaLink="true">https://www.links.net/vita/web/start/original.html</guid>
-      <pubDate>Thu, 27 Jan 1994 00:00:00 +0000</pubDate>
-      <description>A dorm-room personal homepage from January 1994, preserved before profiles replaced places.</description>
+      <pubDate>Wed, 23 Sep 2026 21:03:09 +0200</pubDate>
+      <description>A dorm-room personal homepage from January 1994, preserved before profiles replaced places. Originally published: Thu, 27 Jan 1994 00:00:00 +0000. Added to The Forgotten Web: 2026-09-23.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>Rick Levine, Christopher Locke, Doc Searls &amp; David Weinberger - The Cluetrain Manifesto: 95 Theses</title>
       <link>https://www.cluetrain.com/book/95-theses.html</link>
       <guid isPermaLink="true">https://www.cluetrain.com/book/95-theses.html</guid>
-      <pubDate>Mon, 01 Mar 1999 00:00:00 +0000</pubDate>
-      <description>Markets as conversations, written before the social web was turned into engagement plumbing.</description>
+      <pubDate>Wed, 16 Sep 2026 21:03:23 +0200</pubDate>
+      <description>Markets as conversations, written before the social web was turned into engagement plumbing. Originally published: Mon, 01 Mar 1999 00:00:00 +0000. Added to The Forgotten Web: 2026-09-16.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>Eric S. Raymond - The Cathedral and the Bazaar</title>
       <link>http://catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/</link>
       <guid isPermaLink="true">http://catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/</guid>
-      <pubDate>Tue, 27 May 1997 00:00:00 +0000</pubDate>
-      <description>A firsthand map of open-source collaboration before it became corporate infrastructure and content-marketing wallpaper.</description>
+      <pubDate>Wed, 02 Sep 2026 21:05:19 +0200</pubDate>
+      <description>A firsthand map of open-source collaboration before it became corporate infrastructure and content-marketing wallpaper. Originally published: Tue, 27 May 1997 00:00:00 +0000. Added to The Forgotten Web: 2026-09-02.</description>
       <category>old programming blogs</category>
     </item>
     <item>
       <title>Olia Lialina - My Boyfriend Came Back from the War</title>
       <link>http://www.teleportacia.org/war/</link>
       <guid isPermaLink="true">http://www.teleportacia.org/war/</guid>
-      <pubDate>Mon, 01 Jan 1996 00:00:00 +0000</pubDate>
-      <description>A tiny frame-based net.art work that turns the browser into broken memory.</description>
+      <pubDate>Wed, 26 Aug 2026 21:04:53 +0200</pubDate>
+      <description>A tiny frame-based net.art work that turns the browser into broken memory. Originally published: Mon, 01 Jan 1996 00:00:00 +0000. Added to The Forgotten Web: 2026-08-26.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>J. R. Carpenter - A Handmade Web</title>
       <link>https://luckysoap.com/statements/handmadeweb.html</link>
       <guid isPermaLink="true">https://luckysoap.com/statements/handmadeweb.html</guid>
-      <pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate>
-      <description>Small, handmade, inspectable pages as an antidote to industrial publishing systems.</description>
+      <pubDate>Wed, 19 Aug 2026 21:04:07 +0200</pubDate>
+      <description>Small, handmade, inspectable pages as an antidote to industrial publishing systems. Originally published: Thu, 01 Jan 2015 00:00:00 +0000. Added to The Forgotten Web: 2026-08-19.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>Doc Searls &amp; David Weinberger - World of Ends</title>
       <link>https://web.archive.org/web/20030326190750/http://worldofends.com/</link>
       <guid isPermaLink="false">tag:forgotten-web.local,2003:world-of-ends</guid>
-      <pubDate>Thu, 20 Mar 2003 00:00:00 +0000</pubDate>
-      <description>The internet as a world of edges, not gates — and a useful antidote to every platform that later tried to become the middle.</description>
+      <pubDate>Fri, 19 Jun 2026 10:03:47 +0200</pubDate>
+      <description>The internet as a world of edges, not gates — and a useful antidote to every platform that later tried to become the middle. Originally published: Thu, 20 Mar 2003 00:00:00 +0000. Added to The Forgotten Web: 2026-06-19.</description>
       <category>web architecture</category>
     </item>
     <item>
       <title>Mark Bernstein - Hypertext Gardens: Delightful Vistas</title>
       <link>https://www.eastgate.com/garden/Enter.html</link>
       <guid isPermaLink="true">https://www.eastgate.com/garden/Enter.html</guid>
-      <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
-      <description>The web as a landscaped place of paths, surprise, and authored structure instead of navigation plumbing.</description>
+      <pubDate>Tue, 16 Jun 2026 21:50:15 +0200</pubDate>
+      <description>The web as a landscaped place of paths, surprise, and authored structure instead of navigation plumbing. Originally published: Thu, 01 Jan 1998 00:00:00 +0000. Added to The Forgotten Web: 2026-06-16.</description>
       <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>Bertrand Russell - In Praise of Idleness</title>
-      <link>https://harpers.org/archive/1932/10/in-praise-of-idleness/</link>
-      <guid isPermaLink="true">https://harpers.org/archive/1932/10/in-praise-of-idleness/</guid>
-      <pubDate>Sat, 01 Oct 1932 00:00:00 +0000</pubDate>
-      <description>Old enough to be public-domain furniture, sharp enough to cut modern work culture.</description>
-      <category>weird useful corners</category>
-    </item>
-  <item>
-      <title>Jo Freeman - The Tyranny of Structurelessness</title>
-      <link>https://www.jofreeman.com/joreen/tyranny.htm</link>
-      <guid isPermaLink="true">https://www.jofreeman.com/joreen/tyranny.htm</guid>
-      <pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
-      <description>Still one of the sharpest texts about organizations, communities, and informal control.</description>
-      <category>weird useful corners</category>
     </item>
     <item>
       <title>Olia Lialina - A Vernacular Web</title>
       <link>https://art.teleportacia.org/observation/vernacular/</link>
       <guid isPermaLink="true">https://art.teleportacia.org/observation/vernacular/</guid>
-      <pubDate>Sat, 01 Jan 2005 00:00:00 +0000</pubDate>
-      <description>Early personal homepage aesthetics as a real folk language of the human web.</description>
-      <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>Warren Buffett - Mr. Buffett on the Stock Market</title>
-      <link>https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,1999:buffett-stock-market</guid>
-      <pubDate>Mon, 22 Nov 1999 00:00:00 +0000</pubDate>
-      <description>A calm valuation note written while the room was drunk.</description>
-      <category>markets that aged well</category>
-    </item>
-    <item>
-      <title>Calculated Risk - Housing: Speculation is the Key</title>
-      <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
-      <guid isPermaLink="true">https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</guid>
-      <pubDate>Mon, 04 Apr 2005 00:00:00 +0000</pubDate>
-      <description>Independent diagnosis from before the crash became obvious.</description>
-      <category>markets that aged well</category>
-    </item>
-    <item>
-      <title>Richard P. Gabriel - The Rise of Worse is Better</title>
-      <link>https://www.dreamsongs.com/RiseOfWorseIsBetter.html</link>
-      <guid isPermaLink="true">https://www.dreamsongs.com/RiseOfWorseIsBetter.html</guid>
-      <pubDate>Tue, 01 Jan 1991 00:00:00 +0000</pubDate>
-      <description>It explains half the software world with an uncomfortable little knife.</description>
-      <category>old programming blogs</category>
-    </item>
-    <item>
-      <title>Joel Spolsky - The Law of Leaky Abstractions</title>
-      <link>https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</link>
-      <guid isPermaLink="true">https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</guid>
-      <pubDate>Mon, 11 Nov 2002 00:00:00 +0000</pubDate>
-      <description>A durable warning against smooth tools, black boxes, and fake simplicity.</description>
-      <category>old programming blogs</category>
-    </item>
-    <item>
-      <title>Clay Shirky - A Group Is Its Own Worst Enemy</title>
-      <link>https://web.archive.org/web/20030713130936/http://shirky.com/writings/group_enemy.html</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,2003:shirky-group-enemy</guid>
-      <pubDate>Tue, 01 Jul 2003 00:00:00 +0000</pubDate>
-      <description>It reads like a field manual for every platform community failure that followed.</description>
-      <category>pre-platform culture</category>
-    </item>
-    <item>
-      <title>Rebecca Blood - Weblogs: A History and Perspective</title>
-      <link>https://web.archive.org/web/20001018220805/http://www.rebeccablood.net/essays/weblog_history.html</link>
-      <guid isPermaLink="false">tag:forgotten-web.local,2000:blood-weblogs-history</guid>
-      <pubDate>Thu, 07 Sep 2000 00:00:00 +0000</pubDate>
-      <description>It preserves human selection: someone found a thing, thought about it, and linked with voice.</description>
+      <pubDate>Sat, 13 Jun 2026 21:30:04 +0200</pubDate>
+      <description>Early personal homepage aesthetics as a real folk language of the human web. Originally published: Sat, 01 Jan 2005 00:00:00 +0000. Added to The Forgotten Web: 2026-06-13.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>Cameron Barrett - Anatomy of a Weblog</title>
-      <link>https://web.archive.org/web/19990428175931/http://www.camworld.com/journal/rants/99/0126.html</link>
+      <link>https://web.archive.org/web/19990428141540/http://www.camworld.com/journal/rants/99/01/26.html</link>
       <guid isPermaLink="false">tag:forgotten-web.local,1999:barrett-anatomy-weblog</guid>
-      <pubDate>Tue, 26 Jan 1999 00:00:00 +0000</pubDate>
-      <description>An early attempt to describe what weblogs were becoming: links, commentary, voice, and human selection.</description>
+      <pubDate>Thu, 11 Jun 2026 06:54:29 +0200</pubDate>
+      <description>An early attempt to describe what weblogs were becoming: links, commentary, voice, and human selection. Originally published: Tue, 26 Jan 1999 00:00:00 +0000. Added to The Forgotten Web: 2026-06-11.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>Julian Dibbell - A Rape in Cyberspace</title>
       <link>http://www.juliandibbell.com/articles/a-rape-in-cyberspace/</link>
       <guid isPermaLink="true">http://www.juliandibbell.com/articles/a-rape-in-cyberspace/</guid>
-      <pubDate>Fri, 01 Oct 1993 00:00:00 +0000</pubDate>
-      <description>The LambdaMOO article that made online harm, governance, and embodied text impossible to wave away.</description>
+      <pubDate>Mon, 08 Jun 2026 12:47:25 +0200</pubDate>
+      <description>The LambdaMOO article that made online harm, governance, and embodied text impossible to wave away. Originally published: Fri, 01 Oct 1993 00:00:00 +0000. Added to The Forgotten Web: 2026-06-08.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Bertrand Russell - In Praise of Idleness</title>
+      <link>https://harpers.org/archive/1932/10/in-praise-of-idleness/</link>
+      <guid isPermaLink="true">https://harpers.org/archive/1932/10/in-praise-of-idleness/</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>A 1932 challenge to the cult of overwork that still cuts through modern work culture. Originally published: Sat, 01 Oct 1932 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
+      <category>weird useful corners</category>
+    </item>
+    <item>
+      <title>Jo Freeman - The Tyranny of Structurelessness</title>
+      <link>https://www.jofreeman.com/joreen/tyranny.htm</link>
+      <guid isPermaLink="true">https://www.jofreeman.com/joreen/tyranny.htm</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>Still one of the sharpest texts about organizations, communities, and informal control. Originally published: Thu, 01 Jan 1970 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
+      <category>weird useful corners</category>
+    </item>
+    <item>
+      <title>Warren Buffett - Mr. Buffett on the Stock Market</title>
+      <link>https://web.archive.org/web/20090201221343/http://money.cnn.com/magazines/fortune/fortune_archive/1999/11/22/269071/index.htm</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,1999:buffett-stock-market</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>A calm valuation note written while the room was drunk. Originally published: Mon, 22 Nov 1999 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
+      <category>markets that aged well</category>
+    </item>
+    <item>
+      <title>Calculated Risk - Housing: Speculation is the Key</title>
+      <link>https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</link>
+      <guid isPermaLink="true">https://www.calculatedriskblog.com/2005/04/housing-speculation-is-key.html</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>Independent diagnosis from before the crash became obvious. Originally published: Mon, 04 Apr 2005 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
+      <category>markets that aged well</category>
+    </item>
+    <item>
+      <title>Richard P. Gabriel - The Rise of Worse is Better</title>
+      <link>https://www.dreamsongs.com/RiseOfWorseIsBetter.html</link>
+      <guid isPermaLink="true">https://www.dreamsongs.com/RiseOfWorseIsBetter.html</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>It explains half the software world with an uncomfortable little knife. Originally published: Tue, 01 Jan 1991 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
+      <category>old programming blogs</category>
+    </item>
+    <item>
+      <title>Joel Spolsky - The Law of Leaky Abstractions</title>
+      <link>https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</link>
+      <guid isPermaLink="true">https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>A durable warning against smooth tools, black boxes, and fake simplicity. Originally published: Mon, 11 Nov 2002 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
+      <category>old programming blogs</category>
+    </item>
+    <item>
+      <title>Clay Shirky - A Group Is Its Own Worst Enemy</title>
+      <link>http://shirky.com/essays/a-group-is-its-own-worst-enemy/</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,2003:shirky-group-enemy</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>It reads like a field manual for every platform community failure that followed. Originally published: Tue, 01 Jul 2003 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
+      <category>pre-platform culture</category>
+    </item>
+    <item>
+      <title>Rebecca Blood - Weblogs: A History and Perspective</title>
+      <link>http://www.rebeccablood.net/essays/weblog_history.html</link>
+      <guid isPermaLink="false">tag:forgotten-web.local,2000:blood-weblogs-history</guid>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>It preserves human selection: someone found a thing, thought about it, and linked with voice. Originally published: Thu, 07 Sep 2000 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
       <category>pre-platform culture</category>
     </item>
     <item>
       <title>John Allsopp - A Dao of Web Design</title>
       <link>https://alistapart.com/article/dao/</link>
       <guid isPermaLink="true">https://alistapart.com/article/dao/</guid>
-      <pubDate>Fri, 07 Apr 2000 00:00:00 +0000</pubDate>
-      <description>Responsive web thinking before responsive design had a name.</description>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>Responsive web thinking before responsive design had a name. Originally published: Fri, 07 Apr 2000 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
       <category>web architecture</category>
     </item>
     <item>
       <title>Tim Berners-Lee - Cool URIs don't change</title>
       <link>https://www.w3.org/Provider/Style/URI</link>
       <guid isPermaLink="true">https://www.w3.org/Provider/Style/URI</guid>
-      <pubDate>Thu, 01 Jan 1998 00:00:00 +0000</pubDate>
-      <description>A small manifesto for permanent links: links as promises, not disposable plumbing.</description>
+      <pubDate>Sun, 07 Jun 2026 14:50:47 +0200</pubDate>
+      <description>A small manifesto for permanent links: links as promises, not disposable plumbing. Originally published: Thu, 01 Jan 1998 00:00:00 +0000. Added to The Forgotten Web: 2026-06-07.</description>
       <category>web architecture</category>
     </item>
-    </channel>
+  </channel>
 </rss>
