@@ -205,24 +205,6 @@
     .retro-btn:hover,.retro-btn:focus-visible{ transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(36,27,24,.42), 0 0 0 2px var(--ink), 0 0 0 5px var(--peach); outline:0; }
     .retro-btn:active{ transform:translate(5px,5px); box-shadow:0 0 0 rgba(36,27,24,.42); }
 
-    .ico.oracle-icon{ background:#111; border-color:var(--banana); box-shadow:3px 3px 0 rgba(36,27,24,.45), inset 0 0 0 4px #39104a; }
-    .ico.oracle-icon::before{ content:">_"; position:absolute; left:7px; top:9px; color:var(--lime); font:bold 18px Monaco,Consolas,monospace; text-shadow:0 0 6px var(--lime); }
-    .ico.oracle-icon::after{ content:""; position:absolute; right:6px; bottom:6px; width:8px; height:8px; background:var(--coral); border:1px solid var(--banana); box-shadow:-13px -16px 0 -3px var(--aqua), -24px 4px 0 -3px var(--banana); }
-    .oracle-window{ position:fixed; left:50%; top:52%; transform:translate(-50%,-50%); z-index:35; width:min(720px, calc(100vw - 28px)); max-height:calc(100vh - 56px); border:3px solid var(--ink); background:#0b0611; color:var(--lime); box-shadow:12px 12px 0 rgba(36,21,42,.55), 0 0 0 9999px rgba(36,21,42,.22); font-family:Monaco,Consolas,monospace; }
-    .oracle-window.hidden{ display:none; }
-    .oracle-titlebar{ min-height:30px; display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--banana); color:var(--ink); border-bottom:3px solid var(--ink); padding:4px 8px; font:bold 12px Monaco,Consolas,monospace; }
-    .oracle-close{ width:24px; height:22px; border:2px solid var(--ink); background:var(--coral); color:var(--ink); cursor:pointer; font:bold 14px Monaco,Consolas,monospace; line-height:1; box-shadow:2px 2px 0 rgba(36,21,42,.35); }
-    .oracle-close:hover,.oracle-close:focus-visible{ background:var(--aqua); outline:2px solid var(--ink); outline-offset:2px; }
-    .oracle-body{ padding:14px; background:linear-gradient(180deg,#08040f,#15051f); max-height:calc(100vh - 105px); overflow:auto; }
-    .oracle-screen{ min-height:236px; border:2px solid var(--lime); background:#020403; color:var(--lime); padding:12px; line-height:1.55; font-size:12px; box-shadow:inset 0 0 20px rgba(200,255,77,.13); white-space:pre-wrap; text-shadow:0 0 5px rgba(200,255,77,.55); }
-    .oracle-screen::selection{ background:var(--lime); color:#020403; }
-    .oracle-form{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; margin-top:10px; }
-    .oracle-input{ width:100%; border:2px solid var(--lime); background:#050208; color:var(--aqua); padding:10px; font:13px Monaco,Consolas,monospace; box-shadow:inset 0 0 9px rgba(125,249,255,.15); }
-    .oracle-input:focus{ outline:2px solid var(--banana); outline-offset:2px; }
-    .oracle-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:9px; }
-    .oracle-hint{ color:var(--aqua); font-size:10px; margin-top:9px; line-height:1.4; }
-    .oracle-cursor{ animation:blink .75s steps(1,end) infinite; }
-    @media (max-width: 640px){ .oracle-window{ top:50%; width:calc(100vw - 18px); } .oracle-form{ grid-template-columns:1fr; } .oracle-screen{ min-height:250px; font-size:11px; } }
     .synth-shell{ border:3px solid var(--ink); background:#15031d; color:var(--paper); box-shadow:6px 6px 0 rgba(36,21,42,.38); font-family:Monaco,Consolas,monospace; overflow:hidden; }
     .synth-top{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:stretch; padding:12px; background:linear-gradient(90deg,var(--peach),var(--aqua) 48%,var(--banana)); border-bottom:3px solid var(--ink); color:var(--ink); }
     .synth-cart{ border:3px solid var(--ink); background:#08040f; color:var(--lime); padding:10px; min-height:74px; box-shadow:inset 0 0 18px rgba(200,255,77,.16); text-shadow:0 0 5px rgba(200,255,77,.45); }
@@ -327,7 +309,6 @@
       <button class="icon" data-open="latest"><span class="ico doc latest-icon"></span><span class="label">Latest Finds</span></button>
       <button class="icon" data-open="archive"><span class="ico folder archive-icon"></span><span class="label">Archive</span></button>
       <button class="icon" data-open="random"><span class="ico radio"></span><span class="label">Random Relic</span></button>
-      <button class="icon" data-oracle-open><span class="ico oracle-icon"></span><span class="label">Internet Oracle</span></button>
       <button class="icon" data-open="source"><span class="ico source-icon"></span><span class="label">Source Notes</span></button>
       <button class="icon" data-open="rss"><span class="ico rss-icon"></span><span class="label">RSS + Submit</span></button>
       <button class="icon" data-open="games"><span class="ico game-icon"></span><span class="label">Games</span></button>
@@ -340,23 +321,6 @@
       <div class="statusbar"><span id="statusLeft">status: mounted / human-selected</span><span>source policy: link + contextualize</span></div>
     </section>
 
-    <section class="oracle-window hidden" id="oracleWindow" role="dialog" aria-modal="false" aria-labelledby="oracleTitle">
-      <div class="oracle-titlebar"><span id="oracleTitle">RANDOM INTERNET ORACLE.EXE</span><button class="oracle-close" id="oracleClose" type="button" aria-label="Close Internet Oracle">X</button></div>
-      <div class="oracle-body">
-        <div class="oracle-screen" id="oracleScreen">RANDOM INTERNET ORACLE v0.93
-LOCAL MODE: ENABLED
-NETWORK: UNNECESSARY
-
-ASK THE OLD MACHINE A QUESTION.
-&gt; <span class="oracle-cursor">_</span></div>
-        <form class="oracle-form" id="oracleForm">
-          <input class="oracle-input" id="oracleInput" autocomplete="off" maxlength="180" placeholder="ASK: What is love?" />
-          <button class="retro-btn" type="submit">CONSULT</button>
-        </form>
-        <div class="oracle-actions"><button class="retro-btn" type="button" id="oracleAgain">ASK AGAIN</button><button class="retro-btn" type="button" id="oracleClear">CLEAR TERMINAL</button></div>
-        <div class="oracle-hint">Local randomized oracle. No AI, no server, no memory. Press ESC or X to close.</div>
-      </div>
-    </section>
 
 
   </main>
@@ -1218,112 +1182,6 @@ ASK THE OLD MACHINE A QUESTION.
       const key = e.state?.key || location.hash.replace('#','') || 'start';
       openRelic(key, { scroll:true });
     });
-
-    const oracleWindow = document.getElementById('oracleWindow');
-    const oracleInput = document.getElementById('oracleInput');
-    const oracleScreen = document.getElementById('oracleScreen');
-    const oracleForm = document.getElementById('oracleForm');
-    const oracleClose = document.getElementById('oracleClose');
-    const oracleAgain = document.getElementById('oracleAgain');
-    const oracleClear = document.getElementById('oracleClear');
-    let lastOracleQuestion = '';
-    const oracleBoot = 'RANDOM INTERNET ORACLE v0.93\nLOCAL MODE: ENABLED\nNETWORK: UNNECESSARY\n\nASK THE OLD MACHINE A QUESTION.\n> _';
-    const oracleBanks = {
-      generic: {
-        define: ['It is the old machine admitting the question is larger than the room.', 'It is a pattern looking for a name, not a verdict.', 'It is the thing you understand better after you stop demanding a clean button.'],
-        yes: ['Yes, but keep it smaller than your appetite.', 'Yes. The useful version is boring and reversible.', 'Probably yes, if you do not turn it into theatre.', 'Yes, if you can explain it in one sentence tomorrow.'],
-        no: ['No. The machine sees cleanup pretending to be opportunity.', 'Probably no. The cost is hiding behind the first click.', 'No, unless the boring facts change.', 'No. Future-you is already reaching for a mop.'],
-        maybe: ['Maybe. The missing detail is the hinge, not decoration.', 'Unclear. Ask a narrower question and the fog will lose weight.', 'Maybe, but only after one sleep cycle.', 'The answer is conditional: reduce the blast radius first.'],
-        action: ['Do the smallest test version first.', 'Make it reversible, then proceed.', 'Write the next step down. If it sounds stupid in text, it is stupid.', 'Remove one moving part before you move.']
-      },
-      alcohol: {
-        define: ['Alcohol is a shortcut that charges interest in judgment, sleep, and tomorrow morning.', 'Alcohol is social lubricant until it becomes administrative debt.', 'Alcohol is not the event. It is the amplifier.'],
-        yes: ['Yes, drinking is likely if you leave the decision to the evening version of you.', 'Probably yes, unless you decide the rule before the room gets warm.', 'Yes, but the second drink is the trap wearing a nice jacket.'],
-        no: ['No, if you choose it now and put a substitute in reach.', 'No. Food, water, and an early exit will do more than willpower theatre.', 'Probably no — but only if you do not negotiate with yourself later.'],
-        maybe: ['Maybe. The trigger is not alcohol; it is the setting around it.', 'Unclear. Check who you are with, how tired you are, and whether tomorrow matters.', 'The bottle is not the decision. The first “why not” is.'],
-        action: ['Decide the drink limit before the first drink.', 'Buy sparkling water before optimism starts lying.', 'Eat first. Leave before the second explanation.']
-      },
-      love: {
-        define: ['Love is attention plus responsibility, with chemistry making a lot of noise in the corridor.', 'Love is not the lightning. It is what still behaves kindly after the lightning has left.', 'Love is the dangerous wish to protect someone else’s future without owning it.'],
-        yes: ['Yes, but send the daylight version, not the midnight speech.', 'Probably yes if the message is simple, kind, and contains no courtroom argument.', 'Yes — one clean signal beats twelve encrypted hints.'],
-        no: ['No. That is nostalgia wearing perfume.', 'Probably no. The ache is real; the proposed action is not necessarily wise.', 'No if the question secretly asks for permission to reopen an old wound.'],
-        maybe: ['Maybe. The difference between courage and loneliness is doing some heavy lifting here.', 'Unclear. If you want connection, be direct; if you want reassurance, pause.', 'Maybe, but chemistry is not an instruction manual.'],
-        action: ['Write one honest sentence and stop.', 'Do not send anything that requires a jury to interpret it.', 'Wait until morning if the message is emotionally radioactive.']
-      },
-      money: {
-        define: ['Money is stored optionality. Spend it where it buys freedom, not decoration for anxiety.', 'Money is a tool that becomes a trap when it starts pretending to be identity.', 'Money is future choice wearing numbers.'],
-        yes: ['Yes, if it solves a real problem twice this week.', 'Probably yes if the cost is known and the maintenance is small.', 'Yes, but only the planned version — not the upgraded goblin version.'],
-        no: ['No purchase today. Cart it, sleep, then interrogate it.', 'Probably no. The price is visible; the maintenance cost is hiding.', 'No. A discount is not a purpose.'],
-        maybe: ['Maybe. If you would still buy it bored and sober, continue.', 'Unclear. Separate “need”, “want”, and “want because tired”.', 'Maybe, but subscriptions age like wet cardboard.'],
-        action: ['Wait 24 hours before buying.', 'Write what problem it solves. If the sentence limps, so does the purchase.', 'Check the exit cost before the entry price.']
-      },
-      work: {
-        define: ['Work is effort pointed at a useful change. Everything else is office weather.', 'Work is the part that survives when you remove performance, process, and decorative urgency.', 'Work is moving the load-bearing beam, not polishing the scaffolding.'],
-        yes: ['Yes. Do the ugly first draft and stop decorating the scaffolding.', 'Probably yes: the next step is execution, not another framework.', 'Yes, but ship the small clean thing first.'],
-        no: ['No. That meeting is a calendar-shaped decoy.', 'Probably no. You are polishing the handle while the door is still locked.', 'No, if the task only creates proof that you were busy.'],
-        maybe: ['Maybe. Name the blocker; unnamed blockers breed in the walls.', 'Unclear. The useful question is who owns the next action.', 'Maybe, but reduce scope before adding process.'],
-        action: ['Define the next visible deliverable.', 'Do the part that makes the rest easier.', 'Send the short version. Long versions are where weak decisions hide.']
-      },
-      health: {
-        define: ['Health is the system staying quiet enough that you can spend attention elsewhere.', 'Health is maintenance before drama, mostly paid in boring coins.', 'Health is not optimization. It is enough stability to live instead of constantly repair.'],
-        yes: ['Yes, rest is the correct answer wearing boring shoes.', 'Probably yes: your body is not a committee memo.', 'Yes, but choose the sane version, not heroic self-improvement cosplay.'],
-        no: ['No. Do not negotiate with exhaustion like it is a clever opponent.', 'Probably no if pain, sleep, or stress is already waving a flag.', 'No. The machine detects biological debt collection.'],
-        maybe: ['Maybe. Check sleep, food, water, and daylight before philosophy.', 'Unclear. If the symptom persists, involve a real clinician.', 'Maybe, but lower intensity and increase honesty.'],
-        action: ['Drink water, eat something plain, and reassess.', 'If it is acute, worsening, or scary, get real help.', 'Choose the version you can repeat tomorrow.']
-      },
-      travel: {
-        define: ['Travel is changing rooms while pretending logistics is not the main character.', 'Travel is distance plus friction, improved by slack and punished by fantasy.', 'Travel is an argument between curiosity and transfer time.'],
-        yes: ['Yes, if the route has slack and the bag is not fantasy.', 'Probably yes. Leave earlier than your confidence suggests.', 'Yes, but book the boring option with fewer failure points.'],
-        no: ['No if the plan depends on every connection behaving politely.', 'Probably no. The itinerary is balanced like glassware on a dog.', 'No. Too many moving parts for too little reward.'],
-        maybe: ['Maybe. Weather, sleep, and transfer time are the three goblins.', 'Unclear. Add buffer and the answer improves.', 'Maybe, but the cheap route may be charging interest in stress.'],
-        action: ['Add 30 minutes of slack.', 'Pack the night before.', 'Choose fewer transfers over theoretical elegance.']
-      },
-      danger: ['No. Close the browser and contact a real person now.', 'This is not an oracle question. Get human help immediately.', 'Stop. Move toward a person, not a prediction.', 'The answer is safety first. Everything else can wait.', 'Do not handle this alone. Call someone now.']
-    };
-    const questionWords = {
-      define: /\b(what is|what are|define|meaning of|vad är|vad betyder|definiera)\b/i,
-      yes: /\b(will|should|can|could|would|is|are|am|do|does|did|ska|bör|kan|kommer|är|borde)\b|\?$/i,
-      no: /\b(avoid|skip|stop|cancel|not|inte|undvika|skippa|sluta|avboka)\b/i,
-      action: /\b(how|what should|what do|hur|vad ska|vad bör|råd|advice)\b/i
-    };
-    function oraclePick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-    function oracleProfile(q){
-      const t=q.toLowerCase();
-      if(/hurt myself|kill myself|suicide|självmord|skada mig|ta livet/.test(t)) return {cat:'danger', mode:'action'};
-      let cat='generic';
-      if(/alcohol|drink|drunk|beer|wine|vodka|öl|vin|sprit|alkohol|dricka/.test(t)) cat='alcohol';
-      else if(/love|text her|text him|date|relationship|crush|kärlek|dejta|sms|förhållande|älskar|ex\b/.test(t)) cat='love';
-      else if(/buy|money|stock|invest|price|expensive|subscription|köpa|pengar|aktie|investera|dyrt|prenumeration/.test(t)) cat='money';
-      else if(/work|job|meeting|deadline|project|jobb|möte|projekt|chef|kund|deadline/.test(t)) cat='work';
-      else if(/health|sleep|tired|doctor|pain|träna|sjuk|hälsa|sova|trött|läkare|ont/.test(t)) cat='health';
-      else if(/travel|flight|train|hotel|resa|flyg|tåg|hotell|åka/.test(t)) cat='travel';
-      let mode='maybe';
-      if(questionWords.define.test(t)) mode='define';
-      else if(questionWords.action.test(t)) mode='action';
-      else if(questionWords.no.test(t)) mode='no';
-      else if(questionWords.yes.test(t)) mode=Math.random() < 0.58 ? 'yes' : (Math.random() < 0.5 ? 'maybe' : 'no');
-      return {cat, mode};
-    }
-    function oracleAnswer(question){
-      const q=(question || '').trim();
-      const profile=oracleProfile(q);
-      if(profile.cat==='danger'){
-        return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nORACLE BREAKS CHARACTER:\n'+oraclePick(oracleBanks.danger)+'\n\nACTION:\nContact a real person or emergency service now.';
-      }
-      const bank = oracleBanks[profile.cat] || oracleBanks.generic;
-      const answer = oraclePick(bank[profile.mode] || bank.maybe || oracleBanks.generic.maybe);
-      return 'QUESTION:\n'+(q || '[NO QUESTION PROVIDED]')+'\n\nDIALING FORGOTTEN NODE...\nREADING QUESTION SHAPE...\nMATCHING TOPIC: '+profile.cat.toUpperCase()+' / '+profile.mode.toUpperCase()+'...\n\nORACLE:\n'+answer+'\n\n> _';
-    }
-    function openOracle(){ oracleWindow.classList.remove('hidden'); setTimeout(()=>oracleInput.focus(), 30); }
-    function closeOracle(){ oracleWindow.classList.add('hidden'); }
-    document.addEventListener('click', e => {
-      if(e.target.closest('[data-oracle-open]')){ e.preventDefault(); openOracle(); }
-    });
-    oracleForm.addEventListener('submit', e => { e.preventDefault(); lastOracleQuestion = oracleInput.value.trim(); oracleScreen.textContent = oracleAnswer(lastOracleQuestion); });
-    oracleAgain.addEventListener('click', () => { oracleScreen.textContent = oracleAnswer(lastOracleQuestion || oracleInput.value.trim()); });
-    oracleClear.addEventListener('click', () => { oracleScreen.textContent = oracleBoot; oracleInput.value=''; lastOracleQuestion=''; oracleInput.focus(); });
-    oracleClose.addEventListener('click', closeOracle);
-    document.addEventListener('keydown', e => { if(e.key === 'Escape' && !oracleWindow.classList.contains('hidden')) closeOracle(); });
 
     function tick(){ const d = new Date(); document.getElementById('clock').textContent = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
     const requestedKey = location.hash.replace('#','');

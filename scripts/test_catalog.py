@@ -57,7 +57,8 @@ def main():
         assert r['addedDate'] == datetime.fromisoformat(r['addedAt']).date().isoformat()
         assert r['source'] in re.findall(r'href="([^"]+)"', data['relics'][r['key']]['html'])
         assert '/rants/99/0126.html' not in data['relics'][r['key']]['html'], 'Known broken CamWorld path'
-    all_routes = set(data['relics']) | {'random', 'oracle'}
+    all_routes = set(data['relics']) | {'random'}
+    assert 'oracle' not in source.lower(), 'Removed feature must not return'
     assert set(re.findall(r'data-open="([^"]+)"', source)) <= all_routes
     for name, r in data['relics'].items():
         assert not r.get('tpl') or f'id="{r["tpl"]}"' in source, name
