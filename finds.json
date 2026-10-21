@@ -1,5 +1,19 @@
 [
   {
+    "key": "cameronsworld",
+    "title": "Cameron's World",
+    "addedAt": "2026-10-21T21:02:35+02:00",
+    "addedDate": "2026-10-21",
+    "addedCommit": null,
+    "originalPublicationDate": "August 2015",
+    "originalPublicationPrecision": "month",
+    "originalPublicationLabel": "August 2015 (exact day unspecified)",
+    "publicationEvidence": "https://www.cameronsworld.net/press.html",
+    "source": "https://www.cameronsworld.net/",
+    "category": "pre-platform culture",
+    "description": "A sprawling, clickable collage of rescued GeoCities GIFs, homemade dreams, and personal-web oddities."
+  },
+  {
     "key": "gardenstream",
     "title": "The Garden and the Stream: A Technopastoral",
     "addedAt": "2026-10-07T21:04:22+02:00",

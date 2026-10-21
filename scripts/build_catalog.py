@@ -38,7 +38,10 @@ def rows_ordered(fragment, desired_keys, metadata, fallback=None):
         record = metadata[key]
         text = existing.get(key) or (fallback or {}).get(key)
         if text is None:
-            year = str(datetime.strptime(record['originalPublicationDate'], '%a, %d %b %Y %H:%M:%S %z').year)
+            # Historical dates may be month/year-only; never invent a day.
+            year_match = re.search(r'\b\d{4}\b', record['originalPublicationDate'])
+            assert year_match, f'Missing publication year: {key}'
+            year = year_match[0]
             archived = 'web.archive.org/' in record['source']
             status = 'archive copy' if archived else 'original online'
             css = 'status-archived' if archived else 'status-live'
@@ -141,7 +144,7 @@ def main():
             item.find('guid').set('isPermaLink','false')
         item.find('pubDate').text = format_datetime(datetime.fromisoformat(r['addedAt']))
         # Preserve original publication metadata and the existing GUID (no duplicates).
-        description = r['description'] + ' Originally published: ' + r['originalPublicationDate'] + '. Added to The Forgotten Web: ' + r['addedDate'] + '.'
+        description = r['description'] + ' Originally published: ' + r.get('originalPublicationLabel', r['originalPublicationDate']) + '. Added to The Forgotten Web: ' + r['addedDate'] + '.'
         item.find('description').text = description
         channel.append(item)
     if previous_items != [ET.tostring(item, encoding='unicode') for item in channel.findall('item')]:

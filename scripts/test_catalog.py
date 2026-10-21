@@ -120,7 +120,7 @@ def future_addition_regression():
         data = registry(source)
         records = json.loads((ROOT/'finds.json').read_text())
         fixture = copy.deepcopy(records[0])
-        fixture.update(key='test-fixture', title='Temporary regression fixture', addedAt='2099-01-01T12:00:00+00:00', addedDate='2099-01-01', addedCommit=None, source='https://example.invalid/test-fixture')
+        fixture.update(key='test-fixture', title='Temporary regression fixture', category='web architecture', originalPublicationDate='August 2015', originalPublicationLabel='August 2015 (exact day unspecified)', addedAt='2099-01-01T12:00:00+00:00', addedDate='2099-01-01', addedCommit=None, source='https://example.invalid/test-fixture')
         relic = copy.deepcopy(data['relics'][records[0]['key']])
         relic['title'] = 'Find 9999 / regression.fixture'
         relic['html'] = relic['html'].replace(records[0]['source'], fixture['source'])
@@ -143,6 +143,7 @@ def future_addition_regression():
             assert 'data-open="test-fixture"' in rebuilt['relics']['collection-web']['html']
             rss = ET.parse(sandbox/'feed.xml').getroot().find('channel').findall('item')
             assert len(rss) == len(records)+1 and rss[0].findtext('link') == fixture['source']
+            assert 'Originally published: August 2015 (exact day unspecified).' in (rss[0].findtext('description') or '')
             assert (sandbox/'finds/test-fixture.html').is_file()
             before = {str(p):p.read_bytes() for p in sandbox.rglob('*') if p.is_file()}
             with contextlib.redirect_stdout(io.StringIO()):
