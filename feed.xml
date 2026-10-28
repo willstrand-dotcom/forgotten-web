@@ -6,7 +6,15 @@
     <atom:link href="https://theforgottenweb.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Old essays, blogs, forum posts, and useful web pages selected by a human and linked back to source.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 21 Oct 2026 19:02:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 20:03:08 +0000</lastBuildDate>
+    <item>
+      <title>The Zoomquilt</title>
+      <link>https://zoomquilt.org/</link>
+      <guid isPermaLink="false">https://theforgottenweb.com/finds/zoomquilt.html</guid>
+      <pubDate>Wed, 28 Oct 2026 21:02:24 +0100</pubDate>
+      <description>A collaborative painting that zooms forever through 46 hand-painted worlds, made in 2004 and still running in the browser. Originally published: October 2004 (exact day unspecified). Added to The Forgotten Web: 2026-10-28.</description>
+      <category>weird useful corners</category>
+    </item>
     <item>
       <title>Cameron's World</title>
       <link>https://www.cameronsworld.net/</link>
